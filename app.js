@@ -170,7 +170,7 @@ function conditionsNote(windKn, waterTempC) {
 async function render() {
   const beach = currentBeach();
   select.value = beach.slug;
-  document.title = `${beach.short} · beachcheck`;
+  document.title = `${beach.short} · BeachCheckTO`;
   $("beach-name").textContent = beach.short;
   centerMapOn(beach); // hand-drawn fallback, always kept in sync underneath
   centerMapKitOn(beach); // real Apple Maps, once (if) it has loaded

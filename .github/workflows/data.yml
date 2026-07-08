@@ -29,15 +29,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Probe openwaterdata.com (temporary)
+      - name: Probe NDBC 45159 realtime2 format (temporary)
         run: |
-          UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36"
-          echo "=== /data/sites?keywords=kew ==="
-          curl -s --connect-timeout 8 -A "$UA" "https://www.openwaterdata.com/data/sites?keywords=kew" -o /tmp/sites -w "http %{http_code}, %{size_download} bytes\n" || true
-          jq -r '.Data.sites[] | "\(.oid) \(.slug) \(.l) [\(.lat),\(.lng)]", (.data[]? | "   \(.m) = \(.r) \(.u) @ \(.t)")' /tmp/sites || head -c 1500 /tmp/sites
-          echo "=== /site/data?s=5897058&m=water-temperature ==="
-          curl -s --connect-timeout 8 -A "$UA" "https://www.openwaterdata.com/site/data?s=5897058&m=water-temperature" -o /tmp/sd -w "http %{http_code}, %{size_download} bytes\n" || true
-          head -c 1200 /tmp/sd || true; echo
+          curl -s --connect-timeout 8 "https://www.ndbc.noaa.gov/data/realtime2/45159.txt" -o /tmp/45159.txt -w "http %{http_code}, %{size_download} bytes\n" || true
+          head -5 /tmp/45159.txt || true
       - run: node scripts/fetch-conditions.mjs
       - name: Commit if changed
         id: commit
@@ -67,6 +62,19 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
+      - name: Cache-bust asset URLs
+        run: |
+          V="${GITHUB_SHA}"
+          sed -i \
+            -e "s/href=\"style\.css\"/href=\"style.css?v=$V\"/" \
+            -e "s/src=\"app\.js\"/src=\"app.js?v=$V\"/" \
+            -e "s#import(\"./mapkit-bridge.js\")#import(\"./mapkit-bridge.js?v=$V\")#" \
+            index.html
+          sed -i \
+            -e "s#from \"./mapkit-bridge.js\"#from \"./mapkit-bridge.js?v=$V\"#" \
+            -e "s#from \"./beaches.js\"#from \"./beaches.js?v=$V\"#" \
+            app.js
+          sed -i "s#from \"./beaches.js\"#from \"./beaches.js?v=$V\"#" mapkit-bridge.js
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

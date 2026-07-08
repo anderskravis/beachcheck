@@ -22,6 +22,19 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - name: Cache-bust asset URLs
+        run: |
+          V="${GITHUB_SHA}"
+          sed -i \
+            -e "s/href=\"style\.css\"/href=\"style.css?v=$V\"/" \
+            -e "s/src=\"app\.js\"/src=\"app.js?v=$V\"/" \
+            -e "s#import(\"./mapkit-bridge.js\")#import(\"./mapkit-bridge.js?v=$V\")#" \
+            index.html
+          sed -i \
+            -e "s#from \"./mapkit-bridge.js\"#from \"./mapkit-bridge.js?v=$V\"#" \
+            -e "s#from \"./beaches.js\"#from \"./beaches.js?v=$V\"#" \
+            app.js
+          sed -i "s#from \"./beaches.js\"#from \"./beaches.js?v=$V\"#" mapkit-bridge.js
       - uses: actions/configure-pages@v5
         with:
           enablement: true
