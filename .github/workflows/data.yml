@@ -32,13 +32,15 @@ jobs:
       - name: Probe openwaterdata.com (temporary)
         run: |
           UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36"
-          curl -s --connect-timeout 8 -A "$UA" "https://www.openwaterdata.com/site/kew-balmy-beach" -o /tmp/owd -w "page http %{http_code}, %{size_download} bytes\n" || true
-          echo "=== data/download/json URLs on the page ==="
-          grep -oiE '(href|src|url|data-[a-z-]+)="[^"]*"' /tmp/owd | grep -iE 'json|csv|api|data' | sort -u | head -40 || true
-          echo "=== script blocks fetching data ==="
-          grep -oE '(fetch|get|ajax|load)\(["'"'"'][^"'"'"')]{5,120}' /tmp/owd | head -20 || true
-          echo "=== external scripts ==="
-          grep -oE 'src="[^"]*\.js[^"]*"' /tmp/owd | sort -u | head -15 || true
+          echo "=== script.js data URLs ==="
+          curl -s --connect-timeout 8 -A "$UA" "https://www.openwaterdata.com/js/script.js" -o /tmp/owdjs -w "js http %{http_code}, %{size_download} bytes\n" || true
+          grep -oE '["'"'"'][^"'"'"']*\.(json|csv)[^"'"'"']*["'"'"']|https?://[^"'"'"' )]+|/[a-z_/-]+\?[a-z=&{}$]+' /tmp/owdjs | sort -u | head -40 || true
+          echo "=== water temp element on site page ==="
+          curl -s --connect-timeout 8 -A "$UA" "https://www.openwaterdata.com/site/kew-balmy-beach" -o /tmp/owd || true
+          grep -oE '.{250}Water Temperature.{250}' /tmp/owd | head -3 || true
+          echo "=== terms of service: license keywords ==="
+          curl -s --connect-timeout 8 -A "$UA" "https://www.openwaterdata.com/terms-of-service/index.html" -o /tmp/tos || true
+          grep -oiE '.{120}(open data|licen[cs]|attribution|reuse|creative commons|commercial).{160}' /tmp/tos | head -12 || true
       - run: node scripts/fetch-conditions.mjs
       - name: Commit if changed
         id: commit
