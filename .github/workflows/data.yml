@@ -29,17 +29,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Diagnose data sources (temporary)
-        run: |
-          UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36"
-          probe() {
-            echo "=== $1 ==="
-            : > /tmp/probe
-            curl -s --connect-timeout 8 -A "$UA" -o /tmp/probe -w "%{http_code}\n" "$1" || echo "curl exit $?"
-            head -c 1500 /tmp/probe || true; echo
-          }
-          probe "https://secure.toronto.ca/opendata/adv/beach_results/v1?format=json&startDate=2026-07-06&endDate=2026-07-08"
-          probe "https://secure.toronto.ca/opendata/adv/beach_results/v1?format=json"
       - run: node scripts/fetch-conditions.mjs
       - name: Commit if changed
         id: commit

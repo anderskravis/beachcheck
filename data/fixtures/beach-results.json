@@ -1,0 +1,281 @@
+[
+ {
+  "CollectionDate": "2026-07-07",
+  "data": [
+   {
+    "beachId": 1,
+    "beachName": "Marie Curtis Park East Beach",
+    "eColi": 15,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 2,
+    "beachName": "Sunnyside Beach",
+    "eColi": 245,
+    "advisory": "fixture",
+    "statusFlag": "UNSAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 3,
+    "beachName": "Hanlan's Point Beach",
+    "eColi": 41,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 4,
+    "beachName": "Gibraltar Point Beach",
+    "eColi": 54,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 5,
+    "beachName": "Centre Island Beach",
+    "eColi": 67,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 6,
+    "beachName": "Ward's Island Beach",
+    "eColi": 80,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 7,
+    "beachName": "Cherry Beach",
+    "eColi": 23,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 8,
+    "beachName": "Woodbine Beaches",
+    "eColi": 36,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 9,
+    "beachName": "Kew Balmy Beach",
+    "eColi": 49,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 10,
+    "beachName": "Bluffer's Beach Park",
+    "eColi": 62,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 11,
+    "beachName": "Rouge Beach",
+    "eColi": 75,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   }
+  ]
+ },
+ {
+  "CollectionDate": "2026-07-06",
+  "data": [
+   {
+    "beachId": 1,
+    "beachName": "Marie Curtis Park East Beach",
+    "eColi": 22,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 2,
+    "beachName": "Sunnyside Beach",
+    "eColi": 245,
+    "advisory": "fixture",
+    "statusFlag": "UNSAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 3,
+    "beachName": "Hanlan's Point Beach",
+    "eColi": 48,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 4,
+    "beachName": "Gibraltar Point Beach",
+    "eColi": 61,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 5,
+    "beachName": "Centre Island Beach",
+    "eColi": 74,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 6,
+    "beachName": "Ward's Island Beach",
+    "eColi": 17,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 7,
+    "beachName": "Cherry Beach",
+    "eColi": 30,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 8,
+    "beachName": "Woodbine Beaches",
+    "eColi": 43,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 9,
+    "beachName": "Kew Balmy Beach",
+    "eColi": 56,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 10,
+    "beachName": "Bluffer's Beach Park",
+    "eColi": 69,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 11,
+    "beachName": "Rouge Beach",
+    "eColi": 82,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   }
+  ]
+ },
+ {
+  "CollectionDate": "2026-07-05",
+  "data": [
+   {
+    "beachId": 1,
+    "beachName": "Marie Curtis Park East Beach",
+    "eColi": 29,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 2,
+    "beachName": "Sunnyside Beach",
+    "eColi": 245,
+    "advisory": "fixture",
+    "statusFlag": "UNSAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 3,
+    "beachName": "Hanlan's Point Beach",
+    "eColi": 55,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 4,
+    "beachName": "Gibraltar Point Beach",
+    "eColi": 68,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 5,
+    "beachName": "Centre Island Beach",
+    "eColi": 81,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 6,
+    "beachName": "Ward's Island Beach",
+    "eColi": 24,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 7,
+    "beachName": "Cherry Beach",
+    "eColi": 37,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 8,
+    "beachName": "Woodbine Beaches",
+    "eColi": 50,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 9,
+    "beachName": "Kew Balmy Beach",
+    "eColi": 63,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 10,
+    "beachName": "Bluffer's Beach Park",
+    "eColi": 76,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   },
+   {
+    "beachId": 11,
+    "beachName": "Rouge Beach",
+    "eColi": 19,
+    "advisory": "fixture",
+    "statusFlag": "SAFE",
+    "statusFlagPre": null
+   }
+  ]
+ }
+]

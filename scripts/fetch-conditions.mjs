@@ -14,6 +14,9 @@ import { BEACHES, beachForCityName } from "../beaches.js";
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const CKAN = "https://ckan0.cf.opendata.inter.prod-toronto.ca";
+// Live per-day results powering the city's own beach water quality page.
+// The CKAN datasets below lag a full season behind; this is the current data.
+const LIVE_RESULTS = "https://secure.toronto.ca/opendata/adv/beach_results/v1";
 const WATER_QUALITY_PACKAGE = "toronto-beaches-water-quality";
 const OBSERVATIONS_PACKAGE = "toronto-beaches-observations";
 const HISTORY_DAYS = 14;
@@ -48,6 +51,46 @@ async function fetchDatastore(packageId, fixtureName) {
     `${CKAN}/api/3/action/datastore_search?resource_id=${resource.id}&sort=${sort}&limit=2000`
   );
   return search.result;
+}
+
+// Response shape: [{ CollectionDate, data: [{ beachId, beachName, eColi, advisory, statusFlag }] }]
+async function fetchLiveResults() {
+  if (USE_FIXTURES) {
+    const raw = await readFile(path.join(ROOT, "data", "fixtures", "beach-results.json"), "utf8");
+    return JSON.parse(raw);
+  }
+  const end = new Date();
+  const start = new Date(end.getTime() - HISTORY_DAYS * 86400000);
+  const fmt = (d) => d.toISOString().slice(0, 10);
+  return getJson(`${LIVE_RESULTS}?format=json&startDate=${fmt(start)}&endDate=${fmt(end)}`);
+}
+
+// The live feed already carries one value per beach per day plus the city's
+// own SAFE/UNSAFE call. Returns the same per-slug shape as the CKAN summary.
+function summarizeLiveResults(days) {
+  const bySlug = new Map(); // slug -> [{date, eColi, statusFlag}]
+  for (const day of days ?? []) {
+    const date = dayOf(day.CollectionDate ?? day.collectionDate);
+    for (const rec of day.data ?? []) {
+      const beach = beachForCityName(rec.beachName);
+      const eColi = toNumber(rec.eColi);
+      if (!beach || !date || eColi === null) continue;
+      if (!bySlug.has(beach.slug)) bySlug.set(beach.slug, []);
+      bySlug.get(beach.slug).push({ date, eColi, statusFlag: rec.statusFlag ?? null });
+    }
+  }
+  const out = {};
+  for (const [slug, entries] of bySlug) {
+    entries.sort((a, b) => b.date.localeCompare(a.date));
+    const latest = entries[0];
+    out[slug] = {
+      eColi: latest.eColi,
+      sampleDate: latest.date,
+      statusFlag: latest.statusFlag,
+      history: entries.slice(0, HISTORY_DAYS).map(({ date, eColi }) => ({ date, eColi })),
+    };
+  }
+  return out;
 }
 
 // City datasets have varied casing over the years; find fields case-insensitively.
@@ -130,18 +173,29 @@ function summarizeObservations(records) {
   return out;
 }
 
-const [waterQuality, observations] = await Promise.all([
-  fetchDatastore(WATER_QUALITY_PACKAGE, "water-quality.json").then((r) =>
-    summarizeWaterQuality(r.records)
-  ),
+const [liveResults, ckanWaterQuality, observations] = await Promise.all([
+  fetchLiveResults().then(summarizeLiveResults).catch((e) => {
+    console.error("live beach_results failed:", e.message);
+    return {};
+  }),
+  fetchDatastore(WATER_QUALITY_PACKAGE, "water-quality.json")
+    .then((r) => summarizeWaterQuality(r.records))
+    .catch((e) => {
+      console.error("CKAN water quality failed:", e.message);
+      return {};
+    }),
   fetchDatastore(OBSERVATIONS_PACKAGE, "observations.json").then((r) =>
     summarizeObservations(r.records)
   ),
 ]);
 
+// Live feed wins per beach; the CKAN dataset (a season behind) is the fallback.
+const waterQuality = { ...ckanWaterQuality, ...liveResults };
+
 const conditions = {
   fetchedAt: new Date().toISOString(),
   sources: {
+    liveResults: LIVE_RESULTS,
     waterQuality: `https://open.toronto.ca/dataset/${WATER_QUALITY_PACKAGE}/`,
     observations: `https://open.toronto.ca/dataset/${OBSERVATIONS_PACKAGE}/`,
   },

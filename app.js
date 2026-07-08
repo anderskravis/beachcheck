@@ -69,7 +69,9 @@ function renderStatus(wq) {
       : "beach not currently monitored (sampling runs June–September)";
     return;
   }
-  const safe = wq.eColi < E_COLI_LIMIT;
+  // The city's posted status is authoritative when present (it can flag a
+  // beach unsafe preemptively); the E. coli threshold is the fallback.
+  const safe = wq.statusFlag ? wq.statusFlag === "SAFE" : wq.eColi < E_COLI_LIMIT;
   el.className = `status ${safe ? "good" : "bad"}`;
   word.textContent = safe ? "swim" : "no swim";
   detail.textContent = `E. coli ${wq.eColi} of ${E_COLI_LIMIT} limit · sampled ${shortDate(wq.sampleDate)}`;
