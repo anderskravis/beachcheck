@@ -109,6 +109,9 @@ setTimeout(() => $("map-band").classList.add("show-fallback"), 2500);
 
 /* ---------- status + stats ---------- */
 
+// Returns whether the water is safe to swim in (true/false), or null when
+// there's no current reading — callers use this to keep the paddle note
+// from contradicting a "no swim" call.
 function renderStatus(wq) {
   const card = $("status");
   const word = $("status-word");
@@ -119,7 +122,7 @@ function renderStatus(wq) {
     detail.textContent = wq
       ? `last sample ${shortDate(wq.sampleDate)} — beach not currently monitored`
       : "beach not currently monitored (sampling runs June–September)";
-    return;
+    return null;
   }
   // The city's posted status is authoritative when present (it can flag a
   // beach unsafe preemptively); the E. coli threshold is the fallback.
@@ -127,6 +130,7 @@ function renderStatus(wq) {
   card.className = `stat status-card ${safe ? "good" : "bad"}`;
   word.textContent = safe ? "swim" : "no swim";
   detail.textContent = `E. coli ${wq.eColi} of ${E_COLI_LIMIT} limit · sampled ${shortDate(wq.sampleDate)}`;
+  return safe;
 }
 
 // Real wave height from NW Lake Ontario buoy 45159 wins when fresh; the
@@ -170,7 +174,14 @@ const waveState = (windKn) => bandLabel(WAVE_BANDS, windKn);
 // A single playful line combining wave state, water temp and a paddle verdict.
 // waveWord is whatever the caller already decided is the best available
 // wave descriptor (real buoy height, city observation, or wind estimate).
-function conditionsNote(waveWord, waterTempC, windKn) {
+// safe is renderStatus()'s swim call (true/false/null) — a "no swim" day
+// should never be topped off with an upbeat paddling verdict.
+function conditionsNote(waveWord, waterTempC, windKn, safe) {
+  if (safe === false) {
+    return waveWord
+      ? `${capitalize(waveWord)}, but water quality is unsafe today — best to stay out.`
+      : "Water quality is unsafe today — best to stay out.";
+  }
   const temp = bandLabel(TEMP_BANDS, waterTempC);
   const clauses = [];
   if (waveWord) clauses.push(capitalize(waveWord));
@@ -192,7 +203,7 @@ async function render() {
   const data = conditions?.beaches?.[beach.slug];
   const obs = data?.observations;
 
-  renderStatus(data?.waterQuality ?? null);
+  const safeToSwim = renderStatus(data?.waterQuality ?? null);
 
   const obsFresh = obs && daysAgo(obs.date) <= STALE_DAYS;
   const buoy = data?.buoy;
@@ -254,7 +265,7 @@ async function render() {
     waveWord = waveState(windKn);
     $("waves").innerHTML = waveWord ? `${waveWord} <small>estimated from wind</small>` : "—";
   }
-  $("paddle-note").textContent = conditionsNote(waveWord, waterTempC, windKn);
+  $("paddle-note").textContent = conditionsNote(waveWord, waterTempC, windKn, safeToSwim);
 }
 
 async function fetchWeather(beach) {
