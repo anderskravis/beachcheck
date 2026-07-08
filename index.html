@@ -10,7 +10,8 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
 </head>
 <body>
-  <div class="map-band">
+  <div class="map-band" id="map-band">
+    <div id="mapkit-map" class="mapkit-map" aria-hidden="true"></div>
     <svg id="map" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
       <defs>
         <filter id="fwater" x="-20%" y="-20%" width="140%" height="140%">
@@ -88,6 +89,27 @@
       </footer>
     </div>
   </div>
+
+  <!--
+    Classic (non-module) script so this runs immediately during parsing and
+    `initMapKit` exists well before the async MapKit script below finishes
+    downloading — module scripts are deferred and can't be relied on to win
+    that race. mapkit-bridge.js is an ES module either way; dynamic import()
+    works from a classic script too, and resolves to the same singleton
+    instance that app.js imports statically below.
+  -->
+  <script>
+    window.initMapKit = function () {
+      import("./mapkit-bridge.js").then((m) => m.start(window.mapkit));
+    };
+  </script>
+  <script
+    src="https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.js"
+    crossorigin async
+    data-callback="initMapKit"
+    data-libraries="map,annotations"
+    data-token="MAPKIT_TOKEN_PLACEHOLDER"
+  ></script>
 
   <script type="module" src="app.js"></script>
 </body>

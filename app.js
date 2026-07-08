@@ -1,4 +1,5 @@
 import { BEACHES, DEFAULT_SLUG, beachForSlug, SHORELINE, ISLANDS, SPIT } from "./beaches.js";
+import { centerMapKitOn } from "./mapkit-bridge.js";
 
 const $ = (id) => document.getElementById(id);
 const E_COLI_LIMIT = 100; // city posts a beach unsafe at ≥100 E. coli / 100 mL
@@ -136,7 +137,8 @@ async function render() {
   select.value = beach.slug;
   document.title = `${beach.short} · beachcheck`;
   $("beach-name").textContent = beach.short;
-  centerMapOn(beach);
+  centerMapOn(beach); // hand-drawn fallback, always kept in sync underneath
+  centerMapKitOn(beach); // real Apple Maps, once (if) it has loaded
 
   const conditions = await conditionsPromise.catch(() => null);
   const data = conditions?.beaches?.[beach.slug];

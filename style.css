@@ -47,10 +47,60 @@ body {
   inset: 0;
   width: 100%;
   height: 100%;
+  transition: opacity .6s;
 }
 
 .water-bg { fill: var(--map-water); }
 .water-texture { pointer-events: none; }
+
+/* Real Apple Maps, layered over the hand-drawn fallback. Stays invisible
+   and non-interactive until mapkit-bridge.js confirms the SDK initialized
+   (see index.html for why that's not guaranteed to happen), at which point
+   it fades in and the fallback fades out underneath it. */
+.mapkit-map {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .6s;
+}
+
+.mapkit-map.ready { opacity: 1; pointer-events: auto; }
+.map-band.mapkit-ready #map { opacity: 0; }
+
+.mk-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--map-dot);
+  cursor: pointer;
+  transition: background-color .25s;
+}
+
+.mk-dot:hover { background: #fff; }
+
+.mk-pin {
+  position: relative;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #0d0f12;
+  box-shadow: 0 0 0 8px rgba(255, 255, 255, .14);
+}
+
+.mk-pin::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border: 1.5px solid #fff;
+  border-radius: 50%;
+  animation: pulse 2.6s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mk-pin::after { animation: none; opacity: 0; }
+}
 
 #world {
   transition: transform 1s cubic-bezier(.25, 1, .3, 1);
