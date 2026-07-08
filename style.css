@@ -40,13 +40,21 @@ body {
   z-index: 0;
 }
 
+/* Hidden until either MapKit fails to show up in time (app.js reveals it
+   as a real fallback via .show-fallback) or it's confirmed ready — never
+   flashed on load just because it's the first thing painted. Until then
+   the plain body background (--map-water) is the whole backdrop. */
 #map {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+  opacity: 0;
+  pointer-events: none;
   transition: opacity .6s;
 }
+
+.map-band.show-fallback #map { opacity: 1; pointer-events: auto; }
 
 .water-bg { fill: var(--map-water); }
 .water-texture { pointer-events: none; }
@@ -64,7 +72,9 @@ body {
 }
 
 .mapkit-map.ready { opacity: 1; pointer-events: auto; }
-.map-band.mapkit-ready #map { opacity: 0; pointer-events: none; }
+/* !important so this always wins over .show-fallback, whichever class
+   lands second — MapKit succeeding should always beat the fallback timer. */
+.map-band.mapkit-ready #map { opacity: 0 !important; pointer-events: none !important; }
 
 .mk-dot {
   width: 7px;

@@ -102,6 +102,11 @@ function centerMapOn(beach) {
 
 buildMap();
 
+// Give real Apple Maps a few seconds before falling back to the hand-drawn
+// map, so a slow/blocked/expired MapKit load doesn't flash the fallback on
+// every visit — it should only appear when it's actually needed.
+setTimeout(() => $("map-band").classList.add("show-fallback"), 2500);
+
 /* ---------- status + stats ---------- */
 
 function renderStatus(wq) {
@@ -219,7 +224,7 @@ async function render() {
   let windKn = null;
   if (weather) {
     windKn = weather.wind_speed_10m;
-    const arrow = `<span class="arrow" style="transform: rotate(${Math.round(weather.wind_direction_10m) + 180}deg)">↑</span>`;
+    const arrow = `<span class="arrow" style="transform: rotate(${Math.round(weather.wind_direction_10m)}deg)">↑</span>`;
     $("wind").innerHTML =
       `${Math.round(weather.wind_speed_10m)} kn ${compass(weather.wind_direction_10m)} ${arrow} ` +
       `<small>gusts ${Math.round(weather.wind_gusts_10m)}</small>`;
@@ -241,7 +246,7 @@ async function render() {
     waveWord = waveStateFromHeight(lakeBuoy.waveHeightM);
     const hoursAgo = Math.round((Date.now() - new Date(lakeBuoy.time)) / 3600000);
     const when = hoursAgo < 1 ? "now" : `${hoursAgo}h ago`;
-    $("waves").innerHTML = `${lakeBuoy.waveHeightM.toFixed(1)} m <small>${waveWord} · buoy ${when}</small>`;
+    $("waves").innerHTML = `${waveWord} <small>${lakeBuoy.waveHeightM.toFixed(1)} m · buoy ${when}</small>`;
   } else if (cityWave) {
     waveWord = cityWave;
     $("waves").textContent = cityWave;
