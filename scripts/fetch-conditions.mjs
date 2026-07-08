@@ -1,0 +1,159 @@
+// Fetches Toronto beach data from the city's open data portal (CKAN) and
+// writes data/conditions.json for the site to consume.
+//
+// Usage:
+//   node scripts/fetch-conditions.mjs             # live fetch (runs in CI)
+//   node scripts/fetch-conditions.mjs --fixtures  # use data/fixtures/*.json
+//
+// No dependencies; requires Node 20+.
+
+import { readFile, writeFile } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { BEACHES, beachForCityName } from "../beaches.js";
+
+const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
+const CKAN = "https://ckan0.cf.opendata.inter.prod-toronto.ca";
+const WATER_QUALITY_PACKAGE = "toronto-beaches-water-quality";
+const OBSERVATIONS_PACKAGE = "toronto-beaches-observations";
+const HISTORY_DAYS = 14;
+const USE_FIXTURES = process.argv.includes("--fixtures");
+
+async function getJson(url) {
+  const res = await fetch(url, { headers: { accept: "application/json" } });
+  if (!res.ok) throw new Error(`${res.status} ${res.statusText} for ${url}`);
+  return res.json();
+}
+
+// Returns the CKAN datastore_search result ({ fields, records }) for a package.
+async function fetchDatastore(packageId, fixtureName) {
+  if (USE_FIXTURES) {
+    const raw = await readFile(path.join(ROOT, "data", "fixtures", fixtureName), "utf8");
+    return JSON.parse(raw).result;
+  }
+  const pkg = await getJson(`${CKAN}/api/3/action/package_show?id=${packageId}`);
+  const resource = pkg.result.resources.find((r) => r.datastore_active);
+  if (!resource) throw new Error(`no datastore resource in ${packageId}`);
+  // Recent rows have the highest _id (data is appended), so sort descending
+  // and take enough rows to cover every beach for the history window.
+  const search = await getJson(
+    `${CKAN}/api/3/action/datastore_search?resource_id=${resource.id}&sort=_id desc&limit=2000`
+  );
+  return search.result;
+}
+
+// City datasets have varied casing over the years; find fields case-insensitively.
+function fieldFinder(record) {
+  const keys = Object.keys(record);
+  return (...candidates) => {
+    for (const c of candidates) {
+      const k = keys.find((k) => k.toLowerCase() === c.toLowerCase());
+      if (k !== undefined) return record[k];
+    }
+    return undefined;
+  };
+}
+
+const dayOf = (v) => String(v ?? "").slice(0, 10); // "YYYY-MM-DD"
+
+function toNumber(v) {
+  if (v === null || v === undefined || v === "") return null;
+  const n = Number(String(v).replace(/[^0-9.+-]/g, ""));
+  return Number.isFinite(n) ? n : null;
+}
+
+function geometricMean(values) {
+  if (values.length === 0) return null;
+  // E. coli of 0 breaks a geomean; treat as 1 (detection floor) like the city does.
+  const logs = values.map((v) => Math.log(Math.max(v, 1)));
+  return Math.round(Math.exp(logs.reduce((a, b) => a + b, 0) / logs.length));
+}
+
+// Water quality rows are one per sampling site per day; the city's standard
+// is the geometric mean across a beach's sites. Returns per-slug history.
+function summarizeWaterQuality(records) {
+  const byBeachDay = new Map(); // slug -> Map(day -> number[])
+  for (const rec of records) {
+    const f = fieldFinder(rec);
+    const beach = beachForCityName(f("beachName", "beach_name", "beach"));
+    if (!beach) continue;
+    const day = dayOf(f("collectionDate", "collection_date", "sampleDate", "sample_date"));
+    const eColi = toNumber(f("eColi", "e_coli", "ecoli"));
+    if (!day || eColi === null) continue;
+    if (!byBeachDay.has(beach.slug)) byBeachDay.set(beach.slug, new Map());
+    const days = byBeachDay.get(beach.slug);
+    if (!days.has(day)) days.set(day, []);
+    days.get(day).push(eColi);
+  }
+
+  const out = {};
+  for (const [slug, days] of byBeachDay) {
+    const history = [...days.entries()]
+      .map(([date, samples]) => ({ date, eColi: geometricMean(samples) }))
+      .sort((a, b) => b.date.localeCompare(a.date))
+      .slice(0, HISTORY_DAYS);
+    const latest = history[0];
+    out[slug] = { eColi: latest.eColi, sampleDate: latest.date, history };
+  }
+  return out;
+}
+
+// Observations are one row per beach per day, recorded by city staff.
+function summarizeObservations(records) {
+  const out = {};
+  for (const rec of records) {
+    const f = fieldFinder(rec);
+    const beach = beachForCityName(f("beachName", "beach_name", "beach"));
+    if (!beach) continue;
+    const day = dayOf(f("dataCollectionDate", "data_collection_date", "collectionDate", "date"));
+    if (!day) continue;
+    const existing = out[beach.slug];
+    if (existing && existing.date >= day) continue; // keep the newest row only
+    out[beach.slug] = {
+      date: day,
+      waterTemp: toNumber(f("waterTemp", "water_temp", "waterTemperature")),
+      airTemp: toNumber(f("airTemp", "air_temp", "airTemperature")),
+      windSpeed: toNumber(f("windSpeed", "wind_speed")),
+      windDirection: f("windDirection", "wind_direction") ?? null,
+      waveAction: f("waveAction", "wave_action") ?? null,
+      waterClarity: f("waterClarity", "water_clarity") ?? null,
+    };
+  }
+  return out;
+}
+
+const [waterQuality, observations] = await Promise.all([
+  fetchDatastore(WATER_QUALITY_PACKAGE, "water-quality.json").then((r) =>
+    summarizeWaterQuality(r.records)
+  ),
+  fetchDatastore(OBSERVATIONS_PACKAGE, "observations.json").then((r) =>
+    summarizeObservations(r.records)
+  ),
+]);
+
+const conditions = {
+  fetchedAt: new Date().toISOString(),
+  sources: {
+    waterQuality: `https://open.toronto.ca/dataset/${WATER_QUALITY_PACKAGE}/`,
+    observations: `https://open.toronto.ca/dataset/${OBSERVATIONS_PACKAGE}/`,
+  },
+  beaches: Object.fromEntries(
+    BEACHES.map((b) => [
+      b.slug,
+      {
+        name: b.name,
+        waterQuality: waterQuality[b.slug] ?? null,
+        observations: observations[b.slug] ?? null,
+      },
+    ])
+  ),
+};
+
+const outPath = path.join(ROOT, "data", "conditions.json");
+await writeFile(outPath, JSON.stringify(conditions, null, 2) + "\n");
+
+const withData = Object.values(conditions.beaches).filter((b) => b.waterQuality).length;
+console.log(`wrote ${path.relative(ROOT, outPath)} — ${withData}/${BEACHES.length} beaches have water quality data`);
+if (!USE_FIXTURES && withData === 0) {
+  process.exit(1); // fail the CI run rather than commit an empty file
+}

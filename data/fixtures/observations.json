@@ -1,0 +1,354 @@
+{
+ "success": true,
+ "result": {
+  "fields": [
+   {
+    "id": "_id"
+   },
+   {
+    "id": "dataCollectionDate"
+   },
+   {
+    "id": "beachName"
+   },
+   {
+    "id": "windSpeed"
+   },
+   {
+    "id": "windDirection"
+   },
+   {
+    "id": "airTemp"
+   },
+   {
+    "id": "rain"
+   },
+   {
+    "id": "waterTemp"
+   },
+   {
+    "id": "waterFowl"
+   },
+   {
+    "id": "waveAction"
+   },
+   {
+    "id": "waterClarity"
+   },
+   {
+    "id": "turbidity"
+   }
+  ],
+  "records": [
+   {
+    "_id": 90105,
+    "dataCollectionDate": "2026-07-06",
+    "beachName": "Rouge Beach",
+    "windSpeed": 8,
+    "windDirection": "SW",
+    "airTemp": 24,
+    "rain": "No",
+    "waterTemp": 19.5,
+    "waterFowl": 12,
+    "waveAction": "high",
+    "waterClarity": "clear",
+    "turbidity": null
+   },
+   {
+    "_id": 90104,
+    "dataCollectionDate": "2026-07-06",
+    "beachName": "Bluffer's Beach Park",
+    "windSpeed": 20,
+    "windDirection": "E",
+    "airTemp": 24,
+    "rain": "No",
+    "waterTemp": 18.5,
+    "waterFowl": 12,
+    "waveAction": "mod",
+    "waterClarity": "clear",
+    "turbidity": null
+   },
+   {
+    "_id": 90103,
+    "dataCollectionDate": "2026-07-06",
+    "beachName": "Kew Balmy Beach",
+    "windSpeed": 17,
+    "windDirection": "NE",
+    "airTemp": 24,
+    "rain": "No",
+    "waterTemp": 17.5,
+    "waterFowl": 12,
+    "waveAction": "low",
+    "waterClarity": "clear",
+    "turbidity": null
+   },
+   {
+    "_id": 90102,
+    "dataCollectionDate": "2026-07-06",
+    "beachName": "Woodbine Beaches",
+    "windSpeed": 14,
+    "windDirection": "S",
+    "airTemp": 24,
+    "rain": "No",
+    "waterTemp": 20.5,
+    "waterFowl": 12,
+    "waveAction": "none",
+    "waterClarity": "clear",
+    "turbidity": null
+   },
+   {
+    "_id": 90101,
+    "dataCollectionDate": "2026-07-06",
+    "beachName": "Cherry Beach",
+    "windSpeed": 11,
+    "windDirection": "W",
+    "airTemp": 24,
+    "rain": "No",
+    "waterTemp": 19.5,
+    "waterFowl": 12,
+    "waveAction": "high",
+    "waterClarity": "clear",
+    "turbidity": null
+   },
+   {
+    "_id": 90100,
+    "dataCollectionDate": "2026-07-06",
+    "beachName": "Ward's Island Beach",
+    "windSpeed": 8,
+    "windDirection": "SW",
+    "airTemp": 24,
+    "rain": "No",
+    "waterTemp": 18.5,
+    "waterFowl": 12,
+    "waveAction": "mod",
+    "waterClarity": "clear",
+    "turbidity": null
+   },
+   {
+    "_id": 90099,
+    "dataCollectionDate": "2026-07-06",
+    "beachName": "Centre Island Beach",
+    "windSpeed": 20,
+    "windDirection": "E",
+    "airTemp": 24,
+    "rain": "No",
+    "waterTemp": 17.5,
+    "waterFowl": 12,
+    "waveAction": "low",
+    "waterClarity": "clear",
+    "turbidity": null
+   },
+   {
+    "_id": 90098,
+    "dataCollectionDate": "2026-07-06",
+    "beachName": "Gibraltar Point Beach",
+    "windSpeed": 17,
+    "windDirection": "NE",
+    "airTemp": 24,
+    "rain": "No",
+    "waterTemp": 20.5,
+    "waterFowl": 12,
+    "waveAction": "none",
+    "waterClarity": "clear",
+    "turbidity": null
+   },
+   {
+    "_id": 90097,
+    "dataCollectionDate": "2026-07-06",
+    "beachName": "Hanlan's Point Beach",
+    "windSpeed": 14,
+    "windDirection": "S",
+    "airTemp": 24,
+    "rain": "No",
+    "waterTemp": 19.5,
+    "waterFowl": 12,
+    "waveAction": "high",
+    "waterClarity": "clear",
+    "turbidity": null
+   },
+   {
+    "_id": 90096,
+    "dataCollectionDate": "2026-07-06",
+    "beachName": "Sunnyside Beach",
+    "windSpeed": 11,
+    "windDirection": "W",
+    "airTemp": 24,
+    "rain": "No",
+    "waterTemp": 18.5,
+    "waterFowl": 12,
+    "waveAction": "mod",
+    "waterClarity": "clear",
+    "turbidity": null
+   },
+   {
+    "_id": 90095,
+    "dataCollectionDate": "2026-07-06",
+    "beachName": "Marie Curtis Park East Beach",
+    "windSpeed": 8,
+    "windDirection": "SW",
+    "airTemp": 24,
+    "rain": "No",
+    "waterTemp": 17.5,
+    "waterFowl": 12,
+    "waveAction": "low",
+    "waterClarity": "clear",
+    "turbidity": null
+   },
+   {
+    "_id": 90094,
+    "dataCollectionDate": "2026-07-07",
+    "beachName": "Rouge Beach",
+    "windSpeed": 8,
+    "windDirection": "SW",
+    "airTemp": 24,
+    "rain": "No",
+    "waterTemp": 19.5,
+    "waterFowl": 12,
+    "waveAction": "high",
+    "waterClarity": "clear",
+    "turbidity": null
+   },
+   {
+    "_id": 90093,
+    "dataCollectionDate": "2026-07-07",
+    "beachName": "Bluffer's Beach Park",
+    "windSpeed": 20,
+    "windDirection": "E",
+    "airTemp": 24,
+    "rain": "No",
+    "waterTemp": 18.5,
+    "waterFowl": 12,
+    "waveAction": "mod",
+    "waterClarity": "clear",
+    "turbidity": null
+   },
+   {
+    "_id": 90092,
+    "dataCollectionDate": "2026-07-07",
+    "beachName": "Kew Balmy Beach",
+    "windSpeed": 17,
+    "windDirection": "NE",
+    "airTemp": 24,
+    "rain": "No",
+    "waterTemp": 17.5,
+    "waterFowl": 12,
+    "waveAction": "low",
+    "waterClarity": "clear",
+    "turbidity": null
+   },
+   {
+    "_id": 90091,
+    "dataCollectionDate": "2026-07-07",
+    "beachName": "Woodbine Beaches",
+    "windSpeed": 14,
+    "windDirection": "S",
+    "airTemp": 24,
+    "rain": "No",
+    "waterTemp": 20.5,
+    "waterFowl": 12,
+    "waveAction": "none",
+    "waterClarity": "clear",
+    "turbidity": null
+   },
+   {
+    "_id": 90090,
+    "dataCollectionDate": "2026-07-07",
+    "beachName": "Cherry Beach",
+    "windSpeed": 11,
+    "windDirection": "W",
+    "airTemp": 24,
+    "rain": "No",
+    "waterTemp": 19.5,
+    "waterFowl": 12,
+    "waveAction": "high",
+    "waterClarity": "clear",
+    "turbidity": null
+   },
+   {
+    "_id": 90089,
+    "dataCollectionDate": "2026-07-07",
+    "beachName": "Ward's Island Beach",
+    "windSpeed": 8,
+    "windDirection": "SW",
+    "airTemp": 24,
+    "rain": "No",
+    "waterTemp": 18.5,
+    "waterFowl": 12,
+    "waveAction": "mod",
+    "waterClarity": "clear",
+    "turbidity": null
+   },
+   {
+    "_id": 90088,
+    "dataCollectionDate": "2026-07-07",
+    "beachName": "Centre Island Beach",
+    "windSpeed": 20,
+    "windDirection": "E",
+    "airTemp": 24,
+    "rain": "No",
+    "waterTemp": 17.5,
+    "waterFowl": 12,
+    "waveAction": "low",
+    "waterClarity": "clear",
+    "turbidity": null
+   },
+   {
+    "_id": 90087,
+    "dataCollectionDate": "2026-07-07",
+    "beachName": "Gibraltar Point Beach",
+    "windSpeed": 17,
+    "windDirection": "NE",
+    "airTemp": 24,
+    "rain": "No",
+    "waterTemp": 20.5,
+    "waterFowl": 12,
+    "waveAction": "none",
+    "waterClarity": "clear",
+    "turbidity": null
+   },
+   {
+    "_id": 90086,
+    "dataCollectionDate": "2026-07-07",
+    "beachName": "Hanlan's Point Beach",
+    "windSpeed": 14,
+    "windDirection": "S",
+    "airTemp": 24,
+    "rain": "No",
+    "waterTemp": 19.5,
+    "waterFowl": 12,
+    "waveAction": "high",
+    "waterClarity": "clear",
+    "turbidity": null
+   },
+   {
+    "_id": 90085,
+    "dataCollectionDate": "2026-07-07",
+    "beachName": "Sunnyside Beach",
+    "windSpeed": 11,
+    "windDirection": "W",
+    "airTemp": 24,
+    "rain": "No",
+    "waterTemp": 18.5,
+    "waterFowl": 12,
+    "waveAction": "mod",
+    "waterClarity": "clear",
+    "turbidity": null
+   },
+   {
+    "_id": 90084,
+    "dataCollectionDate": "2026-07-07",
+    "beachName": "Marie Curtis Park East Beach",
+    "windSpeed": 8,
+    "windDirection": "SW",
+    "airTemp": 24,
+    "rain": "No",
+    "waterTemp": 17.5,
+    "waterFowl": 12,
+    "waveAction": "low",
+    "waterClarity": "clear",
+    "turbidity": null
+   }
+  ],
+  "total": 22
+ }
+}

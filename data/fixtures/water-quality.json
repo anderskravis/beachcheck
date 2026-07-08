@@ -1,0 +1,787 @@
+{
+ "success": true,
+ "result": {
+  "fields": [
+   {
+    "id": "_id"
+   },
+   {
+    "id": "beachId"
+   },
+   {
+    "id": "beachName"
+   },
+   {
+    "id": "siteName"
+   },
+   {
+    "id": "collectionDate"
+   },
+   {
+    "id": "eColi"
+   },
+   {
+    "id": "comments"
+   }
+  ],
+  "records": [
+   {
+    "_id": 90083,
+    "beachId": 11,
+    "beachName": "Rouge Beach",
+    "siteName": "Rouge Beach site 1",
+    "collectionDate": "2026-07-01T00:00:00",
+    "eColi": "52",
+    "comments": null
+   },
+   {
+    "_id": 90082,
+    "beachId": 10,
+    "beachName": "Bluffer's Beach Park",
+    "siteName": "Bluffer's Beach Park site 1",
+    "collectionDate": "2026-07-01T00:00:00",
+    "eColi": "39",
+    "comments": null
+   },
+   {
+    "_id": 90081,
+    "beachId": 9,
+    "beachName": "Kew Balmy Beach",
+    "siteName": "Kew Balmy Beach site 2",
+    "collectionDate": "2026-07-01T00:00:00",
+    "eColi": "31",
+    "comments": null
+   },
+   {
+    "_id": 90080,
+    "beachId": 9,
+    "beachName": "Kew Balmy Beach",
+    "siteName": "Kew Balmy Beach site 1",
+    "collectionDate": "2026-07-01T00:00:00",
+    "eColi": "26",
+    "comments": null
+   },
+   {
+    "_id": 90079,
+    "beachId": 8,
+    "beachName": "Woodbine Beaches",
+    "siteName": "Woodbine Beaches site 1",
+    "collectionDate": "2026-07-01T00:00:00",
+    "eColi": "83",
+    "comments": null
+   },
+   {
+    "_id": 90078,
+    "beachId": 7,
+    "beachName": "Cherry Beach",
+    "siteName": "Cherry Beach site 1",
+    "collectionDate": "2026-07-01T00:00:00",
+    "eColi": "70",
+    "comments": null
+   },
+   {
+    "_id": 90077,
+    "beachId": 6,
+    "beachName": "Ward's Island Beach",
+    "siteName": "Ward's Island Beach site 1",
+    "collectionDate": "2026-07-01T00:00:00",
+    "eColi": "57",
+    "comments": null
+   },
+   {
+    "_id": 90076,
+    "beachId": 5,
+    "beachName": "Centre Island Beach",
+    "siteName": "Centre Island Beach site 1",
+    "collectionDate": "2026-07-01T00:00:00",
+    "eColi": "44",
+    "comments": null
+   },
+   {
+    "_id": 90075,
+    "beachId": 4,
+    "beachName": "Gibraltar Point Beach",
+    "siteName": "Gibraltar Point Beach site 1",
+    "collectionDate": "2026-07-01T00:00:00",
+    "eColi": "31",
+    "comments": null
+   },
+   {
+    "_id": 90074,
+    "beachId": 3,
+    "beachName": "Hanlan's Point Beach",
+    "siteName": "Hanlan's Point Beach site 1",
+    "collectionDate": "2026-07-01T00:00:00",
+    "eColi": "88",
+    "comments": null
+   },
+   {
+    "_id": 90073,
+    "beachId": 2,
+    "beachName": "Sunnyside Beach",
+    "siteName": "Sunnyside Beach site 1",
+    "collectionDate": "2026-07-01T00:00:00",
+    "eColi": "245",
+    "comments": null
+   },
+   {
+    "_id": 90072,
+    "beachId": 1,
+    "beachName": "Marie Curtis Park East Beach",
+    "siteName": "Marie Curtis Park East Beach site 1",
+    "collectionDate": "2026-07-01T00:00:00",
+    "eColi": "62",
+    "comments": null
+   },
+   {
+    "_id": 90071,
+    "beachId": 11,
+    "beachName": "Rouge Beach",
+    "siteName": "Rouge Beach site 1",
+    "collectionDate": "2026-07-02T00:00:00",
+    "eColi": "45",
+    "comments": null
+   },
+   {
+    "_id": 90070,
+    "beachId": 10,
+    "beachName": "Bluffer's Beach Park",
+    "siteName": "Bluffer's Beach Park site 1",
+    "collectionDate": "2026-07-02T00:00:00",
+    "eColi": "32",
+    "comments": null
+   },
+   {
+    "_id": 90069,
+    "beachId": 9,
+    "beachName": "Kew Balmy Beach",
+    "siteName": "Kew Balmy Beach site 2",
+    "collectionDate": "2026-07-02T00:00:00",
+    "eColi": "94",
+    "comments": null
+   },
+   {
+    "_id": 90068,
+    "beachId": 9,
+    "beachName": "Kew Balmy Beach",
+    "siteName": "Kew Balmy Beach site 1",
+    "collectionDate": "2026-07-02T00:00:00",
+    "eColi": "89",
+    "comments": null
+   },
+   {
+    "_id": 90067,
+    "beachId": 8,
+    "beachName": "Woodbine Beaches",
+    "siteName": "Woodbine Beaches site 1",
+    "collectionDate": "2026-07-02T00:00:00",
+    "eColi": "76",
+    "comments": null
+   },
+   {
+    "_id": 90066,
+    "beachId": 7,
+    "beachName": "Cherry Beach",
+    "siteName": "Cherry Beach site 1",
+    "collectionDate": "2026-07-02T00:00:00",
+    "eColi": "63",
+    "comments": null
+   },
+   {
+    "_id": 90065,
+    "beachId": 6,
+    "beachName": "Ward's Island Beach",
+    "siteName": "Ward's Island Beach site 1",
+    "collectionDate": "2026-07-02T00:00:00",
+    "eColi": "50",
+    "comments": null
+   },
+   {
+    "_id": 90064,
+    "beachId": 5,
+    "beachName": "Centre Island Beach",
+    "siteName": "Centre Island Beach site 1",
+    "collectionDate": "2026-07-02T00:00:00",
+    "eColi": "37",
+    "comments": null
+   },
+   {
+    "_id": 90063,
+    "beachId": 4,
+    "beachName": "Gibraltar Point Beach",
+    "siteName": "Gibraltar Point Beach site 1",
+    "collectionDate": "2026-07-02T00:00:00",
+    "eColi": "24",
+    "comments": null
+   },
+   {
+    "_id": 90062,
+    "beachId": 3,
+    "beachName": "Hanlan's Point Beach",
+    "siteName": "Hanlan's Point Beach site 1",
+    "collectionDate": "2026-07-02T00:00:00",
+    "eColi": "81",
+    "comments": null
+   },
+   {
+    "_id": 90061,
+    "beachId": 2,
+    "beachName": "Sunnyside Beach",
+    "siteName": "Sunnyside Beach site 1",
+    "collectionDate": "2026-07-02T00:00:00",
+    "eColi": "245",
+    "comments": null
+   },
+   {
+    "_id": 90060,
+    "beachId": 1,
+    "beachName": "Marie Curtis Park East Beach",
+    "siteName": "Marie Curtis Park East Beach site 1",
+    "collectionDate": "2026-07-02T00:00:00",
+    "eColi": "55",
+    "comments": null
+   },
+   {
+    "_id": 90059,
+    "beachId": 11,
+    "beachName": "Rouge Beach",
+    "siteName": "Rouge Beach site 1",
+    "collectionDate": "2026-07-03T00:00:00",
+    "eColi": "38",
+    "comments": null
+   },
+   {
+    "_id": 90058,
+    "beachId": 10,
+    "beachName": "Bluffer's Beach Park",
+    "siteName": "Bluffer's Beach Park site 1",
+    "collectionDate": "2026-07-03T00:00:00",
+    "eColi": "25",
+    "comments": null
+   },
+   {
+    "_id": 90057,
+    "beachId": 9,
+    "beachName": "Kew Balmy Beach",
+    "siteName": "Kew Balmy Beach site 2",
+    "collectionDate": "2026-07-03T00:00:00",
+    "eColi": "87",
+    "comments": null
+   },
+   {
+    "_id": 90056,
+    "beachId": 9,
+    "beachName": "Kew Balmy Beach",
+    "siteName": "Kew Balmy Beach site 1",
+    "collectionDate": "2026-07-03T00:00:00",
+    "eColi": "82",
+    "comments": null
+   },
+   {
+    "_id": 90055,
+    "beachId": 8,
+    "beachName": "Woodbine Beaches",
+    "siteName": "Woodbine Beaches site 1",
+    "collectionDate": "2026-07-03T00:00:00",
+    "eColi": "69",
+    "comments": null
+   },
+   {
+    "_id": 90054,
+    "beachId": 7,
+    "beachName": "Cherry Beach",
+    "siteName": "Cherry Beach site 1",
+    "collectionDate": "2026-07-03T00:00:00",
+    "eColi": "56",
+    "comments": null
+   },
+   {
+    "_id": 90053,
+    "beachId": 6,
+    "beachName": "Ward's Island Beach",
+    "siteName": "Ward's Island Beach site 1",
+    "collectionDate": "2026-07-03T00:00:00",
+    "eColi": "43",
+    "comments": null
+   },
+   {
+    "_id": 90052,
+    "beachId": 5,
+    "beachName": "Centre Island Beach",
+    "siteName": "Centre Island Beach site 1",
+    "collectionDate": "2026-07-03T00:00:00",
+    "eColi": "30",
+    "comments": null
+   },
+   {
+    "_id": 90051,
+    "beachId": 4,
+    "beachName": "Gibraltar Point Beach",
+    "siteName": "Gibraltar Point Beach site 1",
+    "collectionDate": "2026-07-03T00:00:00",
+    "eColi": "87",
+    "comments": null
+   },
+   {
+    "_id": 90050,
+    "beachId": 3,
+    "beachName": "Hanlan's Point Beach",
+    "siteName": "Hanlan's Point Beach site 1",
+    "collectionDate": "2026-07-03T00:00:00",
+    "eColi": "74",
+    "comments": null
+   },
+   {
+    "_id": 90049,
+    "beachId": 2,
+    "beachName": "Sunnyside Beach",
+    "siteName": "Sunnyside Beach site 1",
+    "collectionDate": "2026-07-03T00:00:00",
+    "eColi": "245",
+    "comments": null
+   },
+   {
+    "_id": 90048,
+    "beachId": 1,
+    "beachName": "Marie Curtis Park East Beach",
+    "siteName": "Marie Curtis Park East Beach site 1",
+    "collectionDate": "2026-07-03T00:00:00",
+    "eColi": "48",
+    "comments": null
+   },
+   {
+    "_id": 90047,
+    "beachId": 11,
+    "beachName": "Rouge Beach",
+    "siteName": "Rouge Beach site 1",
+    "collectionDate": "2026-07-04T00:00:00",
+    "eColi": "31",
+    "comments": null
+   },
+   {
+    "_id": 90046,
+    "beachId": 10,
+    "beachName": "Bluffer's Beach Park",
+    "siteName": "Bluffer's Beach Park site 1",
+    "collectionDate": "2026-07-04T00:00:00",
+    "eColi": "88",
+    "comments": null
+   },
+   {
+    "_id": 90045,
+    "beachId": 9,
+    "beachName": "Kew Balmy Beach",
+    "siteName": "Kew Balmy Beach site 2",
+    "collectionDate": "2026-07-04T00:00:00",
+    "eColi": "80",
+    "comments": null
+   },
+   {
+    "_id": 90044,
+    "beachId": 9,
+    "beachName": "Kew Balmy Beach",
+    "siteName": "Kew Balmy Beach site 1",
+    "collectionDate": "2026-07-04T00:00:00",
+    "eColi": "75",
+    "comments": null
+   },
+   {
+    "_id": 90043,
+    "beachId": 8,
+    "beachName": "Woodbine Beaches",
+    "siteName": "Woodbine Beaches site 1",
+    "collectionDate": "2026-07-04T00:00:00",
+    "eColi": "62",
+    "comments": null
+   },
+   {
+    "_id": 90042,
+    "beachId": 7,
+    "beachName": "Cherry Beach",
+    "siteName": "Cherry Beach site 1",
+    "collectionDate": "2026-07-04T00:00:00",
+    "eColi": "49",
+    "comments": null
+   },
+   {
+    "_id": 90041,
+    "beachId": 6,
+    "beachName": "Ward's Island Beach",
+    "siteName": "Ward's Island Beach site 1",
+    "collectionDate": "2026-07-04T00:00:00",
+    "eColi": "36",
+    "comments": null
+   },
+   {
+    "_id": 90040,
+    "beachId": 5,
+    "beachName": "Centre Island Beach",
+    "siteName": "Centre Island Beach site 1",
+    "collectionDate": "2026-07-04T00:00:00",
+    "eColi": "23",
+    "comments": null
+   },
+   {
+    "_id": 90039,
+    "beachId": 4,
+    "beachName": "Gibraltar Point Beach",
+    "siteName": "Gibraltar Point Beach site 1",
+    "collectionDate": "2026-07-04T00:00:00",
+    "eColi": "80",
+    "comments": null
+   },
+   {
+    "_id": 90038,
+    "beachId": 3,
+    "beachName": "Hanlan's Point Beach",
+    "siteName": "Hanlan's Point Beach site 1",
+    "collectionDate": "2026-07-04T00:00:00",
+    "eColi": "67",
+    "comments": null
+   },
+   {
+    "_id": 90037,
+    "beachId": 2,
+    "beachName": "Sunnyside Beach",
+    "siteName": "Sunnyside Beach site 1",
+    "collectionDate": "2026-07-04T00:00:00",
+    "eColi": "245",
+    "comments": null
+   },
+   {
+    "_id": 90036,
+    "beachId": 1,
+    "beachName": "Marie Curtis Park East Beach",
+    "siteName": "Marie Curtis Park East Beach site 1",
+    "collectionDate": "2026-07-04T00:00:00",
+    "eColi": "41",
+    "comments": null
+   },
+   {
+    "_id": 90035,
+    "beachId": 11,
+    "beachName": "Rouge Beach",
+    "siteName": "Rouge Beach site 1",
+    "collectionDate": "2026-07-05T00:00:00",
+    "eColi": "24",
+    "comments": null
+   },
+   {
+    "_id": 90034,
+    "beachId": 10,
+    "beachName": "Bluffer's Beach Park",
+    "siteName": "Bluffer's Beach Park site 1",
+    "collectionDate": "2026-07-05T00:00:00",
+    "eColi": "81",
+    "comments": null
+   },
+   {
+    "_id": 90033,
+    "beachId": 9,
+    "beachName": "Kew Balmy Beach",
+    "siteName": "Kew Balmy Beach site 2",
+    "collectionDate": "2026-07-05T00:00:00",
+    "eColi": "73",
+    "comments": null
+   },
+   {
+    "_id": 90032,
+    "beachId": 9,
+    "beachName": "Kew Balmy Beach",
+    "siteName": "Kew Balmy Beach site 1",
+    "collectionDate": "2026-07-05T00:00:00",
+    "eColi": "68",
+    "comments": null
+   },
+   {
+    "_id": 90031,
+    "beachId": 8,
+    "beachName": "Woodbine Beaches",
+    "siteName": "Woodbine Beaches site 1",
+    "collectionDate": "2026-07-05T00:00:00",
+    "eColi": "55",
+    "comments": null
+   },
+   {
+    "_id": 90030,
+    "beachId": 7,
+    "beachName": "Cherry Beach",
+    "siteName": "Cherry Beach site 1",
+    "collectionDate": "2026-07-05T00:00:00",
+    "eColi": "42",
+    "comments": null
+   },
+   {
+    "_id": 90029,
+    "beachId": 6,
+    "beachName": "Ward's Island Beach",
+    "siteName": "Ward's Island Beach site 1",
+    "collectionDate": "2026-07-05T00:00:00",
+    "eColi": "29",
+    "comments": null
+   },
+   {
+    "_id": 90028,
+    "beachId": 5,
+    "beachName": "Centre Island Beach",
+    "siteName": "Centre Island Beach site 1",
+    "collectionDate": "2026-07-05T00:00:00",
+    "eColi": "86",
+    "comments": null
+   },
+   {
+    "_id": 90027,
+    "beachId": 4,
+    "beachName": "Gibraltar Point Beach",
+    "siteName": "Gibraltar Point Beach site 1",
+    "collectionDate": "2026-07-05T00:00:00",
+    "eColi": "73",
+    "comments": null
+   },
+   {
+    "_id": 90026,
+    "beachId": 3,
+    "beachName": "Hanlan's Point Beach",
+    "siteName": "Hanlan's Point Beach site 1",
+    "collectionDate": "2026-07-05T00:00:00",
+    "eColi": "60",
+    "comments": null
+   },
+   {
+    "_id": 90025,
+    "beachId": 2,
+    "beachName": "Sunnyside Beach",
+    "siteName": "Sunnyside Beach site 1",
+    "collectionDate": "2026-07-05T00:00:00",
+    "eColi": "245",
+    "comments": null
+   },
+   {
+    "_id": 90024,
+    "beachId": 1,
+    "beachName": "Marie Curtis Park East Beach",
+    "siteName": "Marie Curtis Park East Beach site 1",
+    "collectionDate": "2026-07-05T00:00:00",
+    "eColi": "34",
+    "comments": null
+   },
+   {
+    "_id": 90023,
+    "beachId": 11,
+    "beachName": "Rouge Beach",
+    "siteName": "Rouge Beach site 1",
+    "collectionDate": "2026-07-06T00:00:00",
+    "eColi": "87",
+    "comments": null
+   },
+   {
+    "_id": 90022,
+    "beachId": 10,
+    "beachName": "Bluffer's Beach Park",
+    "siteName": "Bluffer's Beach Park site 1",
+    "collectionDate": "2026-07-06T00:00:00",
+    "eColi": "74",
+    "comments": null
+   },
+   {
+    "_id": 90021,
+    "beachId": 9,
+    "beachName": "Kew Balmy Beach",
+    "siteName": "Kew Balmy Beach site 2",
+    "collectionDate": "2026-07-06T00:00:00",
+    "eColi": "66",
+    "comments": null
+   },
+   {
+    "_id": 90020,
+    "beachId": 9,
+    "beachName": "Kew Balmy Beach",
+    "siteName": "Kew Balmy Beach site 1",
+    "collectionDate": "2026-07-06T00:00:00",
+    "eColi": "61",
+    "comments": null
+   },
+   {
+    "_id": 90019,
+    "beachId": 8,
+    "beachName": "Woodbine Beaches",
+    "siteName": "Woodbine Beaches site 1",
+    "collectionDate": "2026-07-06T00:00:00",
+    "eColi": "48",
+    "comments": null
+   },
+   {
+    "_id": 90018,
+    "beachId": 7,
+    "beachName": "Cherry Beach",
+    "siteName": "Cherry Beach site 1",
+    "collectionDate": "2026-07-06T00:00:00",
+    "eColi": "35",
+    "comments": null
+   },
+   {
+    "_id": 90017,
+    "beachId": 6,
+    "beachName": "Ward's Island Beach",
+    "siteName": "Ward's Island Beach site 1",
+    "collectionDate": "2026-07-06T00:00:00",
+    "eColi": "22",
+    "comments": null
+   },
+   {
+    "_id": 90016,
+    "beachId": 5,
+    "beachName": "Centre Island Beach",
+    "siteName": "Centre Island Beach site 1",
+    "collectionDate": "2026-07-06T00:00:00",
+    "eColi": "79",
+    "comments": null
+   },
+   {
+    "_id": 90015,
+    "beachId": 4,
+    "beachName": "Gibraltar Point Beach",
+    "siteName": "Gibraltar Point Beach site 1",
+    "collectionDate": "2026-07-06T00:00:00",
+    "eColi": "66",
+    "comments": null
+   },
+   {
+    "_id": 90014,
+    "beachId": 3,
+    "beachName": "Hanlan's Point Beach",
+    "siteName": "Hanlan's Point Beach site 1",
+    "collectionDate": "2026-07-06T00:00:00",
+    "eColi": "53",
+    "comments": null
+   },
+   {
+    "_id": 90013,
+    "beachId": 2,
+    "beachName": "Sunnyside Beach",
+    "siteName": "Sunnyside Beach site 1",
+    "collectionDate": "2026-07-06T00:00:00",
+    "eColi": "245",
+    "comments": null
+   },
+   {
+    "_id": 90012,
+    "beachId": 1,
+    "beachName": "Marie Curtis Park East Beach",
+    "siteName": "Marie Curtis Park East Beach site 1",
+    "collectionDate": "2026-07-06T00:00:00",
+    "eColi": "27",
+    "comments": null
+   },
+   {
+    "_id": 90011,
+    "beachId": 11,
+    "beachName": "Rouge Beach",
+    "siteName": "Rouge Beach site 1",
+    "collectionDate": "2026-07-07T00:00:00",
+    "eColi": "80",
+    "comments": null
+   },
+   {
+    "_id": 90010,
+    "beachId": 10,
+    "beachName": "Bluffer's Beach Park",
+    "siteName": "Bluffer's Beach Park site 1",
+    "collectionDate": "2026-07-07T00:00:00",
+    "eColi": "67",
+    "comments": null
+   },
+   {
+    "_id": 90009,
+    "beachId": 9,
+    "beachName": "Kew Balmy Beach",
+    "siteName": "Kew Balmy Beach site 2",
+    "collectionDate": "2026-07-07T00:00:00",
+    "eColi": "59",
+    "comments": null
+   },
+   {
+    "_id": 90008,
+    "beachId": 9,
+    "beachName": "Kew Balmy Beach",
+    "siteName": "Kew Balmy Beach site 1",
+    "collectionDate": "2026-07-07T00:00:00",
+    "eColi": "54",
+    "comments": null
+   },
+   {
+    "_id": 90007,
+    "beachId": 8,
+    "beachName": "Woodbine Beaches",
+    "siteName": "Woodbine Beaches site 1",
+    "collectionDate": "2026-07-07T00:00:00",
+    "eColi": "41",
+    "comments": null
+   },
+   {
+    "_id": 90006,
+    "beachId": 7,
+    "beachName": "Cherry Beach",
+    "siteName": "Cherry Beach site 1",
+    "collectionDate": "2026-07-07T00:00:00",
+    "eColi": "28",
+    "comments": null
+   },
+   {
+    "_id": 90005,
+    "beachId": 6,
+    "beachName": "Ward's Island Beach",
+    "siteName": "Ward's Island Beach site 1",
+    "collectionDate": "2026-07-07T00:00:00",
+    "eColi": "85",
+    "comments": null
+   },
+   {
+    "_id": 90004,
+    "beachId": 5,
+    "beachName": "Centre Island Beach",
+    "siteName": "Centre Island Beach site 1",
+    "collectionDate": "2026-07-07T00:00:00",
+    "eColi": "72",
+    "comments": null
+   },
+   {
+    "_id": 90003,
+    "beachId": 4,
+    "beachName": "Gibraltar Point Beach",
+    "siteName": "Gibraltar Point Beach site 1",
+    "collectionDate": "2026-07-07T00:00:00",
+    "eColi": "59",
+    "comments": null
+   },
+   {
+    "_id": 90002,
+    "beachId": 3,
+    "beachName": "Hanlan's Point Beach",
+    "siteName": "Hanlan's Point Beach site 1",
+    "collectionDate": "2026-07-07T00:00:00",
+    "eColi": "46",
+    "comments": null
+   },
+   {
+    "_id": 90001,
+    "beachId": 2,
+    "beachName": "Sunnyside Beach",
+    "siteName": "Sunnyside Beach site 1",
+    "collectionDate": "2026-07-07T00:00:00",
+    "eColi": "245",
+    "comments": null
+   },
+   {
+    "_id": 90000,
+    "beachId": 1,
+    "beachName": "Marie Curtis Park East Beach",
+    "siteName": "Marie Curtis Park East Beach site 1",
+    "collectionDate": "2026-07-07T00:00:00",
+    "eColi": "20",
+    "comments": null
+   }
+  ],
+  "total": 84
+ }
+}

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>beachcheck · Toronto beach conditions</title>
+  <meta name="description" content="Water quality, temperature, waves and wind for Toronto's beaches. For swimmers and SUP riders.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+</head>
+<body>
+  <header>
+    <span class="wordmark">beachcheck</span>
+    <select id="beach-select" aria-label="Choose a beach"></select>
+  </header>
+
+  <main id="app" hidden>
+    <h1 id="beach-name"></h1>
+
+    <p id="status" class="status">
+      <span id="status-word"></span>
+      <span id="status-detail" class="status-detail"></span>
+    </p>
+
+    <dl class="stats">
+      <div class="stat" id="stat-water">
+        <dt>water</dt>
+        <dd><span id="water-temp"></span></dd>
+      </div>
+      <div class="stat" id="stat-waves">
+        <dt>waves</dt>
+        <dd><span id="waves"></span></dd>
+      </div>
+      <div class="stat" id="stat-wind">
+        <dt>wind</dt>
+        <dd><span id="wind"></span></dd>
+      </div>
+      <div class="stat" id="stat-air">
+        <dt>air</dt>
+        <dd><span id="air-temp"></span></dd>
+      </div>
+    </dl>
+
+    <p id="paddle-note" class="paddle-note"></p>
+  </main>
+
+  <p id="loading">…</p>
+
+  <footer>
+    <p id="updated"></p>
+    <p>
+      Water data: <a href="https://open.toronto.ca/dataset/toronto-beaches-water-quality/">City of Toronto</a> ·
+      wind: <a href="https://open-meteo.com/">Open-Meteo</a> ·
+      not official safety advice
+    </p>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
