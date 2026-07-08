@@ -29,6 +29,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Probe openwaterdata.com (temporary)
+        run: |
+          UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36"
+          curl -s --connect-timeout 8 -A "$UA" "https://www.openwaterdata.com/site/kew-balmy-beach" -o /tmp/owd -w "page http %{http_code}, %{size_download} bytes\n" || true
+          echo "=== data/download/json URLs on the page ==="
+          grep -oiE '(href|src|url|data-[a-z-]+)="[^"]*"' /tmp/owd | grep -iE 'json|csv|api|data' | sort -u | head -40 || true
+          echo "=== script blocks fetching data ==="
+          grep -oE '(fetch|get|ajax|load)\(["'"'"'][^"'"'"')]{5,120}' /tmp/owd | head -20 || true
+          echo "=== external scripts ==="
+          grep -oE 'src="[^"]*\.js[^"]*"' /tmp/owd | sort -u | head -15 || true
       - run: node scripts/fetch-conditions.mjs
       - name: Commit if changed
         id: commit
