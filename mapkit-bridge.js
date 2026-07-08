@@ -12,11 +12,21 @@ function currentBeachFromHash() {
   return beachForSlug(location.hash.replace(/^#/, "")) ?? beachForSlug(DEFAULT_SLUG);
 }
 
+// Dark map at night, light muted map by day — tied to actual Toronto time,
+// not the visitor's system theme (the sheet below handles that separately).
+function isNightInToronto() {
+  const hour = Number(
+    new Intl.DateTimeFormat("en-CA", { hour: "numeric", hour12: false, timeZone: "America/Toronto" })
+      .format(new Date())
+  );
+  return hour < 6 || hour >= 20;
+}
+
 // Called by window.initMapKit once the SDK has authorized and loaded.
 export function start(mapkitGlobal) {
   try {
     const instance = new mapkitGlobal.Map("mapkit-map", {
-      colorScheme: "dark",
+      colorScheme: isNightInToronto() ? "dark" : "light",
       mapType: mapkitGlobal.Map.MapTypes.MutedStandard,
       showsCompass: mapkitGlobal.FeatureVisibility.Hidden,
       showsScale: mapkitGlobal.FeatureVisibility.Hidden,
@@ -24,6 +34,8 @@ export function start(mapkitGlobal) {
       showsMapTypeControl: false,
       showsUserLocationControl: false,
       isRotationEnabled: false,
+      isScrollEnabled: true,
+      isZoomEnabled: true,
     });
 
     instance.addAnnotations(
