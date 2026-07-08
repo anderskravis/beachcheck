@@ -1,4 +1,4 @@
-import { BEACHES, DEFAULT_SLUG, beachForSlug } from "./beaches.js";
+import { BEACHES, DEFAULT_SLUG, beachForSlug, SHORELINE, ISLANDS, SPIT } from "./beaches.js";
 
 const $ = (id) => document.getElementById(id);
 const E_COLI_LIMIT = 100; // city posts a beach unsafe at ≥100 E. coli / 100 mL
@@ -39,29 +39,74 @@ function daysAgo(day) {
 const shortDate = (day) =>
   parseDay(day).toLocaleDateString("en-CA", { month: "short", day: "numeric", timeZone: "UTC" });
 
-async function fetchWeather(beach) {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${beach.lat}&longitude=${beach.lon}` +
-    `&current=temperature_2m,wind_speed_10m,wind_gusts_10m,wind_direction_10m` +
-    `&wind_speed_unit=kn&timezone=America%2FToronto`;
-  const r = await fetch(url);
-  if (!r.ok) throw new Error(`open-meteo ${r.status}`);
-  return (await r.json()).current;
+/* ---------- the map ---------- */
+
+// Simple equirectangular projection scaled to ~17 px/km around Toronto.
+const LON0 = -79.66;
+const LAT0 = 43.85;
+const PX_PER_KM = 17;
+const KMX = 111.32 * Math.cos((43.7 * Math.PI) / 180);
+const projX = (lon) => (lon - LON0) * KMX * PX_PER_KM;
+const projY = (lat) => (LAT0 - lat) * 111.32 * PX_PER_KM;
+const ZOOM = 2.1;
+
+function polyPath(points, close) {
+  const d = points
+    .map(([lon, lat], i) => `${i ? "L" : "M"}${projX(lon).toFixed(1)},${projY(lat).toFixed(1)}`)
+    .join(" ");
+  return close ? `${d} Z` : d;
 }
 
-async function fetchWaves(beach) {
-  const url = `https://marine-api.open-meteo.com/v1/marine?latitude=${beach.lat}&longitude=${beach.lon}` +
-    `&current=wave_height&timezone=America%2FToronto`;
-  const r = await fetch(url);
-  if (!r.ok) return null;
-  const height = (await r.json()).current?.wave_height;
-  return typeof height === "number" ? height : null;
+function buildMap() {
+  // Land: the shoreline, closed off well above the top of the view.
+  const first = SHORELINE[0];
+  const last = SHORELINE[SHORELINE.length - 1];
+  $("land").setAttribute(
+    "d",
+    `${polyPath(SHORELINE, false)} L${projX(last[0]).toFixed(1)},-400 L${projX(first[0]).toFixed(1)},-400 Z`
+  );
+  $("islands").setAttribute("d", polyPath(ISLANDS, true));
+  $("spit").setAttribute("d", polyPath(SPIT, true));
+
+  const label = $("lake-label");
+  label.setAttribute("x", projX(-79.47));
+  label.setAttribute("y", projY(43.594));
+
+  const dots = $("dots");
+  for (const b of BEACHES) {
+    const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    dot.setAttribute("cx", projX(b.lon).toFixed(1));
+    dot.setAttribute("cy", projY(b.lat).toFixed(1));
+    dot.setAttribute("r", "3");
+    dot.dataset.slug = b.slug;
+    const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
+    title.textContent = b.short;
+    dot.append(title);
+    dot.addEventListener("click", () => { location.hash = b.slug; });
+    dots.append(dot);
+  }
 }
+
+// Pan the world so the beach sits a little above the sheet.
+function centerMapOn(beach) {
+  const x = projX(beach.lon);
+  const y = projY(beach.lat);
+  $("world").style.transform =
+    `translate(${(400 - ZOOM * x).toFixed(1)}px, ${(180 - ZOOM * y).toFixed(1)}px) scale(${ZOOM})`;
+  $("pin").setAttribute("transform", `translate(${x.toFixed(1)}, ${y.toFixed(1)})`);
+  for (const dot of $("dots").children) {
+    dot.style.opacity = dot.dataset.slug === beach.slug ? "0" : "1";
+  }
+}
+
+buildMap();
+
+/* ---------- status + stats ---------- */
 
 function renderStatus(wq) {
   const word = $("status-word");
   const detail = $("status-detail");
   if (!wq || daysAgo(wq.sampleDate) > STALE_DAYS) {
-    $("hero").dataset.mood = "neutral";
     word.textContent = "no data";
     detail.textContent = wq
       ? `last sample ${shortDate(wq.sampleDate)} — beach not currently monitored`
@@ -71,37 +116,11 @@ function renderStatus(wq) {
   // The city's posted status is authoritative when present (it can flag a
   // beach unsafe preemptively); the E. coli threshold is the fallback.
   const safe = wq.statusFlag ? wq.statusFlag === "SAFE" : wq.eColi < E_COLI_LIMIT;
-  $("hero").dataset.mood = safe ? "good" : "bad";
   word.textContent = safe ? "swim" : "no swim";
   detail.textContent = `E. coli ${wq.eColi} of ${E_COLI_LIMIT} limit · sampled ${shortDate(wq.sampleDate)}`;
 }
 
-// The scene's water follows the wind: more knots, taller and faster swell.
-function setSea(windKn, waveAction) {
-  const waves = document.querySelector(".sea .waves");
-  let amp, speed;
-  if (windKn != null) {
-    amp = Math.min(2, Math.max(0.5, 0.5 + windKn / 12));
-    speed = Math.min(2.2, Math.max(0.6, 0.6 + windKn / 14));
-  } else {
-    const byAction = { none: 0.5, low: 0.7, mod: 1.2, moderate: 1.2, high: 1.8 };
-    amp = byAction[String(waveAction ?? "").toLowerCase()] ?? 0.8;
-    speed = amp;
-  }
-  waves.style.setProperty("--amp", amp.toFixed(2));
-  waves.style.setProperty("--speed", speed.toFixed(2));
-}
-
-// Sun by day, cratered moon and stars by night (Toronto time).
-{
-  const hour = Number(
-    new Intl.DateTimeFormat("en-CA", { hour: "numeric", hour12: false, timeZone: "America/Toronto" })
-      .format(new Date())
-  );
-  $("hero").classList.toggle("is-night", hour < 6 || hour >= 20);
-}
-
-function paddleNote(windKn, gustsKn) {
+function paddleNote(windKn) {
   if (windKn == null) return "";
   if (windKn < 8) return "Light wind — easy paddling.";
   if (windKn < 14) return "Some chop — fine if you're steady on the board.";
@@ -114,6 +133,7 @@ async function render() {
   select.value = beach.slug;
   document.title = `${beach.short} · beachcheck`;
   $("beach-name").textContent = beach.short;
+  centerMapOn(beach);
 
   const conditions = await conditionsPromise.catch(() => null);
   const data = conditions?.beaches?.[beach.slug];
@@ -154,20 +174,36 @@ async function render() {
       `${Math.round(weather.wind_speed_10m)} kn ${compass(weather.wind_direction_10m)} ${arrow} ` +
       `<small>gusts ${Math.round(weather.wind_gusts_10m)}</small>`;
     $("air-temp").textContent = `${Math.round(weather.temperature_2m)}°`;
-    $("paddle-note").textContent = paddleNote(weather.wind_speed_10m, weather.wind_gusts_10m);
-    setSea(weather.wind_speed_10m, obsFresh ? obs.waveAction : null);
+    $("paddle-note").textContent = paddleNote(weather.wind_speed_10m);
   } else {
     $("wind").textContent = obsFresh && obs.windSpeed != null
       ? `${obs.windSpeed} km/h ${obs.windDirection ?? ""}`
       : "—";
     $("air-temp").textContent = obsFresh && obs.airTemp != null ? `${obs.airTemp}°` : "—";
-    setSea(null, obsFresh ? obs.waveAction : null);
   }
 
   const wavePieces = [];
   if (waveHeight != null) wavePieces.push(`${waveHeight.toFixed(1)} m`);
   if (obsFresh && obs.waveAction) wavePieces.push(obs.waveAction);
   $("waves").textContent = wavePieces.length ? wavePieces.join(" · ") : "—";
+}
+
+async function fetchWeather(beach) {
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${beach.lat}&longitude=${beach.lon}` +
+    `&current=temperature_2m,wind_speed_10m,wind_gusts_10m,wind_direction_10m` +
+    `&wind_speed_unit=kn&timezone=America%2FToronto`;
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`open-meteo ${r.status}`);
+  return (await r.json()).current;
+}
+
+async function fetchWaves(beach) {
+  const url = `https://marine-api.open-meteo.com/v1/marine?latitude=${beach.lat}&longitude=${beach.lon}` +
+    `&current=wave_height&timezone=America%2FToronto`;
+  const r = await fetch(url);
+  if (!r.ok) return null;
+  const height = (await r.json()).current?.wave_height;
+  return typeof height === "number" ? height : null;
 }
 
 render();
