@@ -44,13 +44,16 @@
     <div class="grabber" aria-hidden="true"></div>
     <div class="sheet-inner">
       <h1 id="beach-name"></h1>
-      <p id="status" class="status">
-        <span id="status-word"></span>
-        <span id="status-detail" class="status-detail"></span>
-      </p>
 
       <main id="app" hidden>
         <dl class="stats">
+          <div class="stat status-card" id="status">
+            <dt>water quality</dt>
+            <dd>
+              <span id="status-word"></span>
+              <small id="status-detail"></small>
+            </dd>
+          </div>
           <div class="stat" id="stat-water">
             <dt>water</dt>
             <dd><span id="water-temp"></span></dd>

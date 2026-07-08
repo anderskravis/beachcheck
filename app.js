@@ -104,9 +104,11 @@ buildMap();
 /* ---------- status + stats ---------- */
 
 function renderStatus(wq) {
+  const card = $("status");
   const word = $("status-word");
   const detail = $("status-detail");
   if (!wq || daysAgo(wq.sampleDate) > STALE_DAYS) {
+    card.className = "stat status-card";
     word.textContent = "no data";
     detail.textContent = wq
       ? `last sample ${shortDate(wq.sampleDate)} — beach not currently monitored`
@@ -116,6 +118,7 @@ function renderStatus(wq) {
   // The city's posted status is authoritative when present (it can flag a
   // beach unsafe preemptively); the E. coli threshold is the fallback.
   const safe = wq.statusFlag ? wq.statusFlag === "SAFE" : wq.eColi < E_COLI_LIMIT;
+  card.className = `stat status-card ${safe ? "good" : "bad"}`;
   word.textContent = safe ? "swim" : "no swim";
   detail.textContent = `E. coli ${wq.eColi} of ${E_COLI_LIMIT} limit · sampled ${shortDate(wq.sampleDate)}`;
 }
