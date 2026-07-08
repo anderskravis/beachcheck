@@ -38,16 +38,8 @@ jobs:
             curl -s --connect-timeout 8 -A "$UA" -o /tmp/probe -w "%{http_code}\n" "$1" || echo "curl exit $?"
             head -c 1500 /tmp/probe || true; echo
           }
-          curl -s --connect-timeout 8 -A "$UA" "https://www.toronto.ca/resources/tph_beaches/scripts/main0.0.0.js" -o /tmp/appjs || true
-          echo "=== context around BeachesData.json ==="
-          grep -oE '.{300}BeachesData\.json.{150}' /tmp/appjs || true
-          echo
-          echo "=== context around app_content ==="
-          grep -oE '.{150}/app_content/.{200}' /tmp/appjs | head -5 || true
-          echo
-          probe "https://www.toronto.ca/app_content/tph_beaches/BeachesData.json"
-          probe "https://www.toronto.ca/resources/tph_beaches/BeachesData.json"
-          probe "https://secure.toronto.ca/app_content/tph_beaches/BeachesData.json"
+          probe "https://secure.toronto.ca/opendata/adv/beach_results/v1?format=json&startDate=2026-07-06&endDate=2026-07-08"
+          probe "https://secure.toronto.ca/opendata/adv/beach_results/v1?format=json"
       - run: node scripts/fetch-conditions.mjs
       - name: Commit if changed
         id: commit
