@@ -34,10 +34,18 @@ async function fetchDatastore(packageId, fixtureName) {
   const pkg = await getJson(`${CKAN}/api/3/action/package_show?id=${packageId}`);
   const resource = pkg.result.resources.find((r) => r.datastore_active);
   if (!resource) throw new Error(`no datastore resource in ${packageId}`);
-  // Recent rows have the highest _id (data is appended), so sort descending
-  // and take enough rows to cover every beach for the history window.
+  // Row order in the datastore doesn't track recency (_id desc returns 2007
+  // rows for water quality), so probe the field list and sort by the actual
+  // date column. ISO dates sort correctly even when the column is text.
+  const probe = await getJson(
+    `${CKAN}/api/3/action/datastore_search?resource_id=${resource.id}&limit=1`
+  );
+  const dateField = probe.result.fields
+    .map((f) => f.id)
+    .find((id) => /date/i.test(id));
+  const sort = encodeURIComponent(`${dateField ?? "_id"} desc`);
   const search = await getJson(
-    `${CKAN}/api/3/action/datastore_search?resource_id=${resource.id}&sort=_id desc&limit=2000`
+    `${CKAN}/api/3/action/datastore_search?resource_id=${resource.id}&sort=${sort}&limit=2000`
   );
   return search.result;
 }
