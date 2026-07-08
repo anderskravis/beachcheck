@@ -224,10 +224,10 @@ body {
 .sheet {
   position: fixed;
   z-index: 1;
-  top: max(32dvh, 14rem);
+  top: max(44dvh, 20rem);
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 1.25rem;
   width: calc(100% - 1rem);
   max-width: 38rem;
   margin-inline: auto;
@@ -237,6 +237,19 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  transition: top .35s cubic-bezier(.25, 1, .3, 1), bottom .35s cubic-bezier(.25, 1, .3, 1);
+}
+
+/* Scrolling the sheet's own content — even slightly — expands it toward
+   full height, same as Apple Maps' place-card sheet; scrolling back to
+   the very top collapses it back to a floating card (see app.js). */
+.sheet.expanded {
+  top: max(18dvh, 7rem);
+  bottom: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet { transition: none; }
 }
 
 .grabber {

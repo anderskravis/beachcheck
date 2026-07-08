@@ -1,6 +1,6 @@
 {
-  "name": "BeachCheckTO",
-  "short_name": "BeachCheckTO",
+  "name": "BeachCheck",
+  "short_name": "BeachCheck",
   "description": "Water quality, temperature, waves and wind for Toronto's beaches.",
   "start_url": ".",
   "display": "standalone",

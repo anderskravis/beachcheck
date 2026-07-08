@@ -88,12 +88,22 @@ function buildMap() {
   }
 }
 
-// Pan the world so the beach sits a little above the sheet.
+// Where (in viewport px from the top) a pin should land so it's not hidden
+// behind the sheet — roughly centered in whatever map area is still visible
+// above it. Read live off the DOM since the sheet's own height changes
+// (see the expand/collapse listener below), not assumed from CSS constants.
+function visiblePinTargetY() {
+  const sheetTop = document.querySelector(".sheet")?.getBoundingClientRect().top;
+  return sheetTop ? Math.max(60, sheetTop / 2) : 180;
+}
+
+// Pan the world so the beach sits within the map area the sheet isn't covering.
 function centerMapOn(beach) {
   const x = projX(beach.lon);
   const y = projY(beach.lat);
+  const targetY = visiblePinTargetY();
   $("world").style.transform =
-    `translate(${(400 - ZOOM * x).toFixed(1)}px, ${(180 - ZOOM * y).toFixed(1)}px) scale(${ZOOM})`;
+    `translate(${(400 - ZOOM * x).toFixed(1)}px, ${(targetY - ZOOM * y).toFixed(1)}px) scale(${ZOOM})`;
   $("pin").setAttribute("transform", `translate(${x.toFixed(1)}, ${y.toFixed(1)})`);
   for (const dot of $("dots").children) {
     dot.style.opacity = dot.dataset.slug === beach.slug ? "0" : "1";
@@ -106,6 +116,53 @@ buildMap();
 // map, so a slow/blocked/expired MapKit load doesn't flash the fallback on
 // every visit — it should only appear when it's actually needed.
 setTimeout(() => $("map-band").classList.add("show-fallback"), 2500);
+
+// Scrolling/swiping down on the sheet — even before its content is tall
+// enough to actually overflow — expands it toward full height, same as
+// Apple Maps' place-card; the reverse gesture at the top of the content
+// collapses it back. A plain "scroll" listener alone isn't enough: when
+// collapsed content is short enough to fit, there's nothing to scroll, so
+// it would never fire. Wheel/touch deltas catch the gesture either way.
+{
+  const sheetEl = document.querySelector(".sheet");
+  const sheetInner = document.querySelector(".sheet-inner");
+  const expand = () => sheetEl.classList.add("expanded");
+  const collapseIfAtTop = () => {
+    if (sheetInner.scrollTop === 0) sheetEl.classList.remove("expanded");
+  };
+
+  sheetInner.addEventListener(
+    "scroll",
+    () => { if (sheetInner.scrollTop > 0) expand(); },
+    { passive: true }
+  );
+  sheetEl.addEventListener(
+    "wheel",
+    (e) => (e.deltaY > 0 ? expand() : e.deltaY < 0 && collapseIfAtTop()),
+    { passive: true }
+  );
+  let touchStartY = null;
+  sheetEl.addEventListener("touchstart", (e) => { touchStartY = e.touches[0].clientY; }, { passive: true });
+  sheetEl.addEventListener(
+    "touchmove",
+    (e) => {
+      if (touchStartY == null) return;
+      const dy = touchStartY - e.touches[0].clientY; // positive: finger moved up
+      if (dy > 8) expand();
+      else if (dy < -8) collapseIfAtTop();
+    },
+    { passive: true }
+  );
+
+  // Re-center whichever map is showing once the resize finishes, since the
+  // visible area above the sheet just changed.
+  sheetEl.addEventListener("transitionend", (e) => {
+    if (e.propertyName !== "top") return;
+    const beach = currentBeach();
+    centerMapOn(beach);
+    centerMapKitOn(beach);
+  });
+}
 
 /* ---------- status + stats ---------- */
 
@@ -194,7 +251,7 @@ function conditionsNote(waveWord, waterTempC, windKn, safe) {
 async function render() {
   const beach = currentBeach();
   select.value = beach.slug;
-  document.title = `${beach.short} · BeachCheckTO`;
+  document.title = `${beach.short} · BeachCheck`;
   $("beach-name").textContent = beach.short;
   centerMapOn(beach); // hand-drawn fallback, always kept in sync underneath
   centerMapKitOn(beach); // real Apple Maps, once (if) it has loaded
