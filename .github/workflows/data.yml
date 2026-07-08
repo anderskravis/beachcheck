@@ -32,14 +32,12 @@ jobs:
       - name: Probe openwaterdata.com (temporary)
         run: |
           UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36"
-          echo "=== /data/sites ==="
-          curl -s --connect-timeout 8 -A "$UA" "https://www.openwaterdata.com/data/sites?keywords=" -o /tmp/sites -w "http %{http_code}, %{size_download} bytes\n" || true
-          head -c 2500 /tmp/sites || true; echo
-          echo "=== /site/data?s=5897058 (kew-balmy) ==="
-          curl -s --connect-timeout 8 -A "$UA" "https://www.openwaterdata.com/site/data?s=5897058" -o /tmp/sd -w "http %{http_code}, %{size_download} bytes\n" || true
-          head -c 2500 /tmp/sd || true; echo
-          echo "=== water-temp keys in site data ==="
-          grep -oiE '"[^"]*(temp|water)[^"]*"\s*:\s*[^,}]{1,60}' /tmp/sd | head -20 || true
+          echo "=== /data/sites?keywords=kew ==="
+          curl -s --connect-timeout 8 -A "$UA" "https://www.openwaterdata.com/data/sites?keywords=kew" -o /tmp/sites -w "http %{http_code}, %{size_download} bytes\n" || true
+          jq -r '.Data.sites[] | "\(.oid) \(.slug) \(.l) [\(.lat),\(.lng)]", (.data[]? | "   \(.m) = \(.r) \(.u) @ \(.t)")' /tmp/sites || head -c 1500 /tmp/sites
+          echo "=== /site/data?s=5897058&m=water-temperature ==="
+          curl -s --connect-timeout 8 -A "$UA" "https://www.openwaterdata.com/site/data?s=5897058&m=water-temperature" -o /tmp/sd -w "http %{http_code}, %{size_download} bytes\n" || true
+          head -c 1200 /tmp/sd || true; echo
       - run: node scripts/fetch-conditions.mjs
       - name: Commit if changed
         id: commit
