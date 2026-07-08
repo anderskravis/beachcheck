@@ -31,14 +31,17 @@ jobs:
           node-version: 22
       - name: Diagnose data sources (temporary)
         run: |
-          for url in \
-            "https://app.toronto.ca/tpha/ws/beaches.json?v=1.0" \
-            "https://app.toronto.ca/tpha/ws/beaches.xml?v=1.0" \
-            "https://app.toronto.ca/tpha/ws/beaches/history.json?v=1.0&from=2026-07-01&to=2026-07-08"; do
-            echo "=== $url ==="
-            curl -s -o /tmp/probe -w "%{http_code}\n" "$url"
-            head -c 1200 /tmp/probe; echo
-          done
+          UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36"
+          probe() {
+            echo "=== $1 ==="
+            curl -s --connect-timeout 8 -A "$UA" -o /tmp/probe -w "%{http_code}\n" "$1" || echo "curl exit $?"
+            head -c 900 /tmp/probe; echo; rm -f /tmp/probe
+          }
+          probe "http://app.toronto.ca/tpha/ws/beaches.json?v=1.0"
+          probe "https://app.toronto.ca/tpha/ws/beaches.json?v=1.0"
+          probe "https://secure.toronto.ca/opendata/catalogue.json"
+          echo "=== beach page data URLs ==="
+          curl -s --connect-timeout 8 -A "$UA" "https://www.toronto.ca/explore-enjoy/parks-recreation/water-recreation/beaches-marinas/beach-water-quality/" | grep -oE '"[^"]*(json|xml|/data/|tpha|opendata)[^"]*"' | sort -u | head -40 || echo "page fetch failed"
       - run: node scripts/fetch-conditions.mjs
       - name: Commit if changed
         id: commit
