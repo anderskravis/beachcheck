@@ -1,0 +1,59 @@
+{
+ "kew-balmy": {
+  "Data": {
+   "sites": [
+    {
+     "oid": 5897058,
+     "slug": "kew-balmy-beach",
+     "l": "Kew-Balmy Beach",
+     "lat": 43.6671402,
+     "lng": -79.2945157,
+     "data": [
+      {
+       "t": "Xxx, Jul 8, 2026 at 8:44am",
+       "m": "Water Temperature",
+       "u": "Celsius",
+       "r": 20.8
+      }
+     ]
+    },
+    {
+     "oid": 1,
+     "slug": "some-far-away-kew",
+     "l": "Far Kew",
+     "lat": 10,
+     "lng": 10,
+     "data": [
+      {
+       "t": "Xxx, Jul 8, 2026 at 8:44am",
+       "m": "Water Temperature",
+       "u": "Celsius",
+       "r": 30
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "cherry": {
+  "Data": {
+   "sites": [
+    {
+     "oid": 5897138,
+     "slug": "cherry-beach",
+     "l": "Cherry Beach",
+     "lat": 43.637,
+     "lng": -79.344,
+     "data": [
+      {
+       "t": "Tue, Jul 7, 2020 at 8:44am",
+       "m": "Water Temperature",
+       "u": "Celsius",
+       "r": 19.1
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

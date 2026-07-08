@@ -10,51 +10,138 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
 </head>
 <body>
-  <header>
-    <span class="wordmark">beachcheck</span>
-    <select id="beach-select" aria-label="Choose a beach"></select>
-  </header>
+  <section class="hero" id="hero" data-mood="neutral">
+    <svg viewBox="0 0 800 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#000"/>
+          <stop offset="1" stop-color="#2c2c30"/>
+        </linearGradient>
+        <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#232326"/>
+          <stop offset="1" stop-color="#0a0a0c"/>
+        </linearGradient>
+        <radialGradient id="glow">
+          <stop offset="0" stop-color="#fff" stop-opacity=".9"/>
+          <stop offset=".4" stop-color="#fff" stop-opacity=".25"/>
+          <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="disc" cx=".38" cy=".35" r=".9">
+          <stop offset="0" stop-color="#fff"/>
+          <stop offset=".75" stop-color="#e8e8e6"/>
+          <stop offset="1" stop-color="#bdbdb8"/>
+        </radialGradient>
+        <filter id="fclouds" x="-20%" y="-50%" width="140%" height="200%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.006 0.02" numOctaves="5" seed="11"/>
+          <feColorMatrix type="matrix"
+            values="0 0 0 0 0.82  0 0 0 0 0.82  0 0 0 0 0.83  1.3 0 0 0 -0.55"/>
+        </filter>
+        <filter id="fclouds2" x="-20%" y="-50%" width="140%" height="200%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.004 0.014" numOctaves="5" seed="4"/>
+          <feColorMatrix type="matrix"
+            values="0 0 0 0 0.55  0 0 0 0 0.55  0 0 0 0 0.57  1.5 0 0 0 -0.7"/>
+        </filter>
+        <filter id="ffog" x="-20%" y="-50%" width="140%" height="200%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.008 0.012" numOctaves="3" seed="20"/>
+          <feColorMatrix type="matrix"
+            values="0 0 0 0 0.62  0 0 0 0 0.62  0 0 0 0 0.63  0.9 0 0 0 -0.05"/>
+        </filter>
+      </defs>
 
-  <main id="app" hidden>
-    <h1 id="beach-name"></h1>
+      <rect class="skybox" x="0" y="0" width="800" height="340" fill="url(#sky)"/>
 
-    <p id="status" class="status">
-      <span id="status-word"></span>
-      <span id="status-detail" class="status-detail"></span>
-    </p>
+      <g class="celestial">
+        <circle class="halo" cx="540" cy="110" r="150" fill="url(#glow)"/>
+        <circle class="body-disc" cx="540" cy="110" r="46" fill="url(#disc)"/>
+        <g class="craters" fill="#8f8f8a" opacity=".35">
+          <circle cx="524" cy="98" r="9"/>
+          <circle cx="554" cy="126" r="6"/>
+          <circle cx="560" cy="94" r="4"/>
+          <circle cx="532" cy="130" r="5"/>
+          <circle cx="547" cy="109" r="3"/>
+        </g>
+      </g>
 
-    <dl class="stats">
-      <div class="stat" id="stat-water">
-        <dt>water</dt>
-        <dd><span id="water-temp"></span></dd>
-      </div>
-      <div class="stat" id="stat-waves">
-        <dt>waves</dt>
-        <dd><span id="waves"></span></dd>
-      </div>
-      <div class="stat" id="stat-wind">
-        <dt>wind</dt>
-        <dd><span id="wind"></span></dd>
-      </div>
-      <div class="stat" id="stat-air">
-        <dt>air</dt>
-        <dd><span id="air-temp"></span></dd>
-      </div>
-    </dl>
+      <g class="stars" fill="#fff">
+        <circle cx="80" cy="60" r="1.4"/><circle cx="180" cy="120" r="1"/>
+        <circle cx="300" cy="50" r="1.2"/><circle cx="420" cy="95" r="1"/>
+        <circle cx="140" cy="200" r="1"/><circle cx="360" cy="170" r="1.3"/>
+        <circle cx="500" cy="40" r="1"/><circle cx="240" cy="235" r="1.1"/>
+      </g>
 
-    <p id="paddle-note" class="paddle-note"></p>
-  </main>
+      <g class="cloud-layer far">
+        <rect x="-800" y="-40" width="2400" height="340" filter="url(#fclouds)"/>
+      </g>
+      <g class="cloud-layer near">
+        <rect x="-800" y="20" width="2400" height="320" filter="url(#fclouds2)"/>
+      </g>
+      <g class="fog-layer">
+        <rect x="-800" y="-40" width="2400" height="400" filter="url(#ffog)"/>
+      </g>
 
-  <p id="loading">…</p>
+      <g class="sea">
+        <rect x="0" y="310" width="800" height="150" fill="url(#water)"/>
+        <ellipse class="glint" cx="540" cy="330" rx="80" ry="9" fill="#fff" opacity=".08"/>
+        <g class="waves">
+          <path class="wave w3" d="M-800,332 q50,-14 100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 V462 H-800 Z" fill="#3a3a3e"/>
+          <path class="wave w2" d="M-800,344 q50,-18 100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 V462 H-800 Z" fill="#222226"/>
+          <path class="wave w1" d="M-800,362 q50,-22 100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 V462 H-800 Z" fill="#101013"/>
+          <path class="crest c2" d="M-800,344 q50,-18 100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="1.5"/>
+          <path class="crest c1" d="M-800,362 q50,-22 100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0 t100,0" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="2"/>
+        </g>
+      </g>
+    </svg>
 
-  <footer>
-    <p id="updated"></p>
-    <p>
-      Water data: <a href="https://open.toronto.ca/dataset/toronto-beaches-water-quality/">City of Toronto</a> ·
-      wind: <a href="https://open-meteo.com/">Open-Meteo</a> ·
-      not official safety advice
-    </p>
-  </footer>
+    <header>
+      <span class="wordmark">beachcheck</span>
+      <select id="beach-select" aria-label="Choose a beach"></select>
+    </header>
+
+    <div class="hero-text">
+      <h1 id="beach-name"></h1>
+      <p id="status" class="status">
+        <span id="status-word"></span>
+        <span id="status-detail" class="status-detail"></span>
+      </p>
+    </div>
+  </section>
+
+  <div class="content">
+    <main id="app" hidden>
+      <dl class="stats">
+        <div class="stat" id="stat-water">
+          <dt>water</dt>
+          <dd><span id="water-temp"></span></dd>
+        </div>
+        <div class="stat" id="stat-waves">
+          <dt>waves</dt>
+          <dd><span id="waves"></span></dd>
+        </div>
+        <div class="stat" id="stat-wind">
+          <dt>wind</dt>
+          <dd><span id="wind"></span></dd>
+        </div>
+        <div class="stat" id="stat-air">
+          <dt>air</dt>
+          <dd><span id="air-temp"></span></dd>
+        </div>
+      </dl>
+
+      <p id="paddle-note" class="paddle-note"></p>
+    </main>
+
+    <p id="loading">…</p>
+
+    <footer>
+      <p id="updated"></p>
+      <p>
+        Water data: <a href="https://open.toronto.ca/dataset/toronto-beaches-water-quality/">City of Toronto</a> ·
+        water temp: <a href="https://www.openwaterdata.com/">Open Water Data</a> buoys ·
+        wind: <a href="https://open-meteo.com/">Open-Meteo</a> ·
+        not official safety advice
+      </p>
+    </footer>
+  </div>
 
   <script type="module" src="app.js"></script>
 </body>

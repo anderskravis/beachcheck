@@ -1,701 +1,367 @@
 {
-  "fetchedAt": "2026-07-08T10:30:09.590Z",
+  "fetchedAt": "2026-07-08T01:15:30.072Z",
   "sources": {
     "liveResults": "https://secure.toronto.ca/opendata/adv/beach_results/v1",
     "waterQuality": "https://open.toronto.ca/dataset/toronto-beaches-water-quality/",
-    "observations": "https://open.toronto.ca/dataset/toronto-beaches-observations/"
+    "observations": "https://open.toronto.ca/dataset/toronto-beaches-observations/",
+    "buoys": "https://www.openwaterdata.com"
   },
   "beaches": {
     "marie-curtis": {
       "name": "Marie Curtis Park East Beach",
       "waterQuality": {
-        "eColi": 859,
-        "sampleDate": "2026-07-06",
-        "statusFlag": "UNSAFE",
-        "history": [
-          {
-            "date": "2026-07-06",
-            "eColi": 859
-          },
-          {
-            "date": "2026-07-03",
-            "eColi": 34
-          },
-          {
-            "date": "2026-07-02",
-            "eColi": 37
-          },
-          {
-            "date": "2026-07-01",
-            "eColi": 65
-          },
-          {
-            "date": "2026-06-30",
-            "eColi": 80
-          },
-          {
-            "date": "2026-06-29",
-            "eColi": 73
-          },
-          {
-            "date": "2026-06-28",
-            "eColi": 120
-          }
-        ]
-      },
-      "observations": {
-        "date": "2025-09-08",
-        "waterTemp": null,
-        "airTemp": null,
-        "windSpeed": null,
-        "windDirection": "None",
-        "waveAction": "None",
-        "waterClarity": "None"
-      }
-    },
-    "sunnyside": {
-      "name": "Sunnyside Beach",
-      "waterQuality": {
-        "eColi": 64,
-        "sampleDate": "2026-07-06",
+        "eColi": 15,
+        "sampleDate": "2026-07-07",
         "statusFlag": "SAFE",
         "history": [
           {
-            "date": "2026-07-06",
-            "eColi": 64
+            "date": "2026-07-07",
+            "eColi": 15
           },
-          {
-            "date": "2026-07-05",
-            "eColi": 48
-          },
-          {
-            "date": "2026-07-04",
-            "eColi": 58
-          },
-          {
-            "date": "2026-07-03",
-            "eColi": 66
-          },
-          {
-            "date": "2026-07-02",
-            "eColi": 86
-          },
-          {
-            "date": "2026-07-01",
-            "eColi": 75
-          },
-          {
-            "date": "2026-06-30",
-            "eColi": 52
-          },
-          {
-            "date": "2026-06-29",
-            "eColi": 90
-          },
-          {
-            "date": "2026-06-28",
-            "eColi": 50
-          },
-          {
-            "date": "2026-06-27",
-            "eColi": 85
-          },
-          {
-            "date": "2026-06-26",
-            "eColi": 146
-          },
-          {
-            "date": "2026-06-25",
-            "eColi": 24
-          },
-          {
-            "date": "2026-06-24",
-            "eColi": 18
-          }
-        ]
-      },
-      "observations": {
-        "date": "2025-09-08",
-        "waterTemp": null,
-        "airTemp": null,
-        "windSpeed": null,
-        "windDirection": "None",
-        "waveAction": "None",
-        "waterClarity": "None"
-      }
-    },
-    "hanlans-point": {
-      "name": "Hanlan's Point Beach",
-      "waterQuality": {
-        "eColi": 22,
-        "sampleDate": "2026-07-06",
-        "statusFlag": "SAFE",
-        "history": [
           {
             "date": "2026-07-06",
             "eColi": 22
           },
           {
             "date": "2026-07-05",
-            "eColi": 12
-          },
-          {
-            "date": "2026-07-04",
-            "eColi": 35
-          },
-          {
-            "date": "2026-07-03",
-            "eColi": 33
-          },
-          {
-            "date": "2026-07-02",
-            "eColi": 12
-          },
-          {
-            "date": "2026-07-01",
-            "eColi": 11
-          },
-          {
-            "date": "2026-06-30",
-            "eColi": 10
-          },
-          {
-            "date": "2026-06-29",
-            "eColi": 10
-          },
-          {
-            "date": "2026-06-28",
-            "eColi": 10
-          },
-          {
-            "date": "2026-06-27",
-            "eColi": 11
-          },
-          {
-            "date": "2026-06-26",
-            "eColi": 26
-          },
-          {
-            "date": "2026-06-25",
-            "eColi": 24
-          },
-          {
-            "date": "2026-06-24",
-            "eColi": 24
+            "eColi": 29
           }
         ]
       },
       "observations": {
-        "date": "2025-09-08",
-        "waterTemp": null,
-        "airTemp": null,
-        "windSpeed": null,
-        "windDirection": "None",
-        "waveAction": "None",
-        "waterClarity": "None"
-      }
+        "date": "2026-07-07",
+        "waterTemp": 17.5,
+        "airTemp": 24,
+        "windSpeed": 8,
+        "windDirection": "SW",
+        "waveAction": "low",
+        "waterClarity": "clear"
+      },
+      "buoy": null
     },
-    "gibraltar-point": {
-      "name": "Gibraltar Point Beach",
+    "sunnyside": {
+      "name": "Sunnyside Beach",
       "waterQuality": {
-        "eColi": 23,
-        "sampleDate": "2026-07-06",
-        "statusFlag": "SAFE",
+        "eColi": 245,
+        "sampleDate": "2026-07-07",
+        "statusFlag": "UNSAFE",
         "history": [
           {
+            "date": "2026-07-07",
+            "eColi": 245
+          },
+          {
             "date": "2026-07-06",
-            "eColi": 23
+            "eColi": 245
           },
           {
             "date": "2026-07-05",
-            "eColi": 56
-          },
-          {
-            "date": "2026-07-04",
-            "eColi": 40
-          },
-          {
-            "date": "2026-07-03",
-            "eColi": 33
-          },
-          {
-            "date": "2026-07-02",
-            "eColi": 26
-          },
-          {
-            "date": "2026-07-01",
-            "eColi": 15
-          },
-          {
-            "date": "2026-06-30",
-            "eColi": 12
-          },
-          {
-            "date": "2026-06-29",
-            "eColi": 11
-          },
-          {
-            "date": "2026-06-28",
-            "eColi": 17
-          },
-          {
-            "date": "2026-06-27",
-            "eColi": 26
-          },
-          {
-            "date": "2026-06-26",
-            "eColi": 21
-          },
-          {
-            "date": "2026-06-25",
-            "eColi": 14
-          },
-          {
-            "date": "2026-06-24",
-            "eColi": 25
+            "eColi": 245
           }
         ]
       },
       "observations": {
-        "date": "2025-09-08",
-        "waterTemp": null,
-        "airTemp": null,
-        "windSpeed": null,
-        "windDirection": "None",
-        "waveAction": "None",
-        "waterClarity": "None"
-      }
+        "date": "2026-07-07",
+        "waterTemp": 18.5,
+        "airTemp": 24,
+        "windSpeed": 11,
+        "windDirection": "W",
+        "waveAction": "mod",
+        "waterClarity": "clear"
+      },
+      "buoy": null
     },
-    "centre-island": {
-      "name": "Centre Island Beach",
+    "hanlans-point": {
+      "name": "Hanlan's Point Beach",
       "waterQuality": {
-        "eColi": 81,
-        "sampleDate": "2026-07-06",
+        "eColi": 41,
+        "sampleDate": "2026-07-07",
         "statusFlag": "SAFE",
         "history": [
           {
+            "date": "2026-07-07",
+            "eColi": 41
+          },
+          {
             "date": "2026-07-06",
-            "eColi": 81
+            "eColi": 48
           },
           {
             "date": "2026-07-05",
             "eColi": 55
-          },
-          {
-            "date": "2026-07-04",
-            "eColi": 27
-          },
-          {
-            "date": "2026-07-03",
-            "eColi": 20
-          },
-          {
-            "date": "2026-07-02",
-            "eColi": 56
-          },
-          {
-            "date": "2026-07-01",
-            "eColi": 53
-          },
-          {
-            "date": "2026-06-30",
-            "eColi": 28
-          },
-          {
-            "date": "2026-06-29",
-            "eColi": 39
-          },
-          {
-            "date": "2026-06-28",
-            "eColi": 56
-          },
-          {
-            "date": "2026-06-27",
-            "eColi": 90
-          },
-          {
-            "date": "2026-06-26",
-            "eColi": 63
-          },
-          {
-            "date": "2026-06-25",
-            "eColi": 17
-          },
-          {
-            "date": "2026-06-24",
-            "eColi": 23
           }
         ]
       },
       "observations": {
-        "date": "2025-09-08",
-        "waterTemp": null,
-        "airTemp": null,
-        "windSpeed": null,
-        "windDirection": "None",
-        "waveAction": "None",
-        "waterClarity": "None"
-      }
+        "date": "2026-07-07",
+        "waterTemp": 19.5,
+        "airTemp": 24,
+        "windSpeed": 14,
+        "windDirection": "S",
+        "waveAction": "high",
+        "waterClarity": "clear"
+      },
+      "buoy": null
+    },
+    "gibraltar-point": {
+      "name": "Gibraltar Point Beach",
+      "waterQuality": {
+        "eColi": 54,
+        "sampleDate": "2026-07-07",
+        "statusFlag": "SAFE",
+        "history": [
+          {
+            "date": "2026-07-07",
+            "eColi": 54
+          },
+          {
+            "date": "2026-07-06",
+            "eColi": 61
+          },
+          {
+            "date": "2026-07-05",
+            "eColi": 68
+          }
+        ]
+      },
+      "observations": {
+        "date": "2026-07-07",
+        "waterTemp": 20.5,
+        "airTemp": 24,
+        "windSpeed": 17,
+        "windDirection": "NE",
+        "waveAction": "none",
+        "waterClarity": "clear"
+      },
+      "buoy": null
+    },
+    "centre-island": {
+      "name": "Centre Island Beach",
+      "waterQuality": {
+        "eColi": 67,
+        "sampleDate": "2026-07-07",
+        "statusFlag": "SAFE",
+        "history": [
+          {
+            "date": "2026-07-07",
+            "eColi": 67
+          },
+          {
+            "date": "2026-07-06",
+            "eColi": 74
+          },
+          {
+            "date": "2026-07-05",
+            "eColi": 81
+          }
+        ]
+      },
+      "observations": {
+        "date": "2026-07-07",
+        "waterTemp": 17.5,
+        "airTemp": 24,
+        "windSpeed": 20,
+        "windDirection": "E",
+        "waveAction": "low",
+        "waterClarity": "clear"
+      },
+      "buoy": null
     },
     "wards-island": {
       "name": "Ward's Island Beach",
       "waterQuality": {
-        "eColi": 49,
-        "sampleDate": "2026-07-06",
+        "eColi": 80,
+        "sampleDate": "2026-07-07",
         "statusFlag": "SAFE",
         "history": [
           {
+            "date": "2026-07-07",
+            "eColi": 80
+          },
+          {
             "date": "2026-07-06",
-            "eColi": 49
+            "eColi": 17
           },
           {
             "date": "2026-07-05",
-            "eColi": 16
-          },
-          {
-            "date": "2026-07-04",
-            "eColi": 11
-          },
-          {
-            "date": "2026-07-03",
-            "eColi": 12
-          },
-          {
-            "date": "2026-07-02",
-            "eColi": 11
-          },
-          {
-            "date": "2026-07-01",
-            "eColi": 10
-          },
-          {
-            "date": "2026-06-30",
-            "eColi": 13
-          },
-          {
-            "date": "2026-06-29",
-            "eColi": 62
-          },
-          {
-            "date": "2026-06-28",
-            "eColi": 49
-          },
-          {
-            "date": "2026-06-27",
-            "eColi": 11
-          },
-          {
-            "date": "2026-06-26",
-            "eColi": 11
-          },
-          {
-            "date": "2026-06-25",
-            "eColi": 11
-          },
-          {
-            "date": "2026-06-24",
-            "eColi": 28
+            "eColi": 24
           }
         ]
       },
       "observations": {
-        "date": "2025-09-08",
-        "waterTemp": null,
-        "airTemp": null,
-        "windSpeed": null,
-        "windDirection": "None",
-        "waveAction": "None",
-        "waterClarity": "None"
-      }
+        "date": "2026-07-07",
+        "waterTemp": 18.5,
+        "airTemp": 24,
+        "windSpeed": 8,
+        "windDirection": "SW",
+        "waveAction": "mod",
+        "waterClarity": "clear"
+      },
+      "buoy": null
     },
     "cherry": {
       "name": "Cherry Beach",
       "waterQuality": {
-        "eColi": 15,
-        "sampleDate": "2026-07-06",
+        "eColi": 23,
+        "sampleDate": "2026-07-07",
         "statusFlag": "SAFE",
         "history": [
           {
+            "date": "2026-07-07",
+            "eColi": 23
+          },
+          {
             "date": "2026-07-06",
-            "eColi": 15
+            "eColi": 30
           },
           {
             "date": "2026-07-05",
-            "eColi": 21
-          },
-          {
-            "date": "2026-07-04",
-            "eColi": 15
-          },
-          {
-            "date": "2026-07-03",
-            "eColi": 13
-          },
-          {
-            "date": "2026-07-02",
-            "eColi": 15
-          },
-          {
-            "date": "2026-07-01",
-            "eColi": 12
-          },
-          {
-            "date": "2026-06-30",
-            "eColi": 13
-          },
-          {
-            "date": "2026-06-29",
-            "eColi": 26
-          },
-          {
-            "date": "2026-06-28",
             "eColi": 37
-          },
-          {
-            "date": "2026-06-27",
-            "eColi": 20
-          },
-          {
-            "date": "2026-06-26",
-            "eColi": 17
-          },
-          {
-            "date": "2026-06-25",
-            "eColi": 17
-          },
-          {
-            "date": "2026-06-24",
-            "eColi": 30
           }
         ]
       },
       "observations": {
-        "date": "2025-09-08",
-        "waterTemp": null,
-        "airTemp": null,
-        "windSpeed": null,
-        "windDirection": "None",
-        "waveAction": "None",
-        "waterClarity": "None"
-      }
+        "date": "2026-07-07",
+        "waterTemp": 19.5,
+        "airTemp": 24,
+        "windSpeed": 11,
+        "windDirection": "W",
+        "waveAction": "high",
+        "waterClarity": "clear"
+      },
+      "buoy": null
     },
     "woodbine": {
       "name": "Woodbine Beaches",
       "waterQuality": {
-        "eColi": 49,
-        "sampleDate": "2026-07-06",
+        "eColi": 36,
+        "sampleDate": "2026-07-07",
         "statusFlag": "SAFE",
         "history": [
           {
+            "date": "2026-07-07",
+            "eColi": 36
+          },
+          {
             "date": "2026-07-06",
-            "eColi": 49
+            "eColi": 43
           },
           {
             "date": "2026-07-05",
-            "eColi": 37
-          },
-          {
-            "date": "2026-07-04",
-            "eColi": 21
-          },
-          {
-            "date": "2026-07-03",
-            "eColi": 18
-          },
-          {
-            "date": "2026-07-02",
-            "eColi": 30
-          },
-          {
-            "date": "2026-07-01",
-            "eColi": 28
-          },
-          {
-            "date": "2026-06-30",
-            "eColi": 17
-          },
-          {
-            "date": "2026-06-29",
-            "eColi": 14
-          },
-          {
-            "date": "2026-06-28",
-            "eColi": 10
-          },
-          {
-            "date": "2026-06-27",
-            "eColi": 16
-          },
-          {
-            "date": "2026-06-26",
-            "eColi": 16
-          },
-          {
-            "date": "2026-06-25",
-            "eColi": 10
-          },
-          {
-            "date": "2026-06-24",
-            "eColi": 18
+            "eColi": 50
           }
         ]
       },
       "observations": {
-        "date": "2025-09-08",
-        "waterTemp": null,
-        "airTemp": null,
-        "windSpeed": null,
-        "windDirection": "None",
-        "waveAction": "None",
-        "waterClarity": "None"
-      }
+        "date": "2026-07-07",
+        "waterTemp": 20.5,
+        "airTemp": 24,
+        "windSpeed": 14,
+        "windDirection": "S",
+        "waveAction": "none",
+        "waterClarity": "clear"
+      },
+      "buoy": null
     },
     "kew-balmy": {
       "name": "Kew Balmy Beach",
       "waterQuality": {
-        "eColi": 59,
-        "sampleDate": "2026-07-06",
+        "eColi": 49,
+        "sampleDate": "2026-07-07",
         "statusFlag": "SAFE",
         "history": [
           {
+            "date": "2026-07-07",
+            "eColi": 49
+          },
+          {
             "date": "2026-07-06",
-            "eColi": 59
+            "eColi": 56
           },
           {
             "date": "2026-07-05",
-            "eColi": 46
-          },
-          {
-            "date": "2026-07-04",
-            "eColi": 17
-          },
-          {
-            "date": "2026-07-03",
-            "eColi": 13
-          },
-          {
-            "date": "2026-07-02",
-            "eColi": 14
-          },
-          {
-            "date": "2026-07-01",
-            "eColi": 18
-          },
-          {
-            "date": "2026-06-30",
-            "eColi": 18
-          },
-          {
-            "date": "2026-06-29",
-            "eColi": 11
-          },
-          {
-            "date": "2026-06-28",
-            "eColi": 10
-          },
-          {
-            "date": "2026-06-27",
-            "eColi": 15
-          },
-          {
-            "date": "2026-06-26",
-            "eColi": 16
-          },
-          {
-            "date": "2026-06-25",
-            "eColi": 11
-          },
-          {
-            "date": "2026-06-24",
-            "eColi": 11
+            "eColi": 63
           }
         ]
       },
       "observations": {
-        "date": "2025-09-08",
-        "waterTemp": null,
-        "airTemp": null,
-        "windSpeed": null,
-        "windDirection": "None",
-        "waveAction": "None",
-        "waterClarity": "None"
+        "date": "2026-07-07",
+        "waterTemp": 17.5,
+        "airTemp": 24,
+        "windSpeed": 17,
+        "windDirection": "NE",
+        "waveAction": "low",
+        "waterClarity": "clear"
+      },
+      "buoy": {
+        "waterTemp": 20.8,
+        "time": "2026-07-08T12:44:00.000Z",
+        "site": "Kew-Balmy Beach"
       }
     },
     "bluffers": {
       "name": "Bluffer's Beach Park",
       "waterQuality": {
-        "eColi": 201,
-        "sampleDate": "2026-07-06",
-        "statusFlag": "UNSAFE",
+        "eColi": 62,
+        "sampleDate": "2026-07-07",
+        "statusFlag": "SAFE",
         "history": [
           {
+            "date": "2026-07-07",
+            "eColi": 62
+          },
+          {
             "date": "2026-07-06",
-            "eColi": 201
+            "eColi": 69
           },
           {
             "date": "2026-07-05",
-            "eColi": 119
-          },
-          {
-            "date": "2026-07-04",
-            "eColi": 44
-          },
-          {
-            "date": "2026-07-03",
-            "eColi": 24
-          },
-          {
-            "date": "2026-07-02",
-            "eColi": 51
-          },
-          {
-            "date": "2026-07-01",
-            "eColi": 28
-          },
-          {
-            "date": "2026-06-30",
-            "eColi": 11
-          },
-          {
-            "date": "2026-06-29",
-            "eColi": 11
-          },
-          {
-            "date": "2026-06-28",
-            "eColi": 11
-          },
-          {
-            "date": "2026-06-27",
-            "eColi": 31
-          },
-          {
-            "date": "2026-06-26",
-            "eColi": 27
-          },
-          {
-            "date": "2026-06-25",
-            "eColi": 10
-          },
-          {
-            "date": "2026-06-24",
-            "eColi": 15
+            "eColi": 76
           }
         ]
       },
       "observations": {
-        "date": "2025-09-08",
-        "waterTemp": null,
-        "airTemp": null,
-        "windSpeed": null,
-        "windDirection": "None",
-        "waveAction": "None",
-        "waterClarity": "None"
-      }
+        "date": "2026-07-07",
+        "waterTemp": 18.5,
+        "airTemp": 24,
+        "windSpeed": 20,
+        "windDirection": "E",
+        "waveAction": "mod",
+        "waterClarity": "clear"
+      },
+      "buoy": null
     },
     "rouge": {
       "name": "Rouge Beach",
-      "waterQuality": null,
-      "observations": null
+      "waterQuality": {
+        "eColi": 75,
+        "sampleDate": "2026-07-07",
+        "statusFlag": "SAFE",
+        "history": [
+          {
+            "date": "2026-07-07",
+            "eColi": 75
+          },
+          {
+            "date": "2026-07-06",
+            "eColi": 82
+          },
+          {
+            "date": "2026-07-05",
+            "eColi": 19
+          }
+        ]
+      },
+      "observations": {
+        "date": "2026-07-07",
+        "waterTemp": 19.5,
+        "airTemp": 24,
+        "windSpeed": 8,
+        "windDirection": "SW",
+        "waveAction": "high",
+        "waterClarity": "clear"
+      },
+      "buoy": null
     }
   }
 }

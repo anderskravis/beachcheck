@@ -58,11 +58,10 @@ async function fetchWaves(beach) {
 }
 
 function renderStatus(wq) {
-  const el = $("status");
   const word = $("status-word");
   const detail = $("status-detail");
   if (!wq || daysAgo(wq.sampleDate) > STALE_DAYS) {
-    el.className = "status neutral";
+    $("hero").dataset.mood = "neutral";
     word.textContent = "no data";
     detail.textContent = wq
       ? `last sample ${shortDate(wq.sampleDate)} — beach not currently monitored`
@@ -72,9 +71,34 @@ function renderStatus(wq) {
   // The city's posted status is authoritative when present (it can flag a
   // beach unsafe preemptively); the E. coli threshold is the fallback.
   const safe = wq.statusFlag ? wq.statusFlag === "SAFE" : wq.eColi < E_COLI_LIMIT;
-  el.className = `status ${safe ? "good" : "bad"}`;
+  $("hero").dataset.mood = safe ? "good" : "bad";
   word.textContent = safe ? "swim" : "no swim";
   detail.textContent = `E. coli ${wq.eColi} of ${E_COLI_LIMIT} limit · sampled ${shortDate(wq.sampleDate)}`;
+}
+
+// The scene's water follows the wind: more knots, taller and faster swell.
+function setSea(windKn, waveAction) {
+  const waves = document.querySelector(".sea .waves");
+  let amp, speed;
+  if (windKn != null) {
+    amp = Math.min(2, Math.max(0.5, 0.5 + windKn / 12));
+    speed = Math.min(2.2, Math.max(0.6, 0.6 + windKn / 14));
+  } else {
+    const byAction = { none: 0.5, low: 0.7, mod: 1.2, moderate: 1.2, high: 1.8 };
+    amp = byAction[String(waveAction ?? "").toLowerCase()] ?? 0.8;
+    speed = amp;
+  }
+  waves.style.setProperty("--amp", amp.toFixed(2));
+  waves.style.setProperty("--speed", speed.toFixed(2));
+}
+
+// Sun by day, cratered moon and stars by night (Toronto time).
+{
+  const hour = Number(
+    new Intl.DateTimeFormat("en-CA", { hour: "numeric", hour12: false, timeZone: "America/Toronto" })
+      .format(new Date())
+  );
+  $("hero").classList.toggle("is-night", hour < 6 || hour >= 20);
 }
 
 function paddleNote(windKn, gustsKn) {
@@ -98,9 +122,16 @@ async function render() {
   renderStatus(data?.waterQuality ?? null);
 
   const obsFresh = obs && daysAgo(obs.date) <= STALE_DAYS;
-  $("water-temp").innerHTML = obsFresh && obs.waterTemp != null
-    ? `${obs.waterTemp}° <small>${shortDate(obs.date)}</small>`
-    : "—";
+  const buoy = data?.buoy;
+  if (buoy?.waterTemp != null) {
+    const hoursAgo = Math.round((Date.now() - new Date(buoy.time)) / 3600000);
+    const when = hoursAgo < 1 ? "now" : `${hoursAgo}h ago`;
+    $("water-temp").innerHTML = `${buoy.waterTemp}° <small>buoy · ${when}</small>`;
+  } else if (obsFresh && obs.waterTemp != null) {
+    $("water-temp").innerHTML = `${obs.waterTemp}° <small>${shortDate(obs.date)}</small>`;
+  } else {
+    $("water-temp").textContent = "—";
+  }
 
   $("app").hidden = false;
   $("loading").hidden = true;
@@ -124,11 +155,13 @@ async function render() {
       `<small>gusts ${Math.round(weather.wind_gusts_10m)}</small>`;
     $("air-temp").textContent = `${Math.round(weather.temperature_2m)}°`;
     $("paddle-note").textContent = paddleNote(weather.wind_speed_10m, weather.wind_gusts_10m);
+    setSea(weather.wind_speed_10m, obsFresh ? obs.waveAction : null);
   } else {
     $("wind").textContent = obsFresh && obs.windSpeed != null
       ? `${obs.windSpeed} km/h ${obs.windDirection ?? ""}`
       : "—";
     $("air-temp").textContent = obsFresh && obs.airTemp != null ? `${obs.airTemp}°` : "—";
+    setSea(null, obsFresh ? obs.waveAction : null);
   }
 
   const wavePieces = [];

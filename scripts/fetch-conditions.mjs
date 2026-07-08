@@ -93,6 +93,60 @@ function summarizeLiveResults(days) {
   return out;
 }
 
+// Open Water Data (openwaterdata.com) runs IoT water-temperature buoys at
+// some Toronto beaches (Kew-Balmy, Cherry). Their site search returns each
+// matching site with its latest measurements.
+const OWD = "https://www.openwaterdata.com";
+const OWD_MONTHS = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
+const BUOY_MAX_AGE_MS = 48 * 3600 * 1000;
+
+// "Tue, Jul 7, 2026 at 8:44pm" (Toronto local) -> Date, or null.
+function parseOwdTime(t) {
+  const m = String(t ?? "").match(/(\w{3}) (\d+), (\d{4})(?: at (\d+):(\d+)(am|pm))?/);
+  if (!m || !(m[1] in OWD_MONTHS)) return null;
+  let hours = m[4] ? Number(m[4]) % 12 : 12;
+  if (m[6] === "pm") hours += 12;
+  // Treat as UTC-4 (EDT); buoys only matter in summer, and we only use this
+  // for a 48-hour freshness check.
+  return new Date(Date.UTC(Number(m[3]), OWD_MONTHS[m[1]], Number(m[2]), hours + 4, Number(m[5] ?? 0)));
+}
+
+function distanceKm(lat1, lon1, lat2, lon2) {
+  const dLat = (lat2 - lat1) * 111.32;
+  const dLon = (lon2 - lon1) * 111.32 * Math.cos((lat1 * Math.PI) / 180);
+  return Math.hypot(dLat, dLon);
+}
+
+// Search OWD per beach and keep a fresh buoy water temp when a site sits
+// within 2.5 km of the beach. Sequential on purpose — be polite to them.
+async function fetchBuoyTemps() {
+  const fixtures = USE_FIXTURES
+    ? JSON.parse(await readFile(path.join(ROOT, "data", "fixtures", "owd-sites.json"), "utf8"))
+    : null;
+  const out = {};
+  for (const beach of BEACHES) {
+    try {
+      const keyword = beach.short.split(/[\s']/)[0].toLowerCase();
+      const res = fixtures
+        ? fixtures[beach.slug] ?? { Data: { sites: [] } }
+        : await getJson(`${OWD}/data/sites?keywords=${encodeURIComponent(keyword)}`);
+      for (const site of res?.Data?.sites ?? []) {
+        if (!site.slug || distanceKm(beach.lat, beach.lon, site.lat, site.lng) > 2.5) continue;
+        const temp = (site.data ?? []).find((d) => d.m === "Water Temperature");
+        const time = temp && parseOwdTime(temp.t);
+        if (!time || Date.now() - time.getTime() > BUOY_MAX_AGE_MS) continue;
+        const value = toNumber(temp.r);
+        if (value === null) continue;
+        out[beach.slug] = { waterTemp: value, time: time.toISOString(), site: site.l };
+        break;
+      }
+    } catch (e) {
+      console.error(`buoy lookup failed for ${beach.slug}:`, e.message);
+    }
+  }
+  return out;
+}
+
 // City datasets have varied casing over the years; find fields case-insensitively.
 function fieldFinder(record) {
   const keys = Object.keys(record);
@@ -189,6 +243,8 @@ const [liveResults, ckanWaterQuality, observations] = await Promise.all([
   ),
 ]);
 
+const buoys = await fetchBuoyTemps();
+
 // Live feed wins per beach; the CKAN dataset (a season behind) is the fallback.
 const waterQuality = { ...ckanWaterQuality, ...liveResults };
 
@@ -198,6 +254,7 @@ const conditions = {
     liveResults: LIVE_RESULTS,
     waterQuality: `https://open.toronto.ca/dataset/${WATER_QUALITY_PACKAGE}/`,
     observations: `https://open.toronto.ca/dataset/${OBSERVATIONS_PACKAGE}/`,
+    buoys: OWD,
   },
   beaches: Object.fromEntries(
     BEACHES.map((b) => [
@@ -206,6 +263,7 @@ const conditions = {
         name: b.name,
         waterQuality: waterQuality[b.slug] ?? null,
         observations: observations[b.slug] ?? null,
+        buoy: buoys[b.slug] ?? null,
       },
     ])
   ),
