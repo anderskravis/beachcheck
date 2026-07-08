@@ -124,9 +124,17 @@ function renderStatus(wq) {
   detail.textContent = `E. coli ${wq.eColi} of ${E_COLI_LIMIT} limit · sampled ${shortDate(wq.sampleDate)}`;
 }
 
-// Open-Meteo's marine API has no real Great Lakes coverage — it was
-// returning a flat, fake 0.0 m everywhere — so waves are estimated from
-// wind instead, same idea as a lake sailor eyeballing the surface.
+// Real wave height from NW Lake Ontario buoy 45159 wins when fresh; the
+// city's own wave-action observation is next; failing both, waves are
+// estimated from wind — Open-Meteo's marine API has no real Great Lakes
+// coverage (it was returning a flat, fake 0.0 m everywhere).
+const WAVE_HEIGHT_BANDS = [
+  { max: 0.15, label: "flat" },
+  { max: 0.3, label: "light ripples" },
+  { max: 0.6, label: "light chop" },
+  { max: 1.0, label: "choppy" },
+  { max: Infinity, label: "rough" },
+];
 const WAVE_BANDS = [
   { max: 6, label: "flat" },
   { max: 10, label: "light ripples" },
@@ -151,16 +159,16 @@ const VERDICT_BANDS = [
 const bandLabel = (bands, value) => (value == null ? null : bands.find((b) => value < b.max).label);
 const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
-function waveState(windKn) {
-  return bandLabel(WAVE_BANDS, windKn);
-}
+const waveStateFromHeight = (m) => bandLabel(WAVE_HEIGHT_BANDS, m);
+const waveState = (windKn) => bandLabel(WAVE_BANDS, windKn);
 
 // A single playful line combining wave state, water temp and a paddle verdict.
-function conditionsNote(windKn, waterTempC) {
-  const wave = waveState(windKn);
+// waveWord is whatever the caller already decided is the best available
+// wave descriptor (real buoy height, city observation, or wind estimate).
+function conditionsNote(waveWord, waterTempC, windKn) {
   const temp = bandLabel(TEMP_BANDS, waterTempC);
   const clauses = [];
-  if (wave) clauses.push(capitalize(wave));
+  if (waveWord) clauses.push(capitalize(waveWord));
   if (temp) clauses.push(`water's ${temp}`);
   if (!clauses.length) return "";
   const verdict = bandLabel(VERDICT_BANDS, windKn);
@@ -224,12 +232,24 @@ async function render() {
     $("air-temp").textContent = obsFresh && obs.airTemp != null ? `${obs.airTemp}°` : "—";
   }
 
-  // The city's own wave-action observation wins when it's fresh (rare —
-  // that dataset has been stale most of this season); otherwise estimate
-  // from wind, since Open-Meteo's marine model doesn't cover the Great Lakes.
+  // Real buoy height wins; then the city's own (rarely fresh) observation;
+  // then a wind-derived estimate; "—" if none of that is available.
+  const lakeBuoy = conditions?.lakeBuoy;
   const cityWave = obsFresh ? obs.waveAction : null;
-  $("waves").textContent = cityWave ?? waveState(windKn) ?? "—";
-  $("paddle-note").textContent = conditionsNote(windKn, waterTempC);
+  let waveWord;
+  if (lakeBuoy?.waveHeightM != null) {
+    waveWord = waveStateFromHeight(lakeBuoy.waveHeightM);
+    const hoursAgo = Math.round((Date.now() - new Date(lakeBuoy.time)) / 3600000);
+    const when = hoursAgo < 1 ? "now" : `${hoursAgo}h ago`;
+    $("waves").innerHTML = `${lakeBuoy.waveHeightM.toFixed(1)} m <small>${waveWord} · buoy ${when}</small>`;
+  } else if (cityWave) {
+    waveWord = cityWave;
+    $("waves").textContent = cityWave;
+  } else {
+    waveWord = waveState(windKn);
+    $("waves").innerHTML = waveWord ? `${waveWord} <small>estimated from wind</small>` : "—";
+  }
+  $("paddle-note").textContent = conditionsNote(waveWord, waterTempC, windKn);
 }
 
 async function fetchWeather(beach) {

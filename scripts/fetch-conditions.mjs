@@ -147,6 +147,47 @@ async function fetchBuoyTemps() {
   return out;
 }
 
+// NW Lake Ontario buoy 45159 (near Ajax; Environment and Climate Change
+// Canada, relayed through NOAA's National Data Buoy Center) — the one real
+// wave-height reading available for the lake. Open-Meteo's marine model has
+// no Great Lakes coverage at all (it was returning a flat, fake 0.0 m).
+// One shared regional reading applied to every beach, not per-beach.
+const LAKE_BUOY = "https://www.ndbc.noaa.gov/data/realtime2/45159.txt";
+const LAKE_BUOY_MAX_AGE_MS = 4 * 3600 * 1000; // updates hourly; allow some slack
+
+// Fixed-width columns, most-recent row first:
+// #YY MM DD hh mm WDIR WSPD GST WVHT DPD APD MWD PRES ATMP WTMP DEWP VIS PTDY TIDE
+function parseLakeBuoy(text) {
+  const row = text
+    .trim()
+    .split("\n")
+    .find((l) => !l.startsWith("#"));
+  if (!row) return null;
+  const c = row.trim().split(/\s+/);
+  const num = (v) => (v === undefined || v === "MM" ? null : toNumber(v));
+  const time = new Date(Date.UTC(Number(c[0]), Number(c[1]) - 1, Number(c[2]), Number(c[3]), Number(c[4])));
+  if (Number.isNaN(time.getTime()) || Date.now() - time.getTime() > LAKE_BUOY_MAX_AGE_MS) return null;
+  const windMs = num(c[6]);
+  return {
+    time: time.toISOString(),
+    waveHeightM: num(c[8]),
+    waterTempC: num(c[14]),
+    windKn: windMs != null ? Math.round(windMs * 1.9438445 * 10) / 10 : null,
+    station: "45159",
+  };
+}
+
+async function fetchLakeBuoy() {
+  const text = USE_FIXTURES
+    ? await readFile(path.join(ROOT, "data", "fixtures", "lake-buoy.txt"), "utf8")
+    : await (async () => {
+        const res = await fetch(LAKE_BUOY);
+        if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+        return res.text();
+      })();
+  return parseLakeBuoy(text);
+}
+
 // City datasets have varied casing over the years; find fields case-insensitively.
 function fieldFinder(record) {
   const keys = Object.keys(record);
@@ -244,6 +285,10 @@ const [liveResults, ckanWaterQuality, observations] = await Promise.all([
 ]);
 
 const buoys = await fetchBuoyTemps();
+const lakeBuoy = await fetchLakeBuoy().catch((e) => {
+  console.error("NDBC 45159 lake buoy failed:", e.message);
+  return null;
+});
 
 // Live feed wins per beach; the CKAN dataset (a season behind) is the fallback.
 const waterQuality = { ...ckanWaterQuality, ...liveResults };
@@ -255,7 +300,9 @@ const conditions = {
     waterQuality: `https://open.toronto.ca/dataset/${WATER_QUALITY_PACKAGE}/`,
     observations: `https://open.toronto.ca/dataset/${OBSERVATIONS_PACKAGE}/`,
     buoys: OWD,
+    lakeBuoy: "https://www.ndbc.noaa.gov/station_page.php?station=45159",
   },
+  lakeBuoy,
   beaches: Object.fromEntries(
     BEACHES.map((b) => [
       b.slug,

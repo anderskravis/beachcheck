@@ -29,10 +29,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Probe NDBC 45159 realtime2 format (temporary)
-        run: |
-          curl -s --connect-timeout 8 "https://www.ndbc.noaa.gov/data/realtime2/45159.txt" -o /tmp/45159.txt -w "http %{http_code}, %{size_download} bytes\n" || true
-          head -5 /tmp/45159.txt || true
       - run: node scripts/fetch-conditions.mjs
       - name: Commit if changed
         id: commit
