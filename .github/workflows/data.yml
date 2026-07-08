@@ -32,15 +32,14 @@ jobs:
       - name: Probe openwaterdata.com (temporary)
         run: |
           UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36"
-          echo "=== script.js data URLs ==="
-          curl -s --connect-timeout 8 -A "$UA" "https://www.openwaterdata.com/js/script.js" -o /tmp/owdjs -w "js http %{http_code}, %{size_download} bytes\n" || true
-          grep -oE '["'"'"'][^"'"'"']*\.(json|csv)[^"'"'"']*["'"'"']|https?://[^"'"'"' )]+|/[a-z_/-]+\?[a-z=&{}$]+' /tmp/owdjs | sort -u | head -40 || true
-          echo "=== water temp element on site page ==="
-          curl -s --connect-timeout 8 -A "$UA" "https://www.openwaterdata.com/site/kew-balmy-beach" -o /tmp/owd || true
-          grep -oE '.{250}Water Temperature.{250}' /tmp/owd | head -3 || true
-          echo "=== terms of service: license keywords ==="
-          curl -s --connect-timeout 8 -A "$UA" "https://www.openwaterdata.com/terms-of-service/index.html" -o /tmp/tos || true
-          grep -oiE '.{120}(open data|licen[cs]|attribution|reuse|creative commons|commercial).{160}' /tmp/tos | head -12 || true
+          echo "=== /data/sites ==="
+          curl -s --connect-timeout 8 -A "$UA" "https://www.openwaterdata.com/data/sites?keywords=" -o /tmp/sites -w "http %{http_code}, %{size_download} bytes\n" || true
+          head -c 2500 /tmp/sites || true; echo
+          echo "=== /site/data?s=5897058 (kew-balmy) ==="
+          curl -s --connect-timeout 8 -A "$UA" "https://www.openwaterdata.com/site/data?s=5897058" -o /tmp/sd -w "http %{http_code}, %{size_download} bytes\n" || true
+          head -c 2500 /tmp/sd || true; echo
+          echo "=== water-temp keys in site data ==="
+          grep -oiE '"[^"]*(temp|water)[^"]*"\s*:\s*[^,}]{1,60}' /tmp/sd | head -20 || true
       - run: node scripts/fetch-conditions.mjs
       - name: Commit if changed
         id: commit
