@@ -66,7 +66,7 @@ body {
 }
 
 .mapkit-map.ready { opacity: 1; pointer-events: auto; }
-.map-band.mapkit-ready #map { opacity: 0; }
+.map-band.mapkit-ready #map { opacity: 0; pointer-events: none; }
 
 .mk-dot {
   width: 7px;
@@ -202,16 +202,23 @@ body {
 
 /* ---------- the sheet ---------- */
 
+/* A floating card, inset from the viewport edges so the map peeks through
+   on either side — just a sliver on mobile, a wide margin once the card
+   hits its max-width on larger screens. */
 .sheet {
   position: relative;
   z-index: 1;
   flex: 1;
+  width: calc(100% - 1rem);
+  max-width: 38rem;
+  margin-inline: auto;
   margin-top: -1.75rem;
   background: var(--bg);
-  border-radius: 1.75rem 1.75rem 0 0;
-  box-shadow: 0 -12px 36px rgba(0, 0, 0, .38);
+  border-radius: 1.75rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, .4);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .grabber {
@@ -229,8 +236,6 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 34rem;
-  margin: 0 auto;
   padding: .9rem 1.25rem 2rem;
 }
 

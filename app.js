@@ -124,12 +124,47 @@ function renderStatus(wq) {
   detail.textContent = `E. coli ${wq.eColi} of ${E_COLI_LIMIT} limit · sampled ${shortDate(wq.sampleDate)}`;
 }
 
-function paddleNote(windKn) {
-  if (windKn == null) return "";
-  if (windKn < 8) return "Light wind — easy paddling.";
-  if (windKn < 14) return "Some chop — fine if you're steady on the board.";
-  if (windKn < 20) return "Windy — expect real chop, short outings only.";
-  return `Blowing ${Math.round(windKn)} kn — not a paddle day.`;
+// Open-Meteo's marine API has no real Great Lakes coverage — it was
+// returning a flat, fake 0.0 m everywhere — so waves are estimated from
+// wind instead, same idea as a lake sailor eyeballing the surface.
+const WAVE_BANDS = [
+  { max: 6, label: "flat" },
+  { max: 10, label: "light ripples" },
+  { max: 15, label: "light chop" },
+  { max: 20, label: "choppy" },
+  { max: Infinity, label: "whitecaps" },
+];
+const TEMP_BANDS = [
+  { max: 14, label: "frigid" },
+  { max: 18, label: "brisk" },
+  { max: 22, label: "refreshing" },
+  { max: 26, label: "pleasant" },
+  { max: Infinity, label: "bathwater warm" },
+];
+const VERDICT_BANDS = [
+  { max: 8, label: "ideal for a long paddle" },
+  { max: 14, label: "easy paddling" },
+  { max: 20, label: "fine if you're steady on the board" },
+  { max: 28, label: "short outings only" },
+  { max: Infinity, label: "not a paddle day" },
+];
+const bandLabel = (bands, value) => (value == null ? null : bands.find((b) => value < b.max).label);
+const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+
+function waveState(windKn) {
+  return bandLabel(WAVE_BANDS, windKn);
+}
+
+// A single playful line combining wave state, water temp and a paddle verdict.
+function conditionsNote(windKn, waterTempC) {
+  const wave = waveState(windKn);
+  const temp = bandLabel(TEMP_BANDS, waterTempC);
+  const clauses = [];
+  if (wave) clauses.push(capitalize(wave));
+  if (temp) clauses.push(`water's ${temp}`);
+  if (!clauses.length) return "";
+  const verdict = bandLabel(VERDICT_BANDS, windKn);
+  return verdict ? `${clauses.join(", ")} — ${verdict}.` : `${clauses.join(", ")}.`;
 }
 
 async function render() {
@@ -148,11 +183,14 @@ async function render() {
 
   const obsFresh = obs && daysAgo(obs.date) <= STALE_DAYS;
   const buoy = data?.buoy;
+  let waterTempC = null;
   if (buoy?.waterTemp != null) {
+    waterTempC = buoy.waterTemp;
     const hoursAgo = Math.round((Date.now() - new Date(buoy.time)) / 3600000);
     const when = hoursAgo < 1 ? "now" : `${hoursAgo}h ago`;
     $("water-temp").innerHTML = `${buoy.waterTemp}° <small>buoy · ${when}</small>`;
   } else if (obsFresh && obs.waterTemp != null) {
+    waterTempC = obs.waterTemp;
     $("water-temp").innerHTML = `${obs.waterTemp}° <small>${shortDate(obs.date)}</small>`;
   } else {
     $("water-temp").textContent = "—";
@@ -167,30 +205,31 @@ async function render() {
     : "City data unavailable · wind is live";
 
   // Live weather fills in after the city data paints.
-  const [weather, waveHeight] = await Promise.all([
-    fetchWeather(beach).catch(() => null),
-    fetchWaves(beach).catch(() => null),
-  ]);
+  const weather = await fetchWeather(beach).catch(() => null);
   if (beach.slug !== currentBeach().slug) return; // user switched beaches mid-fetch
 
+  let windKn = null;
   if (weather) {
+    windKn = weather.wind_speed_10m;
     const arrow = `<span class="arrow" style="transform: rotate(${Math.round(weather.wind_direction_10m) + 180}deg)">↑</span>`;
     $("wind").innerHTML =
       `${Math.round(weather.wind_speed_10m)} kn ${compass(weather.wind_direction_10m)} ${arrow} ` +
       `<small>gusts ${Math.round(weather.wind_gusts_10m)}</small>`;
     $("air-temp").textContent = `${Math.round(weather.temperature_2m)}°`;
-    $("paddle-note").textContent = paddleNote(weather.wind_speed_10m);
   } else {
+    if (obsFresh && obs.windSpeed != null) windKn = obs.windSpeed * 0.539957; // km/h -> kn
     $("wind").textContent = obsFresh && obs.windSpeed != null
       ? `${obs.windSpeed} km/h ${obs.windDirection ?? ""}`
       : "—";
     $("air-temp").textContent = obsFresh && obs.airTemp != null ? `${obs.airTemp}°` : "—";
   }
 
-  const wavePieces = [];
-  if (waveHeight != null) wavePieces.push(`${waveHeight.toFixed(1)} m`);
-  if (obsFresh && obs.waveAction) wavePieces.push(obs.waveAction);
-  $("waves").textContent = wavePieces.length ? wavePieces.join(" · ") : "—";
+  // The city's own wave-action observation wins when it's fresh (rare —
+  // that dataset has been stale most of this season); otherwise estimate
+  // from wind, since Open-Meteo's marine model doesn't cover the Great Lakes.
+  const cityWave = obsFresh ? obs.waveAction : null;
+  $("waves").textContent = cityWave ?? waveState(windKn) ?? "—";
+  $("paddle-note").textContent = conditionsNote(windKn, waterTempC);
 }
 
 async function fetchWeather(beach) {
@@ -200,15 +239,6 @@ async function fetchWeather(beach) {
   const r = await fetch(url);
   if (!r.ok) throw new Error(`open-meteo ${r.status}`);
   return (await r.json()).current;
-}
-
-async function fetchWaves(beach) {
-  const url = `https://marine-api.open-meteo.com/v1/marine?latitude=${beach.lat}&longitude=${beach.lon}` +
-    `&current=wave_height&timezone=America%2FToronto`;
-  const r = await fetch(url);
-  if (!r.ok) return null;
-  const height = (await r.json()).current?.wave_height;
-  return typeof height === "number" ? height : null;
 }
 
 render();
