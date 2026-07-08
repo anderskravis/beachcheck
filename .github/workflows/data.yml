@@ -38,12 +38,10 @@ jobs:
             curl -s --connect-timeout 8 -A "$UA" -o /tmp/probe -w "%{http_code}\n" "$1" || echo "curl exit $?"
             head -c 1500 /tmp/probe || true; echo
           }
-          echo "=== CKAN packages matching 'beach' ==="
-          curl -s --connect-timeout 8 "https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/package_search?q=beach&rows=50" | jq -r '.result.results[] | "\(.name) | refresh=\(.refresh_rate // "?") | updated=\(.metadata_modified)"' || true
-          echo "=== beach water quality page data URLs ==="
-          curl -sL --connect-timeout 8 -A "$UA" "https://www.toronto.ca/explore-enjoy/parks-recreation/water-recreation/beaches-marinas/beach-water-quality/" -o /tmp/page -w "page http %{http_code}\n" || true
-          grep -oiE '(src|href|data-[a-z-]+|url)="[^"]*"' /tmp/page | grep -iE 'json|xml|api|data/|beach' | sort -u | head -50 || echo "no data urls found"
-          grep -oiE 'https?://[^"'"'"' ]*(json|api)[^"'"'"' ]*' /tmp/page | sort -u | head -30 || true
+          echo "=== tph_beaches app script: endpoints ==="
+          curl -s --connect-timeout 8 -A "$UA" "https://www.toronto.ca/resources/tph_beaches/scripts/main0.0.0.js" -o /tmp/appjs -w "js http %{http_code}, %{size_download} bytes\n" || true
+          grep -oE '"[^"]*(https?:)?//[^"]*"|"[^"]*\.(json|xml)[^"]*"|"/[a-z_/.-]+"' /tmp/appjs | grep -viE '\.(png|css|svg)' | sort -u | head -60 || true
+          grep -oE '(fetch|ajax|get)\(["'"'"'][^"'"'"']+' /tmp/appjs | head -20 || true
       - run: node scripts/fetch-conditions.mjs
       - name: Commit if changed
         id: commit
