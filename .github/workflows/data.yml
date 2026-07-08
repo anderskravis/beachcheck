@@ -38,8 +38,12 @@ jobs:
             curl -s --connect-timeout 8 -A "$UA" -o /tmp/probe -w "%{http_code}\n" "$1" || echo "curl exit $?"
             head -c 1500 /tmp/probe || true; echo
           }
-          probe "http://app.toronto.ca/tpha/ws/beaches.xml?v=1.0"
-          probe "http://app.toronto.ca/tpha/ws/beaches/history.xml?v=1.0&from=2026-07-05&to=2026-07-08"
+          echo "=== CKAN packages matching 'beach' ==="
+          curl -s --connect-timeout 8 "https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/package_search?q=beach&rows=50" | jq -r '.result.results[] | "\(.name) | refresh=\(.refresh_rate // "?") | updated=\(.metadata_modified)"' || true
+          echo "=== beach water quality page data URLs ==="
+          curl -sL --connect-timeout 8 -A "$UA" "https://www.toronto.ca/explore-enjoy/parks-recreation/water-recreation/beaches-marinas/beach-water-quality/" -o /tmp/page -w "page http %{http_code}\n" || true
+          grep -oiE '(src|href|data-[a-z-]+|url)="[^"]*"' /tmp/page | grep -iE 'json|xml|api|data/|beach' | sort -u | head -50 || echo "no data urls found"
+          grep -oiE 'https?://[^"'"'"' ]*(json|api)[^"'"'"' ]*' /tmp/page | sort -u | head -30 || true
       - run: node scripts/fetch-conditions.mjs
       - name: Commit if changed
         id: commit
