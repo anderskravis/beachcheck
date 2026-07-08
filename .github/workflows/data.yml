@@ -29,6 +29,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Diagnose data sources (temporary)
+        run: |
+          CKAN="https://ckan0.cf.opendata.inter.prod-toronto.ca"
+          for pkg in toronto-beaches-water-quality toronto-beaches-observations; do
+            echo "=== $pkg resources ==="
+            curl -s "$CKAN/api/3/action/package_show?id=$pkg" | jq '.result.resources[] | {name, format, datastore_active, last_modified, url}'
+          done
+          echo "=== live beach_results probe ==="
+          curl -s -o /tmp/probe.json -w "%{http_code}\n" "https://secure.toronto.ca/opendata/adv_od/beach_results/v1?format=json&startDate=2026-07-01&endDate=2026-07-08"
+          head -c 600 /tmp/probe.json; echo
       - run: node scripts/fetch-conditions.mjs
       - name: Commit if changed
         id: commit
