@@ -4,6 +4,12 @@ on:
   schedule:
     - cron: "10 * * * *" # hourly; city data changes ~daily but advisories can flip
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - scripts/**
+      - beaches.js
+      - .github/workflows/data.yml
 
 permissions:
   contents: write
