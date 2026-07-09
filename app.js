@@ -229,9 +229,12 @@ setTimeout(() => $("map-band").classList.add("show-fallback"), 2500);
 
 /* ---------- status + stats ---------- */
 
-// Returns whether the water is safe to swim in (true/false), or null when
-// there's no current reading — callers use this to keep the paddle note
-// from contradicting a "no swim" call.
+const E_COLI_CAUTION = 70; // getting close to the posting limit — not unsafe yet, but worth a heads up
+
+// Returns "safe", "caution", "unsafe", or null when there's no current
+// reading — callers use this to keep the paddle note from contradicting a
+// "no swim" call (and to soften it, rather than contradict it, on a
+// "caution" day).
 function renderStatus(wq) {
   const card = $("status");
   const word = $("status-word");
@@ -246,11 +249,15 @@ function renderStatus(wq) {
   }
   // The city's posted status is authoritative when present (it can flag a
   // beach unsafe preemptively); the E. coli threshold is the fallback.
-  const safe = wq.statusFlag ? wq.statusFlag === "SAFE" : wq.eColi < E_COLI_LIMIT;
-  card.className = `stat status-card ${safe ? "good" : "bad"}`;
-  word.textContent = safe ? "swim" : "no swim";
+  // "Caution" only applies within an otherwise-safe reading — a beach the
+  // city has actually posted unsafe is never softened to caution.
+  const unsafe = wq.statusFlag ? wq.statusFlag !== "SAFE" : wq.eColi >= E_COLI_LIMIT;
+  const caution = !unsafe && wq.eColi >= E_COLI_CAUTION;
+  const status = unsafe ? "unsafe" : caution ? "caution" : "safe";
+  card.className = `stat status-card ${unsafe ? "bad" : caution ? "caution" : "good"}`;
+  word.textContent = unsafe ? "no swim" : caution ? "caution" : "swim";
   detail.textContent = `E. coli ${wq.eColi} of ${E_COLI_LIMIT} limit · sampled ${shortDate(wq.sampleDate)}`;
-  return safe;
+  return status;
 }
 
 // Real wave height from NW Lake Ontario buoy 45159 wins when fresh; the
@@ -294,10 +301,11 @@ const waveState = (windKn) => bandLabel(WAVE_BANDS, windKn);
 // A single playful line combining wave state, water temp and a paddle verdict.
 // waveWord is whatever the caller already decided is the best available
 // wave descriptor (real buoy height, city observation, or wind estimate).
-// safe is renderStatus()'s swim call (true/false/null) — a "no swim" day
-// should never be topped off with an upbeat paddling verdict.
-function conditionsNote(waveWord, waterTempC, windKn, safe) {
-  if (safe === false) {
+// status is renderStatus()'s return value ("safe"/"caution"/"unsafe"/null)
+// — a "no swim" day should never be topped off with an upbeat paddling
+// verdict, and a "caution" day gets a gentle heads-up instead of either.
+function conditionsNote(waveWord, waterTempC, windKn, status) {
+  if (status === "unsafe") {
     return waveWord
       ? `${capitalize(waveWord)}, but water quality is unsafe today — best to stay out.`
       : "Water quality is unsafe today — best to stay out.";
@@ -306,9 +314,16 @@ function conditionsNote(waveWord, waterTempC, windKn, safe) {
   const clauses = [];
   if (waveWord) clauses.push(capitalize(waveWord));
   if (temp) clauses.push(`water's ${temp}`);
-  if (!clauses.length) return "";
-  const verdict = bandLabel(VERDICT_BANDS, windKn);
-  return verdict ? `${clauses.join(", ")} — ${verdict}.` : `${clauses.join(", ")}.`;
+  let note = "";
+  if (clauses.length) {
+    const verdict = bandLabel(VERDICT_BANDS, windKn);
+    note = verdict ? `${clauses.join(", ")} — ${verdict}.` : `${clauses.join(", ")}.`;
+  }
+  if (status === "caution") {
+    const headsUp = "Water quality is borderline today — worth checking before you go.";
+    note = note ? `${note} ${headsUp}` : headsUp;
+  }
+  return note;
 }
 
 async function render() {

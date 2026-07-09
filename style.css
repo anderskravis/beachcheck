@@ -381,11 +381,24 @@ h1 {
   color: #fff;
 }
 
+/* Still swimmable, but the E. coli reading is close enough to the posting
+   limit that it's worth a second look before heading out — not a full
+   "no swim", but not a plain "swim" either. */
+.status-card.caution {
+  background: #f2b90f;
+  color: #201a02;
+}
+
 .status-card.good dt,
 .status-card.bad dt,
 .status-card.good #status-detail,
 .status-card.bad #status-detail {
   color: rgba(255, 255, 255, .82);
+}
+
+.status-card.caution dt,
+.status-card.caution #status-detail {
+  color: rgba(32, 26, 2, .72);
 }
 
 /* stat cards */
