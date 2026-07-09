@@ -94,10 +94,21 @@ export function start(mapkitGlobal) {
     // dynamic toolbar — on a fresh page load that toolbar can still be
     // settling for a moment after this callback fires, so a region
     // computed from .sheet's rect right now can end up based on a
-    // not-yet-final layout. Re-assert it once more shortly after,
+    // not-yet-final layout. Re-assert it a few more times shortly after,
     // against whatever the DOM reports once things have actually
-    // settled, rather than trusting this first synchronous read.
-    setTimeout(() => centerMapKitOn(initial), 400);
+    // settled, rather than trusting this first synchronous read (one
+    // delay wasn't always enough on a real device, so this hedges with
+    // a few at increasing delays instead of guessing a single number).
+    // Re-reads the hash each time rather than closing over `initial`, in
+    // case the user has already switched beaches by the time one fires.
+    for (const delay of [300, 800, 1500]) {
+      setTimeout(() => centerMapKitOn(currentBeachFromHash()), delay);
+    }
+    // Don't rely solely on app.js's own listener setup/timing — the
+    // dynamic toolbar can also change size independently of any scroll
+    // gesture, and iOS Safari fires that through visualViewport, not
+    // always through plain window resize.
+    window.visualViewport?.addEventListener("resize", () => centerMapKitOn(currentBeachFromHash()));
   } catch (e) {
     console.error("mapkit init failed:", e);
   }

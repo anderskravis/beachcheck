@@ -221,7 +221,7 @@ setTimeout(() => $("map-band").classList.add("show-fallback"), 2500);
     { passive: true }
   );
 
-  window.addEventListener("resize", () => {
+  const recenterMaps = () => {
     if (sheetInner.scrollTop === 0) sheetEl.style.top = "";
     else updateParallax();
     // Safari showing/hiding its own toolbar changes `dvh`, which moves the
@@ -230,7 +230,15 @@ setTimeout(() => $("map-band").classList.add("show-fallback"), 2500);
     const beach = currentBeach();
     centerMapOn(beach);
     centerMapKitOn(beach);
-  });
+  };
+  window.addEventListener("resize", recenterMaps);
+  // iOS Safari's dynamic toolbar showing/hiding reliably fires
+  // visualViewport's own resize event, but not always the plain window
+  // one — miss this and the map silently goes stale on exactly the
+  // devices this whole dance is for. (mapkit-bridge.js hooks the same
+  // event independently for its own region, rather than depending on
+  // this handler's timing.)
+  window.visualViewport?.addEventListener("resize", recenterMaps);
 }
 
 /* ---------- status + stats ---------- */
