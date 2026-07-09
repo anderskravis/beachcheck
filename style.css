@@ -191,7 +191,7 @@ body {
 .wordmark .wave { font-size: 1.15em; }
 
 .wordmark .locale-tag {
-  margin-left: .3rem;
+  margin-left: .12rem;
   font-size: .58em;
   font-weight: 700;
   letter-spacing: .07em;
@@ -460,6 +460,33 @@ footer .made-in {
   margin-top: .7rem;
   opacity: .8;
 }
+
+.text-btn {
+  margin-top: .9rem;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: .82rem;
+  font-weight: 600;
+  color: #0a7aff;
+  cursor: pointer;
+  transition: opacity .2s;
+}
+
+.text-btn:hover { opacity: .75; }
+
+.text-btn:focus-visible {
+  outline: 2px solid #0a7aff;
+  outline-offset: 3px;
+}
+
+@keyframes flash-confirm-text {
+  0%, 100% { color: #0a7aff; }
+  35% { color: #1fae5a; }
+}
+
+.text-btn.confirm { animation: flash-confirm-text .9s ease; }
 
 /* ---------- about dialog ---------- */
 

@@ -60,9 +60,12 @@ $("share-btn").addEventListener("click", async (e) => {
   try {
     await navigator.clipboard.writeText(`${shareData.title} — ${text} ${shareData.url}`);
     const btn = e.currentTarget;
+    const original = btn.textContent;
     btn.classList.remove("confirm");
     void btn.offsetWidth; // restart the animation if clicked again quickly
     btn.classList.add("confirm");
+    btn.textContent = "Copied!";
+    setTimeout(() => { btn.textContent = original; }, 1500);
   } catch { /* clipboard unavailable; nothing more to do */ }
 });
 
