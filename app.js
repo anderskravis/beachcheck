@@ -78,7 +78,7 @@ const conditionsPromise = fetch("data/conditions.json").then((r) => {
 // just the currently selected one — a subtle color hint (blue/yellow/red)
 // using the same classification as the status card, instead of a flat
 // neutral dot for all of them.
-const DOT_STATUS_COLORS = { safe: "#0a7aff", caution: "#f2b90f", unsafe: "#eb4034" };
+const DOT_STATUS_COLORS = { safe: "#0a7aff", caution: "#ff9500", unsafe: "#eb4034" };
 conditionsPromise.then((conditions) => {
   const statuses = {};
   for (const b of BEACHES) {
@@ -355,7 +355,7 @@ function eColiStatus(value) {
   if (value >= E_COLI_CAUTION) return "caution";
   return "good";
 }
-const STATUS_HEX = { good: "#0a7aff", caution: "#f2b90f", bad: "#eb4034" };
+const STATUS_HEX = { good: "#0a7aff", caution: "#ff9500", bad: "#eb4034" };
 const STATUS_WORD = { good: "swim", caution: "caution", bad: "no swim" };
 
 // A rounded-top, square-bottom bar path — SVG has no "round two corners"
@@ -648,7 +648,7 @@ async function render() {
     $("wind").innerHTML =
       `${Math.round(weather.wind_speed_10m)} kn ${compass(weather.wind_direction_10m)} ${arrow} ` +
       `<small>gusts ${Math.round(weather.wind_gusts_10m)}</small>`;
-    const condition = weatherLabel(weather.weather_code);
+    const condition = liveConditionLabel(weather);
     $("air-temp").innerHTML = condition
       ? `${Math.round(weather.temperature_2m)}° <small>${condition}</small>`
       : `${Math.round(weather.temperature_2m)}°`;
@@ -689,9 +689,23 @@ const WEATHER_CODES = {
 };
 const weatherLabel = (code) => WEATHER_CODES[code] ?? null;
 
+// weather_code is a forecast-model symbol for the whole current hour, not a
+// live observation — a short, localized summer downpour can be genuinely
+// falling while the model's hourly code still reads "cloudy" because it
+// hasn't (yet, or ever, at this resolution) caught the cell. precipitation
+// is a plain measured/nowcast quantity (mm in the current hour) that isn't
+// gated by the model's categorical judgment call, so when it's telling us
+// rain is actually coming down, trust it over a non-precipitation code.
+function liveConditionLabel(weather) {
+  const codeLabel = weatherLabel(weather.weather_code);
+  const codeAlreadySaysPrecip = weather.weather_code >= 51;
+  if (!codeAlreadySaysPrecip && weather.precipitation >= 0.1) return "rain";
+  return codeLabel;
+}
+
 async function fetchWeather(beach) {
   const url = `https://api.open-meteo.com/v1/forecast?latitude=${beach.lat}&longitude=${beach.lon}` +
-    `&current=temperature_2m,wind_speed_10m,wind_gusts_10m,wind_direction_10m,weather_code` +
+    `&current=temperature_2m,wind_speed_10m,wind_gusts_10m,wind_direction_10m,weather_code,precipitation` +
     `&wind_speed_unit=kn&timezone=America%2FToronto`;
   const r = await fetch(url);
   if (!r.ok) throw new Error(`open-meteo ${r.status}`);

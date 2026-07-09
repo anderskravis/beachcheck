@@ -405,7 +405,7 @@ h1 {
    limit that it's worth a second look before heading out — not a full
    "no swim", but not a plain "swim" either. */
 .status-card.caution {
-  background: #f2b90f;
+  background: #ff9500;
   color: #201a02;
 }
 
@@ -642,7 +642,7 @@ footer .made-in {
 }
 
 .history-legend .good .dot { background: #0a7aff; }
-.history-legend .caution .dot { background: #f2b90f; }
+.history-legend .caution .dot { background: #ff9500; }
 .history-legend .bad .dot { background: #eb4034; }
 
 .history-table-toggle {

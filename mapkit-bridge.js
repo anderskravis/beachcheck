@@ -14,7 +14,7 @@ const SPAN = { lat: 0.05, lon: 0.07 }; // roughly a 5-6 km view around the beach
 const dotEls = new Map();
 let pendingStatuses = null;
 
-const STATUS_COLORS = { safe: "#0a7aff", caution: "#f2b90f", unsafe: "#eb4034" };
+const STATUS_COLORS = { safe: "#0a7aff", caution: "#ff9500", unsafe: "#eb4034" };
 
 // Called from app.js once conditions.json resolves — a subtle color hint
 // per beach dot (blue/yellow/red) instead of a flat neutral color, using
