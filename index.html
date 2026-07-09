@@ -161,6 +161,26 @@
         </dl>
 
         <p id="paddle-note" class="paddle-note"></p>
+
+        <section id="history-section" class="history-section" hidden>
+          <h2>14-day E. coli trend</h2>
+          <div class="history-chart-wrap">
+            <svg id="history-chart" class="history-chart" viewBox="0 0 320 132" preserveAspectRatio="none" role="img" aria-label="E. coli reading for the last 14 days"></svg>
+            <div id="history-tooltip" class="history-tooltip" hidden></div>
+          </div>
+          <ul class="history-legend">
+            <li class="good"><span class="dot"></span>swim</li>
+            <li class="caution"><span class="dot"></span>caution</li>
+            <li class="bad"><span class="dot"></span>no swim</li>
+          </ul>
+          <details class="history-table-toggle">
+            <summary>Show as table</summary>
+            <table id="history-table">
+              <thead><tr><th scope="col">Date</th><th scope="col">E. coli</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </details>
+        </section>
       </main>
 
       <p id="loading">…</p>

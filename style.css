@@ -531,6 +531,136 @@ footer .made-in {
   height: 20rem;
 }
 
+/* ---------- history chart ---------- */
+
+.history-section {
+  margin-top: 1.4rem;
+}
+
+.history-section h2 {
+  margin: 0 0 .6rem;
+  font-size: .72rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.history-chart-wrap {
+  position: relative;
+}
+
+.history-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.history-bar {
+  transition: opacity .15s;
+}
+
+.history-bar:hover,
+.history-bar:focus-visible {
+  opacity: .8;
+}
+
+.history-bar:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 1px;
+}
+
+.limit-line {
+  stroke: var(--muted);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  opacity: .55;
+}
+
+.baseline {
+  stroke: var(--muted);
+  stroke-width: 1;
+  opacity: .35;
+}
+
+.limit-label,
+.axis-label {
+  fill: var(--muted);
+  font-size: 7.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.value-label {
+  fill: var(--ink);
+  font-size: 9.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.history-tooltip {
+  position: absolute;
+  transform: translate(-50%, calc(-100% - 8px));
+  background: var(--ink);
+  color: var(--bg);
+  font-size: .74rem;
+  font-weight: 600;
+  padding: .3rem .55rem;
+  border-radius: .5rem;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.history-legend {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  margin: .6rem 0 0;
+  padding: 0;
+  font-size: .78rem;
+  color: var(--muted);
+}
+
+.history-legend li {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+}
+
+.history-legend .dot {
+  width: .55rem;
+  height: .55rem;
+  border-radius: 50%;
+}
+
+.history-legend .good .dot { background: #0a7aff; }
+.history-legend .caution .dot { background: #f2b90f; }
+.history-legend .bad .dot { background: #eb4034; }
+
+.history-table-toggle {
+  margin-top: .7rem;
+  font-size: .8rem;
+  color: var(--muted);
+}
+
+.history-table-toggle summary {
+  cursor: pointer;
+}
+
+.history-table-toggle table {
+  margin-top: .5rem;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .8rem;
+}
+
+.history-table-toggle th,
+.history-table-toggle td {
+  text-align: left;
+  padding: .3rem .4rem;
+  border-bottom: 1px solid var(--card);
+  font-variant-numeric: tabular-nums;
+}
+
 .text-btn {
   margin-top: .9rem;
   padding: 0;

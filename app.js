@@ -344,6 +344,146 @@ function renderStatus(wq, rain48hMm) {
   return status;
 }
 
+// Same three-way call as beachStatus(), but per single reading — a day in
+// history has no city statusFlag and no rain figure attached to it, so this
+// only ever looks at that day's E. coli against the two thresholds. Kept
+// separate from beachStatus() rather than reusing it with fudged inputs,
+// since "the story this reading alone tells" and "was this beach safe that
+// day" are genuinely different questions once rain/city-flag enter into it.
+function eColiStatus(value) {
+  if (value >= E_COLI_LIMIT) return "bad";
+  if (value >= E_COLI_CAUTION) return "caution";
+  return "good";
+}
+const STATUS_HEX = { good: "#0a7aff", caution: "#f2b90f", bad: "#eb4034" };
+const STATUS_WORD = { good: "swim", caution: "caution", bad: "no swim" };
+
+// A rounded-top, square-bottom bar path — SVG has no "round two corners"
+// primitive, so this draws one by hand rather than rounding all four
+// corners (which would look odd sitting on a shared baseline).
+function barPath(x, w, yTop, yBottom, r) {
+  const rr = Math.max(0, Math.min(r, w / 2, yBottom - yTop));
+  return `M${x},${yBottom} L${x},${yTop + rr} Q${x},${yTop} ${x + rr},${yTop} ` +
+    `L${x + w - rr},${yTop} Q${x + w},${yTop} ${x + w},${yTop + rr} L${x + w},${yBottom} Z`;
+}
+
+const svgEl = (tag, attrs) => {
+  const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+  for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+  return el;
+};
+
+// 14-day E. coli history, plotted oldest-to-newest as bars colored by the
+// same swim/caution/no-swim bands as the status card — a quick "how did we
+// get here" alongside the single latest-reading trend arrow. Needs at least
+// a handful of points to be worth plotting at all (a 1-2 bar "chart" is just
+// the stat tile above, restated).
+function renderHistoryChart(wq) {
+  const section = $("history-section");
+  $("history-tooltip").hidden = true;
+  const history = wq?.history?.filter((h) => h.eColi != null) ?? [];
+  if (history.length < 3) {
+    section.hidden = true;
+    return;
+  }
+  section.hidden = false;
+  const days = [...history].reverse(); // oldest first
+
+  const svg = $("history-chart");
+  svg.textContent = "";
+  const VB_W = 320, VB_H = 132;
+  const padL = 6, padR = 6, plotTop = 12, plotBottom = 96;
+  const plotW = VB_W - padL - padR;
+  const plotH = plotBottom - plotTop;
+
+  const domainMax = Math.max(E_COLI_LIMIT * 1.15, ...days.map((d) => d.eColi)) * 1.05;
+  const yFor = (v) => plotBottom - (v / domainMax) * plotH;
+
+  // Limit reference line — dashed, since (unlike a plain gridline) it marks
+  // an actual threshold in the data, not just a scale division.
+  // Anchored at the left, opposite the one direct value-label (always on
+  // today's bar, at the right) — so the two never collide regardless of
+  // where a given day's bar happens to sit relative to the limit line.
+  const limitY = yFor(E_COLI_LIMIT);
+  const limitLabel = svgEl("text", { x: padL, y: limitY - 3, class: "limit-label", "text-anchor": "start" });
+  limitLabel.textContent = `limit ${E_COLI_LIMIT}`;
+  svg.append(
+    svgEl("line", { x1: padL, x2: VB_W - padR, y1: limitY, y2: limitY, class: "limit-line" }),
+    limitLabel,
+    svgEl("line", { x1: padL, x2: VB_W - padR, y1: plotBottom, y2: plotBottom, class: "baseline" }),
+  );
+
+  const slot = plotW / days.length;
+  const barW = Math.min(24, slot - 3);
+  const todayIdx = days.length - 1;
+
+  const tooltip = $("history-tooltip");
+  const wrap = document.querySelector(".history-chart-wrap");
+  const showTip = (bar, text) => {
+    const wrapBox = wrap.getBoundingClientRect();
+    const barBox = bar.getBoundingClientRect();
+    tooltip.textContent = text;
+    tooltip.hidden = false;
+    tooltip.style.left = `${barBox.left - wrapBox.left + barBox.width / 2}px`;
+    tooltip.style.top = `${barBox.top - wrapBox.top}px`;
+  };
+  const hideTip = () => { tooltip.hidden = true; };
+
+  days.forEach((d, i) => {
+    const status = eColiStatus(d.eColi);
+    const x = padL + i * slot + (slot - barW) / 2;
+    const yTop = yFor(d.eColi);
+    const h = Math.max(3, plotBottom - yTop);
+    const path = svgEl("path", {
+      d: barPath(x, barW, plotBottom - h, plotBottom, 4),
+      fill: STATUS_HEX[status],
+      class: "history-bar",
+      tabindex: "0",
+      role: "img",
+      "aria-label": `${shortDate(d.date)}: E. coli ${d.eColi}, ${STATUS_WORD[status]}`,
+    });
+    path.append(svgEl("title", {}));
+    path.lastElementChild.textContent = `${shortDate(d.date)} · ${d.eColi}`;
+    const tipText = `${shortDate(d.date)} · ${d.eColi} · ${STATUS_WORD[status]}`;
+    path.addEventListener("pointerenter", () => showTip(path, tipText));
+    path.addEventListener("pointerleave", hideTip);
+    path.addEventListener("focus", () => showTip(path, tipText));
+    path.addEventListener("blur", hideTip);
+    svg.appendChild(path);
+
+    // The one direct label on the chart: today's reading, at the tip of its
+    // bar — everything else rides the tooltip and the table view instead.
+    if (i === todayIdx) {
+      const label = svgEl("text", {
+        x: x + barW / 2, y: Math.max(plotTop - 2, yTop - 6),
+        class: "value-label", "text-anchor": "middle",
+      });
+      label.textContent = d.eColi;
+      svg.appendChild(label);
+    }
+    if (i === 0 || i === todayIdx) {
+      const tick = svgEl("text", {
+        x: i === 0 ? x : x + barW, y: VB_H - 6,
+        class: "axis-label", "text-anchor": i === 0 ? "start" : "end",
+      });
+      tick.textContent = shortDate(d.date);
+      svg.appendChild(tick);
+    }
+  });
+
+  const table = document.querySelector("#history-table tbody");
+  table.textContent = "";
+  [...days].reverse().forEach((d) => {
+    const tr = document.createElement("tr");
+    const dateCell = document.createElement("td");
+    dateCell.textContent = shortDate(d.date);
+    const valueCell = document.createElement("td");
+    valueCell.textContent = `${d.eColi} (${STATUS_WORD[eColiStatus(d.eColi)]})`;
+    tr.append(dateCell, valueCell);
+    table.appendChild(tr);
+  });
+}
+
 // Real wave height from NW Lake Ontario buoy 45159 wins when fresh; the
 // city's own wave-action observation is next; failing both, waves are
 // estimated from wind — Open-Meteo's marine API has no real Great Lakes
@@ -454,6 +594,7 @@ async function render() {
   const obs = data?.observations;
 
   const safeToSwim = renderStatus(data?.waterQuality ?? null, data?.rain48hMm ?? null);
+  renderHistoryChart(data?.waterQuality ?? null);
 
   const obsFresh = obs && daysAgo(obs.date) <= STALE_DAYS;
   const buoy = data?.buoy;
