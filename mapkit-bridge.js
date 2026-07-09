@@ -34,6 +34,16 @@ function applyPendingStatuses() {
   }
 }
 
+// The selected beach gets its own larger "pin" annotation at the same
+// coordinate as its regular dot — without this, both render on top of
+// each other, showing as the color dot poking out from behind/beside the
+// pin's ring instead of one clean marker.
+function updateDotVisibility(beach) {
+  for (const [slug, el] of dotEls) {
+    el.style.visibility = slug === beach.slug ? "hidden" : "visible";
+  }
+}
+
 // Below this width, use a fixed offset from the header instead of trying
 // to read the sheet's position at all — the sheet's height is CSS `dvh`,
 // which on real phones (not desktop, not emulated mobile) can still be
@@ -186,6 +196,7 @@ export function start(mapkitGlobal) {
     // so this has to be assigned before the first call, not after.
     map = instance;
     instance.region = exactRegionFor(initial);
+    updateDotVisibility(initial);
     document.getElementById("map-band").classList.add("mapkit-ready");
     document.getElementById("mapkit-map").classList.add("ready");
   } catch (e) {
@@ -198,6 +209,7 @@ export function centerMapKitOn(beach) {
   if (!map || !pin) return;
   try {
     pin.coordinate = new mapkit.Coordinate(beach.lat, beach.lon);
+    updateDotVisibility(beach);
     map.setRegionAnimated(exactRegionFor(beach), true);
   } catch (e) {
     console.error("mapkit center failed:", e);

@@ -158,7 +158,7 @@ function buildMap() {
     const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     dot.setAttribute("cx", projX(b.lon).toFixed(1));
     dot.setAttribute("cy", projY(b.lat).toFixed(1));
-    dot.setAttribute("r", "3");
+    dot.setAttribute("r", "4.5");
     dot.dataset.slug = b.slug;
     const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
     title.textContent = b.short;
@@ -382,11 +382,21 @@ function conditionsNote(waveWord, waterTempC, windKn, status) {
   return note;
 }
 
+// Small, beach-specific asides — worth knowing, not load-bearing. Keyed
+// by slug so more can be added later without touching render() itself.
+const BEACH_FUN_FACTS = {
+  "hanlans-point": "Toronto's only clothing-optional beach — swimwear is welcome, not required.",
+};
+
 async function render() {
   const beach = currentBeach();
   select.value = beach.slug;
   document.title = `${beach.short} · BeachCheck`;
   $("beach-name").textContent = beach.short;
+  const funFact = $("beach-fun-fact");
+  const fact = BEACH_FUN_FACTS[beach.slug];
+  funFact.textContent = fact ?? "";
+  funFact.hidden = !fact;
   // Switching beaches resets the sheet to its resting position, so the
   // map centering below is against a known, settled sheet height rather
   // than whatever scroll position the previous beach was left at.
@@ -413,7 +423,7 @@ async function render() {
     waterTempC = obs.waterTemp;
     $("water-temp").innerHTML = `${formatWaterTemp(obs.waterTemp)} <small>${shortDate(obs.date)}</small>`;
   } else {
-    $("water-temp").textContent = "—";
+    $("water-temp").innerHTML = `— <small>no reading for this beach</small>`;
   }
 
   // Real buoy height wins; then the city's own (rarely fresh) observation —
@@ -469,7 +479,9 @@ async function render() {
   // buoy/city-observation waves were already rendered above.
   if (waveWord == null) {
     waveWord = waveState(windKn);
-    $("waves").innerHTML = waveWord ? `${waveWord} <small>estimated from wind</small>` : "—";
+    $("waves").innerHTML = waveWord
+      ? `${waveWord} <small>estimated from wind</small>`
+      : `— <small>no reading for this beach</small>`;
   }
   $("paddle-note").textContent = conditionsNote(waveWord, waterTempC, windKn, safeToSwim);
 }
