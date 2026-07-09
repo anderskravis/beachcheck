@@ -400,6 +400,12 @@ h1 {
   background: var(--card);
   border-radius: 1.15rem;
   padding: .85rem 1rem .95rem;
+  /* Reserves room for a full value line + subtext line from the start, so
+     cards don't visibly collapse/resize as data streams in at different
+     times (water quality + water temp arrive first, wind/air/waves after
+     the weather fetch resolves) — that resizing was the "empty state
+     flash" on load. */
+  min-height: 5.7rem;
 }
 
 .stat dt {
@@ -415,6 +421,18 @@ h1 {
   font-size: 1.4rem;
   font-weight: 650;
   letter-spacing: -.01em;
+}
+
+/* The value itself fades in once its JS-populated span actually has
+   content, rather than snapping from blank to filled. */
+.stat dd > span {
+  display: inline-block;
+  opacity: 1;
+  transition: opacity .3s ease;
+}
+
+.stat dd > span:empty {
+  opacity: 0;
 }
 
 .stat dd small {

@@ -151,7 +151,7 @@ function visiblePinTargetY() {
   const sheetTop = document.querySelector(".sheet")?.getBoundingClientRect().top ?? window.innerHeight * 0.4;
   const visibleTop = headerBottom + 12;
   const visibleBottom = Math.max(sheetTop, visibleTop + 20);
-  const targetY = visibleTop + (visibleBottom - visibleTop) * 0.18;
+  const targetY = visibleTop + (visibleBottom - visibleTop) * 0.56;
   const fraction = Math.max(0.08, Math.min(0.45, targetY / window.innerHeight));
   return fraction * 500; // 500 = the #map viewBox height
 }
@@ -345,6 +345,24 @@ async function render() {
     $("water-temp").textContent = "—";
   }
 
+  // Real buoy height wins; then the city's own (rarely fresh) observation —
+  // neither needs the wind-derived estimate below, so render them now
+  // rather than waiting on the weather fetch for no reason (that gap was
+  // part of the "empty card" flash on load: waves rarely actually depends
+  // on wind, but was being held hostage behind it).
+  const lakeBuoy = conditions?.lakeBuoy;
+  const cityWave = obsFresh ? obs.waveAction : null;
+  let waveWord = null;
+  if (lakeBuoy?.waveHeightM != null) {
+    waveWord = waveStateFromHeight(lakeBuoy.waveHeightM);
+    const hoursAgo = Math.round((Date.now() - new Date(lakeBuoy.time)) / 3600000);
+    const when = hoursAgo < 1 ? "now" : `${hoursAgo}h ago`;
+    $("waves").innerHTML = `${waveWord} <small>${lakeBuoy.waveHeightM.toFixed(1)} m · buoy ${when}</small>`;
+  } else if (cityWave) {
+    waveWord = cityWave;
+    $("waves").textContent = cityWave;
+  }
+
   $("app").hidden = false;
   $("loading").hidden = true;
 
@@ -376,20 +394,9 @@ async function render() {
     $("air-temp").textContent = obsFresh && obs.airTemp != null ? `${obs.airTemp}°` : "—";
   }
 
-  // Real buoy height wins; then the city's own (rarely fresh) observation;
-  // then a wind-derived estimate; "—" if none of that is available.
-  const lakeBuoy = conditions?.lakeBuoy;
-  const cityWave = obsFresh ? obs.waveAction : null;
-  let waveWord;
-  if (lakeBuoy?.waveHeightM != null) {
-    waveWord = waveStateFromHeight(lakeBuoy.waveHeightM);
-    const hoursAgo = Math.round((Date.now() - new Date(lakeBuoy.time)) / 3600000);
-    const when = hoursAgo < 1 ? "now" : `${hoursAgo}h ago`;
-    $("waves").innerHTML = `${waveWord} <small>${lakeBuoy.waveHeightM.toFixed(1)} m · buoy ${when}</small>`;
-  } else if (cityWave) {
-    waveWord = cityWave;
-    $("waves").textContent = cityWave;
-  } else {
+  // Only the wind-derived estimate genuinely needs to wait this long —
+  // buoy/city-observation waves were already rendered above.
+  if (waveWord == null) {
     waveWord = waveState(windKn);
     $("waves").innerHTML = waveWord ? `${waveWord} <small>estimated from wind</small>` : "—";
   }
