@@ -146,8 +146,10 @@ function buildMap() {
 function visiblePinTargetY() {
   const headerBottom = document.querySelector(".map-band header")?.getBoundingClientRect().bottom ?? 60;
   const sheetTop = document.querySelector(".sheet")?.getBoundingClientRect().top ?? window.innerHeight * 0.4;
-  const visibleMidY = (headerBottom + Math.max(sheetTop, headerBottom + 20)) / 2;
-  const fraction = Math.max(0.08, Math.min(0.45, visibleMidY / window.innerHeight));
+  const visibleTop = headerBottom + 12;
+  const visibleBottom = Math.max(sheetTop, visibleTop + 20);
+  const targetY = visibleTop + (visibleBottom - visibleTop) * 0.3;
+  const fraction = Math.max(0.08, Math.min(0.45, targetY / window.innerHeight));
   return fraction * 500; // 500 = the #map viewBox height
 }
 

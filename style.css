@@ -297,23 +297,29 @@ body {
   opacity: .4;
   margin: .55rem auto 0;
   flex: none;
+  /* Needs to render above .scroll-fade, which now starts at the very top
+     of the card (y:0) and would otherwise wash it out — position: static
+     elements always stack below positioned ones regardless of DOM order. */
+  position: relative;
+  z-index: 2;
 }
 
 /* Fixed to the top of .sheet regardless of scroll position (a sibling of
-   the scrolling .sheet-inner, not a child of it) so the content fades
+   the scrolling .sheet-inner, not a child of it) so content fades out
    under the grabber as it scrolls past, rather than hard-clipping at the
-   rounded corner. .sheet's own `position: fixed` is what this is
-   absolute against. */
+   rounded corner. .sheet's own `position: fixed` is what this is absolute
+   against. Must start at the very top edge (top: 0) — starting any lower
+   left a gap where scrolled-past content still showed at full, unfaded
+   opacity right up against the rounded corner, i.e. exactly the "hard
+   line" this is supposed to avoid. Kept short so it clears the h1 title
+   at rest (unscrolled) instead of washing out the page heading. */
 .scroll-fade {
   position: absolute;
-  top: 1.05rem;
+  top: 0;
   left: 0;
   right: 0;
-  /* Tall enough to fully mask something as big as the status card's
-     2.2rem headline as it scrolls past — too short and a mid-scroll
-     screenshot catches large text sliced clean in half instead of faded. */
-  height: 2.75rem;
-  background: linear-gradient(to bottom, var(--bg) 55%, transparent);
+  height: 1.5rem;
+  background: linear-gradient(to bottom, var(--bg) 50%, transparent);
   pointer-events: none;
   z-index: 1;
 }
