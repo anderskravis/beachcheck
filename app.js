@@ -148,7 +148,7 @@ function visiblePinTargetY() {
   const sheetTop = document.querySelector(".sheet")?.getBoundingClientRect().top ?? window.innerHeight * 0.4;
   const visibleTop = headerBottom + 12;
   const visibleBottom = Math.max(sheetTop, visibleTop + 20);
-  const targetY = visibleTop + (visibleBottom - visibleTop) * 0.3;
+  const targetY = visibleTop + (visibleBottom - visibleTop) * 0.42;
   const fraction = Math.max(0.08, Math.min(0.45, targetY / window.innerHeight));
   return fraction * 500; // 500 = the #map viewBox height
 }
@@ -361,7 +361,10 @@ async function render() {
     $("wind").innerHTML =
       `${Math.round(weather.wind_speed_10m)} kn ${compass(weather.wind_direction_10m)} ${arrow} ` +
       `<small>gusts ${Math.round(weather.wind_gusts_10m)}</small>`;
-    $("air-temp").textContent = `${Math.round(weather.temperature_2m)}°`;
+    const condition = weatherLabel(weather.weather_code);
+    $("air-temp").innerHTML = condition
+      ? `${Math.round(weather.temperature_2m)}° <small>${condition}</small>`
+      : `${Math.round(weather.temperature_2m)}°`;
   } else {
     if (obsFresh && obs.windSpeed != null) windKn = obs.windSpeed * 0.539957; // km/h -> kn
     $("wind").textContent = obsFresh && obs.windSpeed != null
@@ -390,9 +393,24 @@ async function render() {
   $("paddle-note").textContent = conditionsNote(waveWord, waterTempC, windKn, safeToSwim);
 }
 
+// WMO weather codes (Open-Meteo's `weather_code` field) collapsed down to
+// short, human labels for the Air tile's subtext — same "one word" spirit
+// as the wave/paddle-note phrasing elsewhere.
+const WEATHER_CODES = {
+  0: "clear", 1: "mostly clear", 2: "partly cloudy", 3: "overcast",
+  45: "foggy", 48: "foggy",
+  51: "drizzly", 53: "drizzly", 55: "drizzly", 56: "freezing drizzle", 57: "freezing drizzle",
+  61: "rainy", 63: "rainy", 65: "heavy rain", 66: "freezing rain", 67: "freezing rain",
+  71: "snowy", 73: "snowy", 75: "heavy snow", 77: "snow grains",
+  80: "showers", 81: "showers", 82: "heavy showers",
+  85: "snow showers", 86: "snow showers",
+  95: "thunderstorms", 96: "thunderstorms", 99: "thunderstorms",
+};
+const weatherLabel = (code) => WEATHER_CODES[code] ?? null;
+
 async function fetchWeather(beach) {
   const url = `https://api.open-meteo.com/v1/forecast?latitude=${beach.lat}&longitude=${beach.lon}` +
-    `&current=temperature_2m,wind_speed_10m,wind_gusts_10m,wind_direction_10m` +
+    `&current=temperature_2m,wind_speed_10m,wind_gusts_10m,wind_direction_10m,weather_code` +
     `&wind_speed_unit=kn&timezone=America%2FToronto`;
   const r = await fetch(url);
   if (!r.ok) throw new Error(`open-meteo ${r.status}`);

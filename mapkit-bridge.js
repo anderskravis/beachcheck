@@ -25,7 +25,7 @@ function regionFor(beach) {
   const sheetTop = document.querySelector(".sheet")?.getBoundingClientRect().top ?? window.innerHeight * 0.4;
   const visibleTop = headerBottom + 12;
   const visibleBottom = Math.max(sheetTop, visibleTop + 20);
-  const targetY = visibleTop + (visibleBottom - visibleTop) * 0.3;
+  const targetY = visibleTop + (visibleBottom - visibleTop) * 0.42;
   const targetFraction = Math.max(0.08, Math.min(0.45, targetY / window.innerHeight));
   const centerLat = beach.lat - SPAN.lat * (0.5 - targetFraction);
   return new mapkit.CoordinateRegion(
