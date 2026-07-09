@@ -17,7 +17,7 @@ const SPAN = { lat: 0.05, lon: 0.07 }; // roughly a 5-6 km view around the beach
 // it's mattered in practice; wide/desktop keeps the sheet-aware version,
 // which already looks right there.
 const NARROW_VIEWPORT_PX = 700;
-const NARROW_TARGET_VH = 0.12; // how far below the header, as a fraction of viewport height
+const NARROW_TARGET_VH = 0.05; // how far below the header, as a fraction of viewport height
 
 function currentBeachFromHash() {
   return beachForSlug(location.hash.replace(/^#/, "")) ?? beachForSlug(DEFAULT_SLUG);
@@ -33,7 +33,7 @@ function regionFor(beach) {
   let targetFraction;
   if (window.innerWidth < NARROW_VIEWPORT_PX) {
     const targetY = headerBottom + window.innerHeight * NARROW_TARGET_VH;
-    targetFraction = Math.max(0.05, Math.min(0.3, targetY / window.innerHeight));
+    targetFraction = Math.max(0.04, Math.min(0.18, targetY / window.innerHeight));
   } else {
     const sheetTop = document.querySelector(".sheet")?.getBoundingClientRect().top ?? window.innerHeight * 0.4;
     const visibleTop = headerBottom + 12;

@@ -111,7 +111,7 @@ const ZOOM = 2.1;
 // already looks right there. Shared with the same constants in
 // mapkit-bridge.js.
 const NARROW_VIEWPORT_PX = 700;
-const NARROW_TARGET_VH = 0.12; // how far below the header, as a fraction of viewport height
+const NARROW_TARGET_VH = 0.05; // how far below the header, as a fraction of viewport height
 
 function polyPath(points, close) {
   const d = points
@@ -165,7 +165,7 @@ function visiblePinTargetY() {
   let fraction;
   if (window.innerWidth < NARROW_VIEWPORT_PX) {
     const targetY = headerBottom + window.innerHeight * NARROW_TARGET_VH;
-    fraction = Math.max(0.05, Math.min(0.3, targetY / window.innerHeight));
+    fraction = Math.max(0.04, Math.min(0.18, targetY / window.innerHeight));
   } else {
     const sheetTop = document.querySelector(".sheet")?.getBoundingClientRect().top ?? window.innerHeight * 0.4;
     const visibleTop = headerBottom + 12;
