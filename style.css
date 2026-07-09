@@ -499,7 +499,13 @@ h1 {
 }
 
 footer {
-  margin-top: auto;
+  /* Was margin-top: auto, which stretches to fill however tall the sheet
+     currently is — harmless when content nearly fills it, but once the
+     sheet is pulled to full height the footer got shoved to the very
+     bottom, leaving a big empty gap above it. Flowing right after content
+     keeps a consistent gap regardless of how far the sheet is expanded;
+     .scroll-spacer (below) still guarantees scrollable overflow on its own. */
+  margin-top: 1rem;
   padding-top: 2.5rem;
   font-size: .75rem;
   color: var(--muted);
@@ -534,7 +540,10 @@ footer .made-in {
 /* ---------- history chart ---------- */
 
 .history-section {
-  margin-top: 1.4rem;
+  /* Extra margin (vs. the ~1.2rem other sections use) is deliberate: it
+     keeps the chart from peeking in at rest, so it's only ever revealed by
+     scrolling/expanding the sheet, the way the paddle note above it isn't. */
+  margin-top: 4.5rem;
 }
 
 .history-section h2 {
