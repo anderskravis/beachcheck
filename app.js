@@ -148,7 +148,7 @@ function visiblePinTargetY() {
   const sheetTop = document.querySelector(".sheet")?.getBoundingClientRect().top ?? window.innerHeight * 0.4;
   const visibleTop = headerBottom + 12;
   const visibleBottom = Math.max(sheetTop, visibleTop + 20);
-  const targetY = visibleTop + (visibleBottom - visibleTop) * 0.42;
+  const targetY = visibleTop + (visibleBottom - visibleTop) * 0.18;
   const fraction = Math.max(0.08, Math.min(0.45, targetY / window.innerHeight));
   return fraction * 500; // 500 = the #map viewBox height
 }
