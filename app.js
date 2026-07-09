@@ -101,6 +101,18 @@ const projX = (lon) => (lon - LON0) * KMX * PX_PER_KM;
 const projY = (lat) => (LAT0 - lat) * 111.32 * PX_PER_KM;
 const ZOOM = 2.1;
 
+// Below this width, use a fixed offset from the header instead of trying
+// to read the sheet's position at all — the sheet's height is CSS `dvh`,
+// which on real phones (not desktop, not emulated mobile) can still be
+// settling from Safari's dynamic toolbar at the moment this runs, making
+// its measured position unreliable. A flat "just below the header" target
+// sidesteps that dependency entirely on narrow viewports, where it's
+// mattered in practice; wide/desktop keeps the sheet-aware version, which
+// already looks right there. Shared with the same constants in
+// mapkit-bridge.js.
+const NARROW_VIEWPORT_PX = 700;
+const NARROW_TARGET_VH = 0.12; // how far below the header, as a fraction of viewport height
+
 function polyPath(points, close) {
   const d = points
     .map(([lon, lat], i) => `${i ? "L" : "M"}${projX(lon).toFixed(1)},${projY(lat).toFixed(1)}`)
@@ -139,20 +151,28 @@ function buildMap() {
 }
 
 // Where a pin should land — in the SVG's own viewBox units (0-500 tall),
-// not screen pixels — so it's not hidden behind the sheet OR the header,
-// roughly centered in whatever strip of map is still visible between the
-// two. #world's translate below is a CSS transform on an SVG element, which
-// resolves in the SVG's user-space (viewBox) units, not physical viewport
-// pixels — mixing the two was the earlier bug. Fraction is read live off
-// the DOM since the sheet's own height changes continuously (see the
+// not screen pixels — so it's not hidden behind the sheet OR the header.
+// On narrow viewports this is a fixed distance below the header, ignoring
+// the sheet entirely (see NARROW_VIEWPORT_PX above); on wide viewports
+// it's centered within the strip actually visible between the header and
+// the sheet. #world's translate below is a CSS transform on an SVG
+// element, which resolves in the SVG's user-space (viewBox) units, not
+// physical viewport pixels — mixing the two was an earlier bug. Read live
+// off the DOM since the sheet's own height changes continuously (see the
 // parallax listener below), not assumed from CSS constants.
 function visiblePinTargetY() {
   const headerBottom = document.querySelector(".map-band header")?.getBoundingClientRect().bottom ?? 60;
-  const sheetTop = document.querySelector(".sheet")?.getBoundingClientRect().top ?? window.innerHeight * 0.4;
-  const visibleTop = headerBottom + 12;
-  const visibleBottom = Math.max(sheetTop, visibleTop + 20);
-  const targetY = visibleTop + (visibleBottom - visibleTop) * 0.56;
-  const fraction = Math.max(0.08, Math.min(0.45, targetY / window.innerHeight));
+  let fraction;
+  if (window.innerWidth < NARROW_VIEWPORT_PX) {
+    const targetY = headerBottom + window.innerHeight * NARROW_TARGET_VH;
+    fraction = Math.max(0.05, Math.min(0.3, targetY / window.innerHeight));
+  } else {
+    const sheetTop = document.querySelector(".sheet")?.getBoundingClientRect().top ?? window.innerHeight * 0.4;
+    const visibleTop = headerBottom + 12;
+    const visibleBottom = Math.max(sheetTop, visibleTop + 20);
+    const targetY = visibleTop + (visibleBottom - visibleTop) * 0.56;
+    fraction = Math.max(0.08, Math.min(0.45, targetY / window.innerHeight));
+  }
   return fraction * 500; // 500 = the #map viewBox height
 }
 

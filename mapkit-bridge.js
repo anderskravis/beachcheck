@@ -8,25 +8,39 @@ let pin = null;
 
 const SPAN = { lat: 0.05, lon: 0.07 }; // roughly a 5-6 km view around the beach
 
+// Below this width, use a fixed offset from the header instead of trying
+// to read the sheet's position at all — the sheet's height is CSS `dvh`,
+// which on real phones (not desktop, not emulated mobile) can still be
+// settling from Safari's dynamic toolbar at the moment this runs, making
+// its measured position unreliable. A flat "just below the header"
+// target sidesteps that dependency entirely on narrow viewports, where
+// it's mattered in practice; wide/desktop keeps the sheet-aware version,
+// which already looks right there.
+const NARROW_VIEWPORT_PX = 700;
+const NARROW_TARGET_VH = 0.12; // how far below the header, as a fraction of viewport height
+
 function currentBeachFromHash() {
   return beachForSlug(location.hash.replace(/^#/, "")) ?? beachForSlug(DEFAULT_SLUG);
 }
 
-// The sheet covers the lower part of the screen (and its own height varies —
-// see app.js's parallax scroll), so centering the region ON the beach
-// coordinate would put the pin right underneath it. Shift the region's
-// center south of the beach so the beach itself lands within whatever
-// strip is actually visible between the header and the sheet — biased
-// toward the top of that strip (rather than dead center) so the pin sits
-// close under the header, matching a typical map-card layout, with
-// clearance from the header's own height so it never lands underneath it.
+// Shifts the region's center south of the beach so the beach itself lands
+// higher up on screen than dead-center — either a fixed distance below the
+// header (narrow viewports) or centered within the strip actually visible
+// between the header and the sheet (wide viewports, where the sheet's
+// position is trustworthy).
 function regionFor(beach) {
   const headerBottom = document.querySelector(".map-band header")?.getBoundingClientRect().bottom ?? 60;
-  const sheetTop = document.querySelector(".sheet")?.getBoundingClientRect().top ?? window.innerHeight * 0.4;
-  const visibleTop = headerBottom + 12;
-  const visibleBottom = Math.max(sheetTop, visibleTop + 20);
-  const targetY = visibleTop + (visibleBottom - visibleTop) * 0.56;
-  const targetFraction = Math.max(0.08, Math.min(0.45, targetY / window.innerHeight));
+  let targetFraction;
+  if (window.innerWidth < NARROW_VIEWPORT_PX) {
+    const targetY = headerBottom + window.innerHeight * NARROW_TARGET_VH;
+    targetFraction = Math.max(0.05, Math.min(0.3, targetY / window.innerHeight));
+  } else {
+    const sheetTop = document.querySelector(".sheet")?.getBoundingClientRect().top ?? window.innerHeight * 0.4;
+    const visibleTop = headerBottom + 12;
+    const visibleBottom = Math.max(sheetTop, visibleTop + 20);
+    const targetY = visibleTop + (visibleBottom - visibleTop) * 0.56;
+    targetFraction = Math.max(0.08, Math.min(0.45, targetY / window.innerHeight));
+  }
   const centerLat = beach.lat - SPAN.lat * (0.5 - targetFraction);
   return new mapkit.CoordinateRegion(
     new mapkit.Coordinate(centerLat, beach.lon),
