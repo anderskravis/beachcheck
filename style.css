@@ -517,6 +517,20 @@ footer .made-in {
   opacity: .8;
 }
 
+/* Guarantees a fixed amount of scrollable overflow always exists below
+   the visible content, regardless of how tall the sheet currently is.
+   Without this, on short content the sheet expanding (to reveal more of
+   itself, driven by scroll position) shrinks its own remaining overflow,
+   which forces the browser to correct scrollTop, which re-triggers the
+   scroll listener, which resizes the sheet again — an unstable feedback
+   loop that jitters indefinitely once scrolled near the bottom. This
+   spacer keeps "how much you can scroll" independent of "how tall the
+   sheet is" so that loop can't start. */
+.scroll-spacer {
+  flex: none;
+  height: 20rem;
+}
+
 .text-btn {
   margin-top: .9rem;
   padding: 0;
