@@ -188,6 +188,49 @@ async function fetchLakeBuoy() {
   return parseLakeBuoy(text);
 }
 
+// Rainfall over the previous 48 hours, per beach. Heavy rain washes runoff
+// into the lake and can spike E. coli well before the (day-delayed) samples
+// catch up — the classic "don't swim for 48h after a storm" rule. Summer
+// storms are localized enough across the ~40 km beach span to be worth
+// per-beach numbers; Open-Meteo takes comma-separated coordinates and
+// returns one result per point, so it's still a single request.
+const RAIN_HOURS = 48;
+
+async function fetchRain48h() {
+  if (USE_FIXTURES) {
+    // A mix: a couple of soaked beaches to exercise the caution escalation,
+    // dry everywhere else.
+    return Object.fromEntries(
+      BEACHES.map((b) => [b.slug, b.slug === "woodbine" ? 31.2 : b.slug === "kew-balmy" ? 26.4 : 2.1])
+    );
+  }
+  const lats = BEACHES.map((b) => b.lat).join(",");
+  const lons = BEACHES.map((b) => b.lon).join(",");
+  const url =
+    `https://api.open-meteo.com/v1/forecast?latitude=${lats}&longitude=${lons}` +
+    `&hourly=precipitation&past_days=2&forecast_days=1&timezone=UTC`;
+  const res = await getJson(url);
+  const locations = Array.isArray(res) ? res : [res];
+  const now = Date.now();
+  const cutoff = now - RAIN_HOURS * 3600 * 1000;
+  const out = {};
+  BEACHES.forEach((beach, i) => {
+    const hourly = locations[i]?.hourly;
+    if (!hourly?.time) return;
+    let mm = 0;
+    hourly.time.forEach((t, j) => {
+      const ts = Date.parse(`${t}:00Z`);
+      // Only hours that have actually happened — the request includes today's
+      // forecast hours, and predicted rain shouldn't count as fallen rain.
+      if (ts >= cutoff && ts <= now && hourly.precipitation[j] != null) {
+        mm += hourly.precipitation[j];
+      }
+    });
+    out[beach.slug] = Math.round(mm * 10) / 10;
+  });
+  return out;
+}
+
 // City datasets have varied casing over the years; find fields case-insensitively.
 function fieldFinder(record) {
   const keys = Object.keys(record);
@@ -289,6 +332,10 @@ const lakeBuoy = await fetchLakeBuoy().catch((e) => {
   console.error("NDBC 45159 lake buoy failed:", e.message);
   return null;
 });
+const rain48h = await fetchRain48h().catch((e) => {
+  console.error("Open-Meteo rain history failed:", e.message);
+  return {};
+});
 
 // Live feed wins per beach; the CKAN dataset (a season behind) is the fallback.
 const waterQuality = { ...ckanWaterQuality, ...liveResults };
@@ -301,6 +348,7 @@ const conditions = {
     observations: `https://open.toronto.ca/dataset/${OBSERVATIONS_PACKAGE}/`,
     buoys: OWD,
     lakeBuoy: "https://www.ndbc.noaa.gov/station_page.php?station=45159",
+    rain: "https://open-meteo.com/",
   },
   lakeBuoy,
   beaches: Object.fromEntries(
@@ -311,6 +359,7 @@ const conditions = {
         waterQuality: waterQuality[b.slug] ?? null,
         observations: observations[b.slug] ?? null,
         buoy: buoys[b.slug] ?? null,
+        rain48hMm: rain48h[b.slug] ?? null,
       },
     ])
   ),

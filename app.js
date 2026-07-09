@@ -82,7 +82,8 @@ const DOT_STATUS_COLORS = { safe: "#0a7aff", caution: "#f2b90f", unsafe: "#eb403
 conditionsPromise.then((conditions) => {
   const statuses = {};
   for (const b of BEACHES) {
-    statuses[b.slug] = beachStatus(conditions?.beaches?.[b.slug]?.waterQuality ?? null);
+    const entry = conditions?.beaches?.[b.slug];
+    statuses[b.slug] = beachStatus(entry?.waterQuality ?? null, entry?.rain48hMm ?? null);
   }
   for (const dot of $("dots").children) {
     const color = DOT_STATUS_COLORS[statuses[dot.dataset.slug]];
@@ -280,28 +281,50 @@ setTimeout(() => $("map-band").classList.add("show-fallback"), 2500);
 
 const E_COLI_CAUTION = 70; // getting close to the posting limit — not unsafe yet, but worth a heads up
 
+// 48h rainfall (mm) that earns a caution on its own, even when the posted
+// reading looks fine — readings lag the lake by about a day (samples are
+// collected each morning, results take ~a day in the lab), and storm
+// runoff is the classic way the real picture gets worse faster than the
+// tests can show. Threshold is roughly "a genuinely rainy couple of days,"
+// not a passing shower.
+const RAIN_CAUTION_MM = 20;
+
 // Pure classification, shared between the status card (current beach) and
 // the map dots (every beach at once): "safe", "caution", "unsafe", or null
 // when there's no current reading. The city's posted status is
 // authoritative when present (it can flag a beach unsafe preemptively);
 // the E. coli threshold is the fallback. "Caution" only applies within an
 // otherwise-safe reading — a beach the city has actually posted unsafe is
-// never softened to caution.
-function beachStatus(wq) {
+// never softened to caution — and heavy recent rain escalates an
+// otherwise-safe reading to caution, since the reading predates the rain.
+function beachStatus(wq, rain48hMm) {
   if (!wq || daysAgo(wq.sampleDate) > STALE_DAYS) return null;
   const unsafe = wq.statusFlag ? wq.statusFlag !== "SAFE" : wq.eColi >= E_COLI_LIMIT;
-  const caution = !unsafe && wq.eColi >= E_COLI_CAUTION;
-  return unsafe ? "unsafe" : caution ? "caution" : "safe";
+  if (unsafe) return "unsafe";
+  const rainy = rain48hMm != null && rain48hMm >= RAIN_CAUTION_MM;
+  return wq.eColi >= E_COLI_CAUTION || rainy ? "caution" : "safe";
+}
+
+// Direction of the latest reading vs the previous sample, with enough of a
+// dead zone that day-to-day noise doesn't earn an arrow: E. coli counts
+// bounce around a lot at low levels, so "up 4 from 9" isn't a trend, but
+// "up 40% and 10+ points" is worth showing. Returns { dir, from } or null.
+function eColiTrend(wq) {
+  const prev = wq?.history?.[1];
+  if (!prev || wq.eColi == null || prev.eColi == null) return null;
+  if (wq.eColi >= prev.eColi * 1.25 && wq.eColi - prev.eColi >= 10) return { dir: "up", from: prev.eColi };
+  if (prev.eColi >= wq.eColi * 1.25 && prev.eColi - wq.eColi >= 10) return { dir: "down", from: prev.eColi };
+  return null;
 }
 
 // Renders the status card for the current beach — callers use the return
 // value to keep the paddle note from contradicting a "no swim" call (and
 // to soften it, rather than contradict it, on a "caution" day).
-function renderStatus(wq) {
+function renderStatus(wq, rain48hMm) {
   const card = $("status");
   const word = $("status-word");
   const detail = $("status-detail");
-  const status = beachStatus(wq);
+  const status = beachStatus(wq, rain48hMm);
   if (status === null) {
     card.className = "stat status-card";
     word.textContent = "no data";
@@ -312,7 +335,12 @@ function renderStatus(wq) {
   }
   card.className = `stat status-card ${status === "unsafe" ? "bad" : status === "caution" ? "caution" : "good"}`;
   word.textContent = status === "unsafe" ? "no swim" : status === "caution" ? "caution" : "swim";
-  detail.textContent = `E. coli ${wq.eColi} of ${E_COLI_LIMIT} limit · sampled ${shortDate(wq.sampleDate)}`;
+  const bits = [`E. coli ${wq.eColi} of ${E_COLI_LIMIT} limit`];
+  const trend = eColiTrend(wq);
+  if (trend) bits.push(`${trend.dir === "up" ? "↑" : "↓"} from ${trend.from}`);
+  if (rain48hMm != null && rain48hMm >= RAIN_CAUTION_MM) bits.push(`${Math.round(rain48hMm)} mm rain in 48 h`);
+  bits.push(`sampled ${shortDate(wq.sampleDate)}`);
+  detail.textContent = bits.join(" · ");
   return status;
 }
 
@@ -367,9 +395,10 @@ const BEACH_ASIDES = {
 // wave descriptor (real buoy height, city observation, or wind estimate).
 // status is renderStatus()'s return value ("safe"/"caution"/"unsafe"/null)
 // — a "no swim" day should never be topped off with an upbeat paddling
-// verdict, and a "caution" day gets a gentle heads-up instead of either.
+// verdict, and a "caution" day gets a heads-up that says WHY (borderline
+// reading, heavy recent rain, or both — wq/rain48hMm carry the evidence).
 // Returns HTML (a beach aside may include a link), not plain text.
-function conditionsNote(waveWord, waterTempC, windKn, status, slug) {
+function conditionsNote(waveWord, waterTempC, windKn, status, slug, wq, rain48hMm) {
   let note;
   if (status === "unsafe") {
     note = waveWord
@@ -386,7 +415,19 @@ function conditionsNote(waveWord, waterTempC, windKn, status, slug) {
       note = verdict ? `${clauses.join(", ")} — ${verdict}.` : `${clauses.join(", ")}.`;
     }
     if (status === "caution") {
-      const headsUp = "Water quality is borderline today — worth checking before you go.";
+      const borderline = wq != null && wq.eColi >= E_COLI_CAUTION;
+      const rainy = rain48hMm != null && rain48hMm >= RAIN_CAUTION_MM;
+      const rising = eColiTrend(wq)?.dir === "up";
+      let headsUp;
+      if (borderline && rainy) {
+        headsUp = "Water quality is borderline and it's rained hard in the past 48 h — think twice today.";
+      } else if (rainy) {
+        headsUp = "The reading looks fine, but heavy rain in the past 48 h can push bacteria up before tests catch up — swim with caution.";
+      } else if (rising) {
+        headsUp = "Water quality is borderline and trending up — worth checking before you go.";
+      } else {
+        headsUp = "Water quality is borderline today — worth checking before you go.";
+      }
       note = note ? `${note} ${headsUp}` : headsUp;
     }
   }
@@ -412,7 +453,7 @@ async function render() {
   const data = conditions?.beaches?.[beach.slug];
   const obs = data?.observations;
 
-  const safeToSwim = renderStatus(data?.waterQuality ?? null);
+  const safeToSwim = renderStatus(data?.waterQuality ?? null, data?.rain48hMm ?? null);
 
   const obsFresh = obs && daysAgo(obs.date) <= STALE_DAYS;
   const buoy = data?.buoy;
@@ -486,7 +527,10 @@ async function render() {
       ? `${waveWord} <small>estimated from wind</small>`
       : `— <small>no reading for this beach</small>`;
   }
-  $("paddle-note").innerHTML = conditionsNote(waveWord, waterTempC, windKn, safeToSwim, beach.slug);
+  $("paddle-note").innerHTML = conditionsNote(
+    waveWord, waterTempC, windKn, safeToSwim, beach.slug,
+    data?.waterQuality ?? null, data?.rain48hMm ?? null
+  );
 }
 
 // WMO weather codes (Open-Meteo's `weather_code` field) collapsed down to

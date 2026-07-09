@@ -4,7 +4,7 @@
 
 BeachCheck covers all of Toronto's supervised beaches: Marie Curtis Park East, Sunnyside, Hanlan's Point, Gibraltar Point, Centre Island, Ward's Island, Cherry, Woodbine, Kew-Balmy, Bluffer's Park and Rouge.
 
-A beach reads "swim" when its latest E. coli sample is under the City of Toronto's posting limit (100 / 100 mL), "no swim" at or above it, and "no data" outside the June–September sampling season. This is not official safety advice; always check for posted lifeguard flags at the beach itself.
+A beach reads "swim" when its latest E. coli sample is comfortably under the City of Toronto's posting limit (100 / 100 mL), "caution" when the reading is approaching that limit or when heavy rain has fallen in the past 48 hours (samples lag the lake by about a day, and storm runoff can raise bacteria before tests catch up), "no swim" at or above the limit, and "no data" outside the June–September sampling season. The card also shows the day-over-day E. coli trend. This is not official safety advice; always check for posted lifeguard flags at the beach itself.
 
 ## Data sources
 

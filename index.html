@@ -47,7 +47,7 @@
         "name": "Is it safe to swim today?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Check the water quality card at the top of BeachCheck — \"swim\" means the beach's latest E. coli sample is comfortably under Toronto's posting limit; \"caution\" means it's getting close to that limit but not over it yet; \"no swim\" means it's at or above it. It refreshes daily during the June to September sampling season."
+          "text": "Check the water quality card at the top of BeachCheck — \"swim\" means the beach's latest E. coli sample is comfortably under Toronto's posting limit; \"caution\" means it's getting close to that limit, or there has been heavy rain since the sample was taken (runoff can raise bacteria faster than the day-delayed tests can show); \"no swim\" means it's at or above the limit. It refreshes daily during the June to September sampling season."
         }
       },
       {
@@ -198,8 +198,24 @@
       <li><a href="https://open.toronto.ca/dataset/toronto-beaches-water-quality/" target="_blank" rel="noopener">City of Toronto</a> — daily E. coli sampling &amp; posted swim status</li>
       <li><a href="https://www.openwaterdata.com/" target="_blank" rel="noopener">Open Water Data</a> — real-time buoy water temperature</li>
       <li><a href="https://www.ndbc.noaa.gov/station_page.php?station=45159" target="_blank" rel="noopener">NOAA / ECCC buoy 45159</a> — Lake Ontario wave height</li>
-      <li><a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> — live wind &amp; air temperature</li>
+      <li><a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> — live wind, air temperature &amp; rainfall</li>
     </ul>
+
+    <h3>How the water quality call works</h3>
+    <p>
+      The city samples each beach every morning during the season, and lab
+      results take about a day — so the posted reading always trails the
+      lake by roughly a day. It's the best official signal there is, just
+      not a live one.
+    </p>
+    <p>
+      Heavy rain washes runoff into the lake and can push bacteria up
+      faster than the tests can show — the usual rule of thumb is to skip
+      swimming for 48 hours after a big storm. BeachCheck flags
+      <strong>caution</strong> when a reading is climbing toward the limit
+      or when there's been heavy rain since the last sample, and shows the
+      day-over-day trend (↑/↓) right on the card.
+    </p>
 
     <h3>Units</h3>
     <label class="toggle-row">
@@ -212,7 +228,7 @@
     </label>
 
     <h3>FAQ</h3>
-    <p><strong>Is it safe to swim today?</strong><br>Check the water quality card at the top — "swim" means the beach's latest E. coli sample is comfortably under Toronto's posting limit, "caution" means it's getting close, and "no swim" means it's at or above it. It refreshes daily during the June–September sampling season.</p>
+    <p><strong>Is it safe to swim today?</strong><br>Check the water quality card at the top — "swim" means the beach's latest E. coli sample is comfortably under Toronto's posting limit, "caution" means it's getting close (or there's been heavy rain since the sample was taken), and "no swim" means it's at or above it. It refreshes daily during the June–September sampling season.</p>
     <p><strong>Which beaches does BeachCheck cover?</strong><br>All of Toronto's supervised swimming beaches, from Marie Curtis Park in the west to Rouge Beach in the east — pick one from the dropdown up top.</p>
     <p><strong>Is this official?</strong><br>No — it's an independent tool built on the City of Toronto's own open data. Always check for posted lifeguard flags too.</p>
 
