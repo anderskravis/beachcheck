@@ -224,7 +224,11 @@ body {
 .sheet {
   position: fixed;
   z-index: 1;
-  top: max(44dvh, 20rem);
+  /* Set from app.js once real content height is known (varies by device
+     and by content — e.g. "no data" vs a full stat grid), clamped to keep
+     some map visible above it either way. Fallback covers the brief
+     instant before JS runs. */
+  top: var(--collapsed-top, max(44dvh, 20rem));
   left: 0;
   right: 0;
   bottom: 1.25rem;

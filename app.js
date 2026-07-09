@@ -164,6 +164,30 @@ setTimeout(() => $("map-band").classList.add("show-fallback"), 2500);
   });
 }
 
+// A static dvh/rem guess for the collapsed sheet height doesn't hold up
+// across real devices (Safari's dynamic chrome, notches, etc.) — on at
+// least one real iPhone it left the wind/air cards cut off. Instead,
+// measure how tall the content actually is and set the collapsed `top`
+// so it just fits, clamped so there's always some map visible above it
+// and it never grows absurdly tall on short-content states.
+const grabberEl = document.querySelector(".grabber");
+const sheetElForHeight = document.querySelector(".sheet");
+const sheetInnerForHeight = document.querySelector(".sheet-inner");
+
+function tuneCollapsedHeight() {
+  if (sheetElForHeight.classList.contains("expanded")) return; // don't fight the user's own expand
+  const bottomGapPx = 20; // matches .sheet's `bottom: 1.25rem`
+  const innerPadding = 14 + 32; // sheet-inner's top+bottom padding (.9rem + 2rem)
+  const contentHeight = grabberEl.offsetHeight + innerPadding + sheetInnerForHeight.scrollHeight;
+  const needed = window.innerHeight - contentHeight - bottomGapPx;
+  const minTop = window.innerHeight * 0.14;
+  const maxTop = window.innerHeight * 0.55;
+  const top = Math.max(minTop, Math.min(maxTop, needed));
+  sheetElForHeight.style.setProperty("--collapsed-top", `${Math.round(top)}px`);
+}
+
+window.addEventListener("resize", tuneCollapsedHeight);
+
 /* ---------- status + stats ---------- */
 
 // Returns whether the water is safe to swim in (true/false), or null when
@@ -323,6 +347,7 @@ async function render() {
     $("waves").innerHTML = waveWord ? `${waveWord} <small>estimated from wind</small>` : "—";
   }
   $("paddle-note").textContent = conditionsNote(waveWord, waterTempC, windKn, safeToSwim);
+  tuneCollapsedHeight();
 }
 
 async function fetchWeather(beach) {
