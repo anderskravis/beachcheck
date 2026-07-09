@@ -23,29 +23,70 @@ function currentBeachFromHash() {
   return beachForSlug(location.hash.replace(/^#/, "")) ?? beachForSlug(DEFAULT_SLUG);
 }
 
-// Shifts the region's center south of the beach so the beach itself lands
-// higher up on screen than dead-center — either a fixed distance below the
-// header (narrow viewports) or centered within the strip actually visible
-// between the header and the sheet (wide viewports, where the sheet's
-// position is trustworthy).
-function regionFor(beach) {
+// Where the beach should land on screen (page/client px — equivalent here
+// since .map-band is a fixed, unscrolled full-viewport layer): a fixed
+// distance below the header on narrow viewports (ignoring the sheet
+// entirely — its dvh-driven position proved unreliable to read on real
+// phones), or centered within the strip actually visible between the
+// header and the sheet on wide viewports, where the sheet's position is
+// trustworthy.
+function targetScreenY() {
   const headerBottom = document.querySelector(".map-band header")?.getBoundingClientRect().bottom ?? 60;
-  let targetFraction;
   if (window.innerWidth < NARROW_VIEWPORT_PX) {
-    const targetY = headerBottom + window.innerHeight * NARROW_TARGET_VH;
-    targetFraction = Math.max(0.04, Math.min(0.18, targetY / window.innerHeight));
-  } else {
-    const sheetTop = document.querySelector(".sheet")?.getBoundingClientRect().top ?? window.innerHeight * 0.4;
-    const visibleTop = headerBottom + 12;
-    const visibleBottom = Math.max(sheetTop, visibleTop + 20);
-    const targetY = visibleTop + (visibleBottom - visibleTop) * 0.56;
-    targetFraction = Math.max(0.08, Math.min(0.45, targetY / window.innerHeight));
+    return headerBottom + window.innerHeight * NARROW_TARGET_VH;
   }
+  const sheetTop = document.querySelector(".sheet")?.getBoundingClientRect().top ?? window.innerHeight * 0.4;
+  const visibleTop = headerBottom + 12;
+  const visibleBottom = Math.max(sheetTop, visibleTop + 20);
+  return visibleTop + (visibleBottom - visibleTop) * 0.56;
+}
+
+// A same-span region dead-centered exactly on the beach — the simplest
+// possible region, and also the reference frame exactRegionFor uses below.
+function centeredRegionFor(beach) {
+  return new mapkit.CoordinateRegion(
+    new mapkit.Coordinate(beach.lat, beach.lon),
+    new mapkit.CoordinateSpan(SPAN.lat, SPAN.lon)
+  );
+}
+
+// Shifting the center by a fraction of SPAN.lat assumes a simple linear
+// relationship between "fraction of screen height" and "fraction of the
+// region's latitude span" — that held up fine against this file's own
+// hand-drawn SVG fallback (a simple equirectangular projection we fully
+// control), but not against real MapKit on an actual phone: MapKit fits a
+// region to the container using its own projection, which doesn't
+// preserve that relationship, especially on a tall/narrow screen with a
+// roughly-square span like this one. Used only if the exact method below
+// is ever unavailable.
+function approximateRegionFor(beach) {
+  const targetFraction = Math.max(0.04, Math.min(0.45, targetScreenY() / window.innerHeight));
   const centerLat = beach.lat - SPAN.lat * (0.5 - targetFraction);
   return new mapkit.CoordinateRegion(
     new mapkit.Coordinate(centerLat, beach.lon),
     new mapkit.CoordinateSpan(SPAN.lat, SPAN.lon)
   );
+}
+
+// Asks MapKit itself where things render instead of guessing: center
+// exactly on the beach, read back the page point that coordinate actually
+// lands on, then solve for whatever center coordinate would put it at the
+// real target point instead. Exact regardless of aspect ratio or
+// projection quirks, since it's driven by MapKit's own conversion rather
+// than an assumed degrees-per-pixel relationship.
+function exactRegionFor(beach) {
+  const targetY = targetScreenY();
+  try {
+    map.region = centeredRegionFor(beach);
+    const rect = document.getElementById("mapkit-map").getBoundingClientRect();
+    const centerPt = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+    const solveAt = new DOMPoint(centerPt.x, 2 * centerPt.y - targetY);
+    const newCenter = map.convertPointOnPageToCoordinate(solveAt);
+    return new mapkit.CoordinateRegion(newCenter, new mapkit.CoordinateSpan(SPAN.lat, SPAN.lon));
+  } catch (e) {
+    console.error("exact region calc failed, falling back to approximate centering:", e);
+    return approximateRegionFor(beach);
+  }
 }
 
 // Dark map at night, light muted map by day — tied to actual Toronto time,
@@ -99,8 +140,11 @@ export function start(mapkitGlobal) {
       }
     );
     instance.addAnnotation(pin);
-    instance.region = regionFor(initial);
+    // exactRegionFor reads/writes the module-level `map` variable (it needs
+    // to set a reference region on it before asking it to convert points),
+    // so this has to be assigned before the first call, not after.
     map = instance;
+    instance.region = exactRegionFor(initial);
     document.getElementById("map-band").classList.add("mapkit-ready");
     document.getElementById("mapkit-map").classList.add("ready");
 
@@ -133,7 +177,7 @@ export function centerMapKitOn(beach) {
   if (!map || !pin) return;
   try {
     pin.coordinate = new mapkit.Coordinate(beach.lat, beach.lon);
-    map.setRegionAnimated(regionFor(beach), true);
+    map.setRegionAnimated(exactRegionFor(beach), true);
   } catch (e) {
     console.error("mapkit center failed:", e);
   }
