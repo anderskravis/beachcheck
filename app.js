@@ -19,6 +19,28 @@ const currentBeach = () => beachForSlug(slugFromHash()) ?? beachForSlug(DEFAULT_
 select.addEventListener("change", () => { location.hash = select.value; });
 addEventListener("hashchange", render);
 
+const aboutDialog = $("about-dialog");
+$("about-btn").addEventListener("click", () => aboutDialog.showModal());
+
+$("share-btn").addEventListener("click", async (e) => {
+  const beach = currentBeach();
+  const word = $("status-word").textContent.trim();
+  const note = $("paddle-note").textContent.trim();
+  const text = [word && `${word}.`, note].filter(Boolean).join(" ");
+  const shareData = { title: `BeachCheck · ${beach.short}`, text, url: location.href };
+  if (navigator.share) {
+    try { await navigator.share(shareData); } catch { /* user cancelled */ }
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(`${shareData.title} — ${text} ${shareData.url}`);
+    const btn = e.currentTarget;
+    btn.classList.remove("confirm");
+    void btn.offsetWidth; // restart the animation if clicked again quickly
+    btn.classList.add("confirm");
+  } catch { /* clipboard unavailable; nothing more to do */ }
+});
+
 const conditionsPromise = fetch("data/conditions.json").then((r) => {
   if (!r.ok) throw new Error(`conditions.json ${r.status}`);
   return r.json();

@@ -1,12 +1,41 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-CA">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="light dark">
   <title>BeachCheck · Toronto beach conditions</title>
-  <meta name="description" content="Water quality, temperature, waves and wind for Toronto's beaches. For swimmers and SUP riders.">
+  <meta name="description" content="Live water quality, water temperature, waves and wind for Toronto's supervised beaches — one glance for swimmers, paddlers and SUP riders.">
+  <link rel="canonical" href="https://beachcheck.ca/">
+  <meta name="robots" content="index, follow">
   <link rel="stylesheet" href="style.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BeachCheck">
+  <meta property="og:title" content="BeachCheck · Toronto beach conditions">
+  <meta property="og:description" content="Live water quality, water temperature, waves and wind for Toronto's supervised beaches — one glance for swimmers, paddlers and SUP riders.">
+  <meta property="og:url" content="https://beachcheck.ca/">
+  <meta property="og:image" content="https://beachcheck.ca/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BeachCheck · Toronto beach conditions">
+  <meta name="twitter:description" content="Live water quality, water temperature, waves and wind for Toronto's supervised beaches.">
+  <meta name="twitter:image" content="https://beachcheck.ca/og-image.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "BeachCheck",
+    "url": "https://beachcheck.ca/",
+    "description": "Live water quality, water temperature, waves and wind for Toronto's supervised beaches — for swimmers, paddlers and SUP riders.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CAD" },
+    "areaServed": { "@type": "City", "name": "Toronto" }
+  }
+  </script>
 
   <link rel="icon" href="favicon-32.png" sizes="32x32">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -44,13 +73,30 @@
     </svg>
     <header>
       <span class="wordmark"><span class="wave" aria-hidden="true">🌊</span>BeachCheck</span>
-      <select id="beach-select" aria-label="Choose a beach"></select>
+      <div class="header-actions">
+        <button id="share-btn" class="icon-btn" type="button" aria-label="Share current conditions" title="Share">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3v13"/>
+            <path d="M7 8l5-5 5 5"/>
+            <path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/>
+          </svg>
+        </button>
+        <button id="about-btn" class="icon-btn" type="button" aria-label="About BeachCheck" title="About">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/>
+            <line x1="12" y1="11" x2="12" y2="16"/>
+            <circle cx="12" cy="7.5" r=".6" fill="currentColor" stroke="none"/>
+          </svg>
+        </button>
+        <select id="beach-select" aria-label="Choose a beach"></select>
+      </div>
     </header>
   </div>
 
   <div class="sheet">
     <div class="grabber" aria-hidden="true"></div>
     <div class="sheet-inner">
+      <div class="scroll-fade" aria-hidden="true"></div>
       <h1 id="beach-name"></h1>
 
       <main id="app" hidden>
@@ -93,9 +139,37 @@
           wind: <a href="https://open-meteo.com/">Open-Meteo</a> ·
           not official safety advice
         </p>
+        <p class="made-in">Made in Toronto, Canada 🇨🇦</p>
       </footer>
     </div>
   </div>
+
+  <dialog id="about-dialog">
+    <form method="dialog"><button class="dialog-close" type="submit" aria-label="Close">✕</button></form>
+    <h2>🌊 About BeachCheck</h2>
+    <p>
+      BeachCheck is a small, free tool for swimmers, paddlers and SUP riders —
+      real-time water quality, water temperature, waves and wind for Toronto's
+      supervised beaches, at a glance instead of five tabs.
+    </p>
+    <p>
+      Toronto's beaches are genuinely beautiful and still underused for how
+      good they are. The hope is that knowing conditions at a glance makes it
+      a little easier to actually get out and enjoy — and look after — them.
+    </p>
+    <h3>Data sources</h3>
+    <ul>
+      <li><a href="https://open.toronto.ca/dataset/toronto-beaches-water-quality/" target="_blank" rel="noopener">City of Toronto</a> — daily E. coli sampling &amp; posted swim status</li>
+      <li><a href="https://www.openwaterdata.com/" target="_blank" rel="noopener">Open Water Data</a> — real-time buoy water temperature</li>
+      <li><a href="https://www.ndbc.noaa.gov/station_page.php?station=45159" target="_blank" rel="noopener">NOAA / ECCC buoy 45159</a> — Lake Ontario wave height</li>
+      <li><a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> — live wind &amp; air temperature</li>
+    </ul>
+    <p class="fine-print">
+      Not official safety advice — always use your judgment and check for
+      posted lifeguard flags.
+      <a href="https://github.com/anderskravis/beachcheck" target="_blank" rel="noopener">View source on GitHub</a>.
+    </p>
+  </dialog>
 
   <!--
     Classic (non-module) script so this runs immediately during parsing and
