@@ -354,49 +354,52 @@ const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 const waveStateFromHeight = (m) => bandLabel(WAVE_HEIGHT_BANDS, m);
 const waveState = (windKn) => bandLabel(WAVE_BANDS, windKn);
 
+// A small, factual aside folded into the end of the note for specific
+// beaches — worth knowing, understated rather than a standalone callout.
+// Keyed by slug so more can be added later without touching the function
+// itself. The link does the explaining instead of the copy spelling it out.
+const BEACH_ASIDES = {
+  "hanlans-point": 'Clothing optional — see <a href="https://en.wikipedia.org/wiki/Hanlan%27s_Point_Beach" target="_blank" rel="noopener">Wikipedia</a>.',
+};
+
 // A single playful line combining wave state, water temp and a paddle verdict.
 // waveWord is whatever the caller already decided is the best available
 // wave descriptor (real buoy height, city observation, or wind estimate).
 // status is renderStatus()'s return value ("safe"/"caution"/"unsafe"/null)
 // — a "no swim" day should never be topped off with an upbeat paddling
 // verdict, and a "caution" day gets a gentle heads-up instead of either.
-function conditionsNote(waveWord, waterTempC, windKn, status) {
+// Returns HTML (a beach aside may include a link), not plain text.
+function conditionsNote(waveWord, waterTempC, windKn, status, slug) {
+  let note;
   if (status === "unsafe") {
-    return waveWord
+    note = waveWord
       ? `${capitalize(waveWord)}, but water quality is unsafe today — best to stay out.`
       : "Water quality is unsafe today — best to stay out.";
+  } else {
+    const temp = bandLabel(TEMP_BANDS, waterTempC);
+    const clauses = [];
+    if (waveWord) clauses.push(capitalize(waveWord));
+    if (temp) clauses.push(`water's ${temp}`);
+    note = "";
+    if (clauses.length) {
+      const verdict = bandLabel(VERDICT_BANDS, windKn);
+      note = verdict ? `${clauses.join(", ")} — ${verdict}.` : `${clauses.join(", ")}.`;
+    }
+    if (status === "caution") {
+      const headsUp = "Water quality is borderline today — worth checking before you go.";
+      note = note ? `${note} ${headsUp}` : headsUp;
+    }
   }
-  const temp = bandLabel(TEMP_BANDS, waterTempC);
-  const clauses = [];
-  if (waveWord) clauses.push(capitalize(waveWord));
-  if (temp) clauses.push(`water's ${temp}`);
-  let note = "";
-  if (clauses.length) {
-    const verdict = bandLabel(VERDICT_BANDS, windKn);
-    note = verdict ? `${clauses.join(", ")} — ${verdict}.` : `${clauses.join(", ")}.`;
-  }
-  if (status === "caution") {
-    const headsUp = "Water quality is borderline today — worth checking before you go.";
-    note = note ? `${note} ${headsUp}` : headsUp;
-  }
+  const aside = BEACH_ASIDES[slug];
+  if (aside) note = note ? `${note} ${aside}` : aside;
   return note;
 }
-
-// Small, beach-specific asides — worth knowing, not load-bearing. Keyed
-// by slug so more can be added later without touching render() itself.
-const BEACH_FUN_FACTS = {
-  "hanlans-point": "Toronto's only clothing-optional beach — swimwear is welcome, not required.",
-};
 
 async function render() {
   const beach = currentBeach();
   select.value = beach.slug;
   document.title = `${beach.short} · BeachCheck`;
   $("beach-name").textContent = beach.short;
-  const funFact = $("beach-fun-fact");
-  const fact = BEACH_FUN_FACTS[beach.slug];
-  funFact.textContent = fact ?? "";
-  funFact.hidden = !fact;
   // Switching beaches resets the sheet to its resting position, so the
   // map centering below is against a known, settled sheet height rather
   // than whatever scroll position the previous beach was left at.
@@ -483,19 +486,19 @@ async function render() {
       ? `${waveWord} <small>estimated from wind</small>`
       : `— <small>no reading for this beach</small>`;
   }
-  $("paddle-note").textContent = conditionsNote(waveWord, waterTempC, windKn, safeToSwim);
+  $("paddle-note").innerHTML = conditionsNote(waveWord, waterTempC, windKn, safeToSwim, beach.slug);
 }
 
 // WMO weather codes (Open-Meteo's `weather_code` field) collapsed down to
 // short, human labels for the Air tile's subtext — same "one word" spirit
 // as the wave/paddle-note phrasing elsewhere.
 const WEATHER_CODES = {
-  0: "clear", 1: "mostly clear", 2: "partly cloudy", 3: "overcast",
+  0: "clear and sunny", 1: "mostly sunny", 2: "partly cloudy", 3: "cloudy and overcast",
   45: "foggy", 48: "foggy",
-  51: "drizzly", 53: "drizzly", 55: "drizzly", 56: "freezing drizzle", 57: "freezing drizzle",
-  61: "rainy", 63: "rainy", 65: "heavy rain", 66: "freezing rain", 67: "freezing rain",
-  71: "snowy", 73: "snowy", 75: "heavy snow", 77: "snow grains",
-  80: "showers", 81: "showers", 82: "heavy showers",
+  51: "light drizzle", 53: "light drizzle", 55: "steady drizzle", 56: "freezing drizzle", 57: "freezing drizzle",
+  61: "light rain", 63: "rainy", 65: "heavy rain", 66: "freezing rain", 67: "freezing rain",
+  71: "light snow", 73: "snowy", 75: "heavy snow", 77: "snow grains",
+  80: "rain showers", 81: "rain showers", 82: "heavy showers",
   85: "snow showers", 86: "snow showers",
   95: "thunderstorms", 96: "thunderstorms", 99: "thunderstorms",
 };
