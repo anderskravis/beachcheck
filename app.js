@@ -224,6 +224,12 @@ setTimeout(() => $("map-band").classList.add("show-fallback"), 2500);
   window.addEventListener("resize", () => {
     if (sheetInner.scrollTop === 0) sheetEl.style.top = "";
     else updateParallax();
+    // Safari showing/hiding its own toolbar changes `dvh`, which moves the
+    // sheet's resting position — re-center against wherever it actually
+    // ends up rather than leaving the pin wherever it was for the old size.
+    const beach = currentBeach();
+    centerMapOn(beach);
+    centerMapKitOn(beach);
   });
 }
 

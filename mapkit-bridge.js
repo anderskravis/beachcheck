@@ -89,6 +89,15 @@ export function start(mapkitGlobal) {
     map = instance;
     document.getElementById("map-band").classList.add("mapkit-ready");
     document.getElementById("mapkit-map").classList.add("ready");
+
+    // The sheet's resting height is CSS `dvh`, which reflects Safari's
+    // dynamic toolbar — on a fresh page load that toolbar can still be
+    // settling for a moment after this callback fires, so a region
+    // computed from .sheet's rect right now can end up based on a
+    // not-yet-final layout. Re-assert it once more shortly after,
+    // against whatever the DOM reports once things have actually
+    // settled, rather than trusting this first synchronous read.
+    setTimeout(() => centerMapKitOn(initial), 400);
   } catch (e) {
     console.error("mapkit init failed:", e);
   }
