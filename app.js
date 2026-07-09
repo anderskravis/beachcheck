@@ -229,6 +229,13 @@ setTimeout(() => $("map-band").classList.add("show-fallback"), 2500);
     "scroll",
     () => {
       if (!ticking) { ticking = true; requestAnimationFrame(updateParallax); }
+      // On narrow viewports the pin's target no longer depends on the
+      // sheet's position at all (see NARROW_VIEWPORT_PX above), so
+      // there's nothing to re-center here — doing it anyway just
+      // produced visible jitter as the map briefly re-centers on itself
+      // for no visual change. Wide viewports still genuinely need this,
+      // since their target is the sheet-relative strip midpoint.
+      if (window.innerWidth < NARROW_VIEWPORT_PX) return;
       // Re-centering the map on every scroll frame would be janky and
       // wasteful; wait until scrolling settles instead.
       clearTimeout(recenterTimer);
@@ -241,24 +248,14 @@ setTimeout(() => $("map-band").classList.add("show-fallback"), 2500);
     { passive: true }
   );
 
-  const recenterMaps = () => {
+  window.addEventListener("resize", () => {
     if (sheetInner.scrollTop === 0) sheetEl.style.top = "";
     else updateParallax();
-    // Safari showing/hiding its own toolbar changes `dvh`, which moves the
-    // sheet's resting position — re-center against wherever it actually
-    // ends up rather than leaving the pin wherever it was for the old size.
+    if (window.innerWidth < NARROW_VIEWPORT_PX) return;
     const beach = currentBeach();
     centerMapOn(beach);
     centerMapKitOn(beach);
-  };
-  window.addEventListener("resize", recenterMaps);
-  // iOS Safari's dynamic toolbar showing/hiding reliably fires
-  // visualViewport's own resize event, but not always the plain window
-  // one — miss this and the map silently goes stale on exactly the
-  // devices this whole dance is for. (mapkit-bridge.js hooks the same
-  // event independently for its own region, rather than depending on
-  // this handler's timing.)
-  window.visualViewport?.addEventListener("resize", recenterMaps);
+  });
 }
 
 /* ---------- status + stats ---------- */

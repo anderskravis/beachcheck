@@ -74,8 +74,19 @@ function approximateRegionFor(beach) {
 // real target point instead. Exact regardless of aspect ratio or
 // projection quirks, since it's driven by MapKit's own conversion rather
 // than an assumed degrees-per-pixel relationship.
+//
+// The point conversion calls need a real, live region on the map to
+// measure against, so this temporarily sets one — but always restores
+// whatever the map's region was beforehand. Skipping that restore was a
+// real bug: the caller typically does map.setRegionAnimated(result, true)
+// right after this returns, which animates FROM whatever the map's
+// current region happens to be — leaving it parked on the temporary
+// beach-centered reference frame made every call visibly jump there
+// first, then animate to the real target. A visible glitch on every
+// single call, not just repeated ones.
 function exactRegionFor(beach) {
   const targetY = targetScreenY();
+  const previousRegion = map.region;
   try {
     map.region = centeredRegionFor(beach);
     const rect = document.getElementById("mapkit-map").getBoundingClientRect();
@@ -86,6 +97,8 @@ function exactRegionFor(beach) {
   } catch (e) {
     console.error("exact region calc failed, falling back to approximate centering:", e);
     return approximateRegionFor(beach);
+  } finally {
+    if (previousRegion) map.region = previousRegion;
   }
 }
 
@@ -147,26 +160,6 @@ export function start(mapkitGlobal) {
     instance.region = exactRegionFor(initial);
     document.getElementById("map-band").classList.add("mapkit-ready");
     document.getElementById("mapkit-map").classList.add("ready");
-
-    // The sheet's resting height is CSS `dvh`, which reflects Safari's
-    // dynamic toolbar — on a fresh page load that toolbar can still be
-    // settling for a moment after this callback fires, so a region
-    // computed from .sheet's rect right now can end up based on a
-    // not-yet-final layout. Re-assert it a few more times shortly after,
-    // against whatever the DOM reports once things have actually
-    // settled, rather than trusting this first synchronous read (one
-    // delay wasn't always enough on a real device, so this hedges with
-    // a few at increasing delays instead of guessing a single number).
-    // Re-reads the hash each time rather than closing over `initial`, in
-    // case the user has already switched beaches by the time one fires.
-    for (const delay of [300, 800, 1500]) {
-      setTimeout(() => centerMapKitOn(currentBeachFromHash()), delay);
-    }
-    // Don't rely solely on app.js's own listener setup/timing — the
-    // dynamic toolbar can also change size independently of any scroll
-    // gesture, and iOS Safari fires that through visualViewport, not
-    // always through plain window resize.
-    window.visualViewport?.addEventListener("resize", () => centerMapKitOn(currentBeachFromHash()));
   } catch (e) {
     console.error("mapkit init failed:", e);
   }
