@@ -6,7 +6,7 @@ export const BEACHES = [
   { slug: "sunnyside", name: "Sunnyside Beach", short: "Sunnyside", lat: 43.6368, lon: -79.4552, aliases: [] },
   { slug: "hanlans-point", name: "Hanlan's Point Beach", short: "Hanlan's Point", lat: 43.6198, lon: -79.3944, aliases: ["hanlans point"] },
   { slug: "gibraltar-point", name: "Gibraltar Point Beach", short: "Gibraltar Point", lat: 43.6132, lon: -79.3820, aliases: [] },
-  { slug: "centre-island", name: "Centre Island Beach", short: "Centre Island", lat: 43.6185, lon: -79.3738, aliases: [] },
+  { slug: "centre-island", name: "Centre Island Beach", short: "Centre Island", lat: 43.6155, lon: -79.3752, aliases: [] },
   { slug: "wards-island", name: "Ward's Island Beach", short: "Ward's Island", lat: 43.6300, lon: -79.3524, aliases: ["wards island"] },
   { slug: "cherry", name: "Cherry Beach", short: "Cherry", lat: 43.6369, lon: -79.3441, aliases: ["cherry beach clarke beach"] },
   { slug: "woodbine", name: "Woodbine Beaches", short: "Woodbine", lat: 43.6626, lon: -79.3065, aliases: ["woodbine beach"] },
