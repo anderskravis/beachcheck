@@ -80,7 +80,10 @@ body {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--map-dot);
+  /* --dot-status is set from JS once water quality data loads — a subtle
+     color hint (blue/yellow/red) instead of a flat neutral dot. Falls
+     back to the neutral color until that data arrives. */
+  background: var(--dot-status, var(--map-dot));
   cursor: pointer;
   transition: background-color .25s;
 }
@@ -134,7 +137,7 @@ body {
 }
 
 #dots circle {
-  fill: var(--map-dot);
+  fill: var(--dot-status, var(--map-dot));
   cursor: pointer;
   transition: fill .25s;
 }
@@ -174,6 +177,18 @@ body {
   padding: max(1rem, env(safe-area-inset-top)) 1.25rem 0;
   margin: 0 auto;
   max-width: 34rem;
+}
+
+/* On mobile the header sits above the narrow sheet, so keeping it the
+   same width reads as one column. On wide/desktop screens that same cap
+   just bunched the logo and the beach picker together in the middle of
+   the header instead of at the screen's actual left/right edges. */
+@media (min-width: 700px) {
+  .map-band header {
+    max-width: none;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }
 
 .wordmark {

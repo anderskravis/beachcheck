@@ -8,6 +8,32 @@ let pin = null;
 
 const SPAN = { lat: 0.05, lon: 0.07 }; // roughly a 5-6 km view around the beach
 
+// Every beach dot's DOM element, keyed by slug, so setBeachStatuses can
+// recolor them once water quality data loads (which happens on its own
+// schedule, independent of — and usually slower than — MapKit itself).
+const dotEls = new Map();
+let pendingStatuses = null;
+
+const STATUS_COLORS = { safe: "#0a7aff", caution: "#f2b90f", unsafe: "#eb4034" };
+
+// Called from app.js once conditions.json resolves — a subtle color hint
+// per beach dot (blue/yellow/red) instead of a flat neutral color, using
+// the same "safe"/"caution"/"unsafe"/null classification as the status
+// card. Safe to call before start() has run; applies once dots exist.
+export function setBeachStatuses(statuses) {
+  pendingStatuses = statuses;
+  applyPendingStatuses();
+}
+
+function applyPendingStatuses() {
+  if (!pendingStatuses) return;
+  for (const [slug, el] of dotEls) {
+    const color = STATUS_COLORS[pendingStatuses[slug]];
+    if (color) el.style.setProperty("--dot-status", color);
+    else el.style.removeProperty("--dot-status");
+  }
+}
+
 // Below this width, use a fixed offset from the header instead of trying
 // to read the sheet's position at all — the sheet's height is CSS `dvh`,
 // which on real phones (not desktop, not emulated mobile) can still be
@@ -138,10 +164,12 @@ export function start(mapkitGlobal) {
             el.className = "mk-dot";
             el.title = b.short;
             el.addEventListener("click", () => { location.hash = b.slug; });
+            dotEls.set(b.slug, el);
             return el;
           })
       )
     );
+    applyPendingStatuses();
 
     const initial = currentBeachFromHash();
     pin = new mapkitGlobal.Annotation(

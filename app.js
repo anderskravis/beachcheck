@@ -1,5 +1,5 @@
 import { BEACHES, DEFAULT_SLUG, beachForSlug, SHORELINE, ISLANDS, SPIT } from "./beaches.js";
-import { centerMapKitOn, isNightInToronto } from "./mapkit-bridge.js";
+import { centerMapKitOn, isNightInToronto, setBeachStatuses } from "./mapkit-bridge.js";
 
 const $ = (id) => document.getElementById(id);
 
@@ -73,6 +73,24 @@ const conditionsPromise = fetch("data/conditions.json").then((r) => {
   if (!r.ok) throw new Error(`conditions.json ${r.status}`);
   return r.json();
 });
+
+// Once conditions.json resolves, give every beach dot on the map — not
+// just the currently selected one — a subtle color hint (blue/yellow/red)
+// using the same classification as the status card, instead of a flat
+// neutral dot for all of them.
+const DOT_STATUS_COLORS = { safe: "#0a7aff", caution: "#f2b90f", unsafe: "#eb4034" };
+conditionsPromise.then((conditions) => {
+  const statuses = {};
+  for (const b of BEACHES) {
+    statuses[b.slug] = beachStatus(conditions?.beaches?.[b.slug]?.waterQuality ?? null);
+  }
+  for (const dot of $("dots").children) {
+    const color = DOT_STATUS_COLORS[statuses[dot.dataset.slug]];
+    if (color) dot.style.setProperty("--dot-status", color);
+    else dot.style.removeProperty("--dot-status");
+  }
+  setBeachStatuses(statuses);
+}).catch(() => { /* dots just keep their neutral color if this fails */ });
 
 const compass = (deg) =>
   ["N", "NE", "E", "SE", "S", "SW", "W", "NW"][Math.round(deg / 45) % 8];
@@ -262,15 +280,29 @@ setTimeout(() => $("map-band").classList.add("show-fallback"), 2500);
 
 const E_COLI_CAUTION = 70; // getting close to the posting limit — not unsafe yet, but worth a heads up
 
-// Returns "safe", "caution", "unsafe", or null when there's no current
-// reading — callers use this to keep the paddle note from contradicting a
-// "no swim" call (and to soften it, rather than contradict it, on a
-// "caution" day).
+// Pure classification, shared between the status card (current beach) and
+// the map dots (every beach at once): "safe", "caution", "unsafe", or null
+// when there's no current reading. The city's posted status is
+// authoritative when present (it can flag a beach unsafe preemptively);
+// the E. coli threshold is the fallback. "Caution" only applies within an
+// otherwise-safe reading — a beach the city has actually posted unsafe is
+// never softened to caution.
+function beachStatus(wq) {
+  if (!wq || daysAgo(wq.sampleDate) > STALE_DAYS) return null;
+  const unsafe = wq.statusFlag ? wq.statusFlag !== "SAFE" : wq.eColi >= E_COLI_LIMIT;
+  const caution = !unsafe && wq.eColi >= E_COLI_CAUTION;
+  return unsafe ? "unsafe" : caution ? "caution" : "safe";
+}
+
+// Renders the status card for the current beach — callers use the return
+// value to keep the paddle note from contradicting a "no swim" call (and
+// to soften it, rather than contradict it, on a "caution" day).
 function renderStatus(wq) {
   const card = $("status");
   const word = $("status-word");
   const detail = $("status-detail");
-  if (!wq || daysAgo(wq.sampleDate) > STALE_DAYS) {
+  const status = beachStatus(wq);
+  if (status === null) {
     card.className = "stat status-card";
     word.textContent = "no data";
     detail.textContent = wq
@@ -278,15 +310,8 @@ function renderStatus(wq) {
       : "beach not currently monitored (sampling runs June–September)";
     return null;
   }
-  // The city's posted status is authoritative when present (it can flag a
-  // beach unsafe preemptively); the E. coli threshold is the fallback.
-  // "Caution" only applies within an otherwise-safe reading — a beach the
-  // city has actually posted unsafe is never softened to caution.
-  const unsafe = wq.statusFlag ? wq.statusFlag !== "SAFE" : wq.eColi >= E_COLI_LIMIT;
-  const caution = !unsafe && wq.eColi >= E_COLI_CAUTION;
-  const status = unsafe ? "unsafe" : caution ? "caution" : "safe";
-  card.className = `stat status-card ${unsafe ? "bad" : caution ? "caution" : "good"}`;
-  word.textContent = unsafe ? "no swim" : caution ? "caution" : "swim";
+  card.className = `stat status-card ${status === "unsafe" ? "bad" : status === "caution" ? "caution" : "good"}`;
+  word.textContent = status === "unsafe" ? "no swim" : status === "caution" ? "caution" : "swim";
   detail.textContent = `E. coli ${wq.eColi} of ${E_COLI_LIMIT} limit · sampled ${shortDate(wq.sampleDate)}`;
   return status;
 }
