@@ -1,7 +1,12 @@
 import { BEACHES, DEFAULT_SLUG, beachForSlug, SHORELINE, ISLANDS, SPIT } from "./beaches.js";
-import { centerMapKitOn } from "./mapkit-bridge.js";
+import { centerMapKitOn, isNightInToronto } from "./mapkit-bridge.js";
 
 const $ = (id) => document.getElementById(id);
+
+// Safari tints its own status bar/toolbar to this color — match whichever
+// map tone (day/night) is actually showing behind it instead of leaving a
+// mismatched dark bar over a light map at noon.
+$("theme-color-meta")?.setAttribute("content", isNightInToronto() ? "#0b0d10" : "#aab7c2");
 const E_COLI_LIMIT = 100; // city posts a beach unsafe at ≥100 E. coli / 100 mL
 const STALE_DAYS = 5; // older samples mean the beach isn't being monitored
 
@@ -139,83 +144,56 @@ buildMap();
 // every visit — it should only appear when it's actually needed.
 setTimeout(() => $("map-band").classList.add("show-fallback"), 2500);
 
-// Scrolling/swiping down on the sheet — even before its content is tall
-// enough to actually overflow — expands it toward full height, same as
-// Apple Maps' place-card; the reverse gesture at the top of the content
-// collapses it back. A plain "scroll" listener alone isn't enough: when
-// collapsed content is short enough to fit, there's nothing to scroll, so
-// it would never fire. Wheel/touch deltas catch the gesture either way.
+// The sheet's resting position is pure CSS (see .sheet's `top`, a
+// clamp() on dvh) — no JS measures content or resizes it after load, so
+// there's no post-load jump. Scrolling the sheet's own content instead
+// pulls the sheet taller continuously, in step with the scroll offset —
+// a parallax follow rather than a snap between two fixed states. Once
+// scrolled past SCROLL_RANGE_PX the sheet is at its full height and
+// further scrolling just scrolls the remaining content (footer etc.)
+// normally.
 {
   const sheetEl = document.querySelector(".sheet");
   const sheetInner = document.querySelector(".sheet-inner");
-  const expand = () => sheetEl.classList.add("expanded");
-  const collapseIfAtTop = () => {
-    if (sheetInner.scrollTop === 0) sheetEl.classList.remove("expanded");
-  };
+  const SCROLL_RANGE_PX = 160;
 
+  const collapsedTopPx = () => {
+    const vh = window.innerHeight;
+    const guess = vh - 34 * 16;
+    return Math.min(Math.max(guess, vh * 0.10), vh * 0.46);
+  };
+  const expandedTopPx = () => Math.max(window.innerHeight * 0.18, 7 * 16);
+
+  let ticking = false;
+  function updateParallax() {
+    ticking = false;
+    const t = Math.min(1, Math.max(0, sheetInner.scrollTop / SCROLL_RANGE_PX));
+    const top = collapsedTopPx() + (expandedTopPx() - collapsedTopPx()) * t;
+    sheetEl.style.top = `${Math.round(top)}px`;
+  }
+
+  let recenterTimer = null;
   sheetInner.addEventListener(
     "scroll",
-    () => { if (sheetInner.scrollTop > 0) expand(); },
-    { passive: true }
-  );
-  sheetEl.addEventListener(
-    "wheel",
-    (e) => (e.deltaY > 0 ? expand() : e.deltaY < 0 && collapseIfAtTop()),
-    { passive: true }
-  );
-  let touchStartY = null;
-  sheetEl.addEventListener("touchstart", (e) => { touchStartY = e.touches[0].clientY; }, { passive: true });
-  sheetEl.addEventListener(
-    "touchmove",
-    (e) => {
-      if (touchStartY == null) return;
-      const dy = touchStartY - e.touches[0].clientY; // positive: finger moved up
-      if (dy > 8) expand();
-      else if (dy < -8) collapseIfAtTop();
+    () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(updateParallax); }
+      // Re-centering the map on every scroll frame would be janky and
+      // wasteful; wait until scrolling settles instead.
+      clearTimeout(recenterTimer);
+      recenterTimer = setTimeout(() => {
+        const beach = currentBeach();
+        centerMapOn(beach);
+        centerMapKitOn(beach);
+      }, 180);
     },
     { passive: true }
   );
 
-  // Re-center whichever map is showing once the resize finishes, since the
-  // visible area above the sheet just changed.
-  sheetEl.addEventListener("transitionend", (e) => {
-    if (e.propertyName !== "top") return;
-    const beach = currentBeach();
-    centerMapOn(beach);
-    centerMapKitOn(beach);
+  window.addEventListener("resize", () => {
+    if (sheetInner.scrollTop === 0) sheetEl.style.top = "";
+    else updateParallax();
   });
 }
-
-// A static dvh/rem guess for the collapsed sheet height doesn't hold up
-// across real devices (Safari's dynamic chrome, notches, etc.) — on at
-// least one real iPhone it left the wind/air cards cut off. Instead,
-// measure how tall the content actually is and set the collapsed `top`
-// so it just fits, clamped so there's always some map visible above it
-// and it never grows absurdly tall on short-content states.
-const grabberEl = document.querySelector(".grabber");
-const sheetElForHeight = document.querySelector(".sheet");
-const sheetInnerForHeight = document.querySelector(".sheet-inner");
-
-function tuneCollapsedHeight() {
-  if (sheetElForHeight.classList.contains("expanded")) return; // don't fight the user's own expand
-  const bottomGapPx = 20; // matches .sheet's `bottom: 1.25rem`
-  // scrollHeight already includes sheet-inner's own top+bottom padding, so
-  // don't add it again. The footer (source credits etc.) is deliberately
-  // left below the fold in the collapsed state — otherwise, on a tall
-  // enough viewport, every field fits and there's nothing left to reveal
-  // by scrolling/expanding.
-  const footerEl = sheetInnerForHeight.querySelector("footer");
-  const footerHeight = footerEl ? footerEl.offsetHeight : 0;
-  const essentialContentHeight = sheetInnerForHeight.scrollHeight - footerHeight;
-  const neededSheetHeight = grabberEl.offsetHeight + essentialContentHeight;
-  const needed = window.innerHeight - neededSheetHeight - bottomGapPx;
-  const minTop = window.innerHeight * 0.14;
-  const maxTop = window.innerHeight * 0.6;
-  const top = Math.max(minTop, Math.min(maxTop, needed));
-  sheetElForHeight.style.setProperty("--collapsed-top", `${Math.round(top)}px`);
-}
-
-window.addEventListener("resize", tuneCollapsedHeight);
 
 /* ---------- status + stats ---------- */
 
@@ -306,6 +284,11 @@ async function render() {
   select.value = beach.slug;
   document.title = `${beach.short} · BeachCheck`;
   $("beach-name").textContent = beach.short;
+  // Switching beaches resets the sheet to its resting position, so the
+  // map centering below is against a known, settled sheet height rather
+  // than whatever scroll position the previous beach was left at.
+  document.querySelector(".sheet-inner").scrollTop = 0;
+  document.querySelector(".sheet").style.top = "";
   centerMapOn(beach); // hand-drawn fallback, always kept in sync underneath
   centerMapKitOn(beach); // real Apple Maps, once (if) it has loaded
 
@@ -376,7 +359,6 @@ async function render() {
     $("waves").innerHTML = waveWord ? `${waveWord} <small>estimated from wind</small>` : "—";
   }
   $("paddle-note").textContent = conditionsNote(waveWord, waterTempC, windKn, safeToSwim);
-  tuneCollapsedHeight();
 }
 
 async function fetchWeather(beach) {

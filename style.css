@@ -261,11 +261,15 @@ body {
 .sheet {
   position: fixed;
   z-index: 1;
-  /* Set from app.js once real content height is known (varies by device
-     and by content — e.g. "no data" vs a full stat grid), clamped to keep
-     some map visible above it either way. Fallback covers the brief
-     instant before JS runs. */
-  top: var(--collapsed-top, max(44dvh, 20rem));
+  /* dvh (not vh) so this already accounts for Safari's collapsing chrome —
+     a plain rem/vh guess measured wrong the moment the toolbar showed or
+     hid. ~34rem is roughly the title + status card + 2x2 stat grid + note,
+     so this sits a touch above "just barely fits" without any JS
+     measuring/resizing after load (that caused a visible jump). app.js
+     nudges `top` further, continuously, as the sheet's own content is
+     scrolled — see the parallax listener there — but this is the resting,
+     load-time value and never changes on its own. */
+  top: clamp(10dvh, calc(100dvh - 34rem), 46dvh);
   left: 0;
   right: 0;
   bottom: 1.25rem;
@@ -278,15 +282,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: top .35s cubic-bezier(.25, 1, .3, 1), bottom .35s cubic-bezier(.25, 1, .3, 1);
-}
-
-/* Scrolling the sheet's own content — even slightly — expands it toward
-   full height, same as Apple Maps' place-card sheet; scrolling back to
-   the very top collapses it back to a floating card (see app.js). */
-.sheet.expanded {
-  top: max(18dvh, 7rem);
-  bottom: 0;
+  transition: top .15s ease-out;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -303,6 +299,22 @@ body {
   flex: none;
 }
 
+/* Fixed to the top of .sheet regardless of scroll position (a sibling of
+   the scrolling .sheet-inner, not a child of it) so the content fades
+   under the grabber as it scrolls past, rather than hard-clipping at the
+   rounded corner. .sheet's own `position: fixed` is what this is
+   absolute against. */
+.scroll-fade {
+  position: absolute;
+  top: 1.05rem;
+  left: 0;
+  right: 0;
+  height: 1.4rem;
+  background: linear-gradient(to bottom, var(--bg), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
 .sheet-inner {
   flex: 1;
   overflow-y: auto;
@@ -311,20 +323,6 @@ body {
   flex-direction: column;
   width: 100%;
   padding: .9rem 1.25rem 2rem;
-}
-
-/* Sticks to the top of the scroll area so scrolled content fades out under
-   the grabber instead of hard-clipping at the sheet's rounded corner.
-   Negative margin keeps it from adding extra scroll height of its own. */
-.scroll-fade {
-  flex: none; /* a flex item with no content would otherwise shrink to 0 */
-  position: sticky;
-  top: 0;
-  margin: 0 -1.25rem -1.4rem;
-  height: 1.4rem;
-  background: linear-gradient(to bottom, var(--bg) 40%, transparent);
-  pointer-events: none;
-  z-index: 1;
 }
 
 h1 {

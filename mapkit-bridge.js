@@ -30,7 +30,9 @@ function regionFor(beach) {
 
 // Dark map at night, light muted map by day — tied to actual Toronto time,
 // not the visitor's system theme (the sheet below handles that separately).
-function isNightInToronto() {
+// Exported so app.js can tint Safari's own chrome (status bar/toolbar) to
+// roughly match whichever map tone is actually showing behind it.
+export function isNightInToronto() {
   const hour = Number(
     new Intl.DateTimeFormat("en-CA", { hour: "numeric", hour12: false, timeZone: "America/Toronto" })
       .format(new Date())
