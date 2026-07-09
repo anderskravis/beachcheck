@@ -177,11 +177,18 @@ const sheetInnerForHeight = document.querySelector(".sheet-inner");
 function tuneCollapsedHeight() {
   if (sheetElForHeight.classList.contains("expanded")) return; // don't fight the user's own expand
   const bottomGapPx = 20; // matches .sheet's `bottom: 1.25rem`
-  const innerPadding = 14 + 32; // sheet-inner's top+bottom padding (.9rem + 2rem)
-  const contentHeight = grabberEl.offsetHeight + innerPadding + sheetInnerForHeight.scrollHeight;
-  const needed = window.innerHeight - contentHeight - bottomGapPx;
+  // scrollHeight already includes sheet-inner's own top+bottom padding, so
+  // don't add it again. The footer (source credits etc.) is deliberately
+  // left below the fold in the collapsed state — otherwise, on a tall
+  // enough viewport, every field fits and there's nothing left to reveal
+  // by scrolling/expanding.
+  const footerEl = sheetInnerForHeight.querySelector("footer");
+  const footerHeight = footerEl ? footerEl.offsetHeight : 0;
+  const essentialContentHeight = sheetInnerForHeight.scrollHeight - footerHeight;
+  const neededSheetHeight = grabberEl.offsetHeight + essentialContentHeight;
+  const needed = window.innerHeight - neededSheetHeight - bottomGapPx;
   const minTop = window.innerHeight * 0.14;
-  const maxTop = window.innerHeight * 0.55;
+  const maxTop = window.innerHeight * 0.6;
   const top = Math.max(minTop, Math.min(maxTop, needed));
   sheetElForHeight.style.setProperty("--collapsed-top", `${Math.round(top)}px`);
 }
