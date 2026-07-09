@@ -309,8 +309,11 @@ body {
   top: 1.05rem;
   left: 0;
   right: 0;
-  height: 1.4rem;
-  background: linear-gradient(to bottom, var(--bg), transparent);
+  /* Tall enough to fully mask something as big as the status card's
+     2.2rem headline as it scrolls past — too short and a mid-scroll
+     screenshot catches large text sliced clean in half instead of faded. */
+  height: 2.75rem;
+  background: linear-gradient(to bottom, var(--bg) 55%, transparent);
   pointer-events: none;
   z-index: 1;
 }
@@ -522,4 +525,74 @@ dialog#about-dialog form {
   font-size: .85rem;
   line-height: 1;
   cursor: pointer;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: flex-start;
+  gap: .75rem;
+  margin: .5rem 0 0;
+  cursor: pointer;
+}
+
+.toggle-row input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-switch {
+  flex: none;
+  width: 2.6rem;
+  height: 1.5rem;
+  margin-top: .1rem;
+  border-radius: 99px;
+  background: var(--card);
+  border: 1px solid rgba(128, 128, 128, .3);
+  position: relative;
+  transition: background-color .2s, border-color .2s;
+}
+
+.toggle-switch::after {
+  content: "";
+  position: absolute;
+  top: .14rem;
+  left: .14rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+  transition: transform .2s;
+}
+
+.toggle-row input:checked + .toggle-switch {
+  background: #0a7aff;
+  border-color: transparent;
+}
+
+.toggle-row input:checked + .toggle-switch::after {
+  transform: translateX(1.1rem);
+}
+
+.toggle-row input:focus-visible + .toggle-switch {
+  outline: 2px solid #0a7aff;
+  outline-offset: 2px;
+}
+
+.toggle-copy {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+}
+
+.toggle-copy strong {
+  font-size: .92rem;
+}
+
+.toggle-copy small {
+  font-size: .8rem;
+  line-height: 1.45;
+  color: var(--muted);
 }

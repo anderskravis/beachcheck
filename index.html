@@ -37,6 +37,47 @@
   }
   </script>
 
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is it safe to swim today?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Check the water quality card at the top of BeachCheck — \"swim\" means the beach's latest E. coli sample is under Toronto's posting limit; \"no swim\" means it's at or above it. It refreshes daily during the June to September sampling season."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which Toronto beaches does BeachCheck cover?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "All of Toronto's supervised swimming beaches, from Marie Curtis Park in the west to Rouge Beach in the east, including Kew-Balmy, Woodbine, Cherry, Hanlan's Point and Bluffer's Park."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where does BeachCheck get its data?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Water quality and posted swim status come from the City of Toronto's open data; water temperature from Open Water Data buoys; wave height from NOAA/ECCC buoy 45159 on Lake Ontario; and wind and air temperature from Open-Meteo."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is BeachCheck an official City of Toronto source?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No, BeachCheck is an independent tool built on the City of Toronto's own open data. It is not official safety advice — always check for posted lifeguard flags at the beach."
+        }
+      }
+    ]
+  }
+  </script>
+
   <link rel="icon" href="favicon-32.png" sizes="32x32">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="manifest" href="manifest.json">
@@ -164,6 +205,22 @@
       <li><a href="https://www.ndbc.noaa.gov/station_page.php?station=45159" target="_blank" rel="noopener">NOAA / ECCC buoy 45159</a> — Lake Ontario wave height</li>
       <li><a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> — live wind &amp; air temperature</li>
     </ul>
+
+    <h3>Units</h3>
+    <label class="toggle-row">
+      <input type="checkbox" id="canadian-mode-toggle">
+      <span class="toggle-switch" aria-hidden="true"></span>
+      <span class="toggle-copy">
+        <strong>🇨🇦 Canadian Measurement Mode</strong>
+        <small>Water temp in Fahrenheit, air stays in Celsius — because that's honestly how we talk about a beach day. 78°F water, 22°C air, zero notes.</small>
+      </span>
+    </label>
+
+    <h3>FAQ</h3>
+    <p><strong>Is it safe to swim today?</strong><br>Check the water quality card at the top — "swim" means the beach's latest E. coli sample is under Toronto's posting limit; "no swim" means it's at or above it. It refreshes daily during the June–September sampling season.</p>
+    <p><strong>Which beaches does BeachCheck cover?</strong><br>All of Toronto's supervised swimming beaches, from Marie Curtis Park in the west to Rouge Beach in the east — pick one from the dropdown up top.</p>
+    <p><strong>Is this official?</strong><br>No — it's an independent tool built on the City of Toronto's own open data. Always check for posted lifeguard flags too.</p>
+
     <p class="fine-print">
       Not official safety advice — always use your judgment and check for
       posted lifeguard flags.

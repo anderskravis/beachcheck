@@ -27,6 +27,26 @@ addEventListener("hashchange", render);
 const aboutDialog = $("about-dialog");
 $("about-btn").addEventListener("click", () => aboutDialog.showModal());
 
+// "Canadian Measurement Mode" — water temp in Fahrenheit (how it actually
+// gets talked about at the beach), air stays in Celsius (how the weather
+// gets talked about). Persisted as a cookie per the original ask, not
+// localStorage.
+function getCookie(name) {
+  return document.cookie.split("; ").find((row) => row.startsWith(`${name}=`))?.split("=")[1];
+}
+function setCookie(name, value, days) {
+  document.cookie = `${name}=${value}; max-age=${days * 86400}; path=/; SameSite=Lax`;
+}
+let canadianMode = getCookie("canadianMode") === "1";
+const canadianModeToggle = $("canadian-mode-toggle");
+canadianModeToggle.checked = canadianMode;
+canadianModeToggle.addEventListener("change", () => {
+  canadianMode = canadianModeToggle.checked;
+  setCookie("canadianMode", canadianMode ? "1" : "0", 365);
+  render();
+});
+const formatWaterTemp = (c) => (canadianMode ? `${Math.round((c * 9) / 5 + 32)}°F` : `${c}°`);
+
 $("share-btn").addEventListener("click", async (e) => {
   const beach = currentBeach();
   const word = $("status-word").textContent.trim();
@@ -115,13 +135,20 @@ function buildMap() {
   }
 }
 
-// Where (in viewport px from the top) a pin should land so it's not hidden
-// behind the sheet — roughly centered in whatever map area is still visible
-// above it. Read live off the DOM since the sheet's own height changes
-// (see the expand/collapse listener below), not assumed from CSS constants.
+// Where a pin should land — in the SVG's own viewBox units (0-500 tall),
+// not screen pixels — so it's not hidden behind the sheet OR the header,
+// roughly centered in whatever strip of map is still visible between the
+// two. #world's translate below is a CSS transform on an SVG element, which
+// resolves in the SVG's user-space (viewBox) units, not physical viewport
+// pixels — mixing the two was the earlier bug. Fraction is read live off
+// the DOM since the sheet's own height changes continuously (see the
+// parallax listener below), not assumed from CSS constants.
 function visiblePinTargetY() {
-  const sheetTop = document.querySelector(".sheet")?.getBoundingClientRect().top;
-  return sheetTop ? Math.max(60, sheetTop / 2) : 180;
+  const headerBottom = document.querySelector(".map-band header")?.getBoundingClientRect().bottom ?? 60;
+  const sheetTop = document.querySelector(".sheet")?.getBoundingClientRect().top ?? window.innerHeight * 0.4;
+  const visibleMidY = (headerBottom + Math.max(sheetTop, headerBottom + 20)) / 2;
+  const fraction = Math.max(0.08, Math.min(0.45, visibleMidY / window.innerHeight));
+  return fraction * 500; // 500 = the #map viewBox height
 }
 
 // Pan the world so the beach sits within the map area the sheet isn't covering.
@@ -305,10 +332,10 @@ async function render() {
     waterTempC = buoy.waterTemp;
     const hoursAgo = Math.round((Date.now() - new Date(buoy.time)) / 3600000);
     const when = hoursAgo < 1 ? "now" : `${hoursAgo}h ago`;
-    $("water-temp").innerHTML = `${buoy.waterTemp}° <small>buoy · ${when}</small>`;
+    $("water-temp").innerHTML = `${formatWaterTemp(buoy.waterTemp)} <small>buoy · ${when}</small>`;
   } else if (obsFresh && obs.waterTemp != null) {
     waterTempC = obs.waterTemp;
-    $("water-temp").innerHTML = `${obs.waterTemp}° <small>${shortDate(obs.date)}</small>`;
+    $("water-temp").innerHTML = `${formatWaterTemp(obs.waterTemp)} <small>${shortDate(obs.date)}</small>`;
   } else {
     $("water-temp").textContent = "—";
   }

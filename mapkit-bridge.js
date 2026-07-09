@@ -13,14 +13,18 @@ function currentBeachFromHash() {
 }
 
 // The sheet covers the lower part of the screen (and its own height varies —
-// see app.js's expand/collapse), so centering the region ON the beach
+// see app.js's parallax scroll), so centering the region ON the beach
 // coordinate would put the pin right underneath it. Shift the region's
-// center south of the beach so the beach itself lands in whatever strip is
-// actually visible above the sheet, read live off the DOM.
+// center south of the beach so the beach itself lands in the vertical
+// middle of whatever strip is actually visible between the header and the
+// sheet — not just "above the sheet", which ignored the header's own
+// height and let the pin land underneath it once the sheet grew tall
+// enough to shrink that strip down close to the header's size.
 function regionFor(beach) {
-  const sheetTop = document.querySelector(".sheet")?.getBoundingClientRect().top;
-  const visibleFraction = sheetTop ? sheetTop / window.innerHeight : 0.4;
-  const targetFraction = Math.max(0.06, Math.min(0.45, visibleFraction / 2));
+  const headerBottom = document.querySelector(".map-band header")?.getBoundingClientRect().bottom ?? 60;
+  const sheetTop = document.querySelector(".sheet")?.getBoundingClientRect().top ?? window.innerHeight * 0.4;
+  const visibleMidY = (headerBottom + Math.max(sheetTop, headerBottom + 20)) / 2;
+  const targetFraction = Math.max(0.08, Math.min(0.45, visibleMidY / window.innerHeight));
   const centerLat = beach.lat - SPAN.lat * (0.5 - targetFraction);
   return new mapkit.CoordinateRegion(
     new mapkit.Coordinate(centerLat, beach.lon),
