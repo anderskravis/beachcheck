@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-10T14:51:10.303Z",
+  "fetchedAt": "2026-07-10T17:05:45.714Z",
   "sources": {
     "liveResults": "https://secure.toronto.ca/opendata/adv/beach_results/v1",
     "waterQuality": "https://open.toronto.ca/dataset/toronto-beaches-water-quality/",
@@ -9,20 +9,24 @@
     "rain": "https://open-meteo.com/"
   },
   "lakeBuoy": {
-    "time": "2026-07-10T14:00:00.000Z",
-    "waveHeightM": 0,
-    "waterTempC": 21.4,
-    "windKn": 1.9,
+    "time": "2026-07-10T16:00:00.000Z",
+    "waveHeightM": 0.1,
+    "waterTempC": 22.1,
+    "windKn": 3.9,
     "station": "45159"
   },
   "beaches": {
     "marie-curtis": {
       "name": "Marie Curtis Park East Beach",
       "waterQuality": {
-        "eColi": 70,
-        "sampleDate": "2026-07-08",
+        "eColi": 19,
+        "sampleDate": "2026-07-09",
         "statusFlag": "SAFE",
         "history": [
+          {
+            "date": "2026-07-09",
+            "eColi": 19
+          },
           {
             "date": "2026-07-08",
             "eColi": 70
@@ -76,10 +80,14 @@
     "sunnyside": {
       "name": "Sunnyside Beach",
       "waterQuality": {
-        "eColi": 30,
-        "sampleDate": "2026-07-08",
+        "eColi": 41,
+        "sampleDate": "2026-07-09",
         "statusFlag": "SAFE",
         "history": [
+          {
+            "date": "2026-07-09",
+            "eColi": 41
+          },
           {
             "date": "2026-07-08",
             "eColi": 30
@@ -149,10 +157,14 @@
     "hanlans-point": {
       "name": "Hanlan's Point Beach",
       "waterQuality": {
-        "eColi": 10,
-        "sampleDate": "2026-07-08",
+        "eColi": 12,
+        "sampleDate": "2026-07-09",
         "statusFlag": "SAFE",
         "history": [
+          {
+            "date": "2026-07-09",
+            "eColi": 12
+          },
           {
             "date": "2026-07-08",
             "eColi": 10
@@ -222,10 +234,14 @@
     "gibraltar-point": {
       "name": "Gibraltar Point Beach",
       "waterQuality": {
-        "eColi": 12,
-        "sampleDate": "2026-07-08",
+        "eColi": 10,
+        "sampleDate": "2026-07-09",
         "statusFlag": "SAFE",
         "history": [
+          {
+            "date": "2026-07-09",
+            "eColi": 10
+          },
           {
             "date": "2026-07-08",
             "eColi": 12
@@ -295,10 +311,14 @@
     "centre-island": {
       "name": "Centre Island Beach",
       "waterQuality": {
-        "eColi": 21,
-        "sampleDate": "2026-07-08",
+        "eColi": 14,
+        "sampleDate": "2026-07-09",
         "statusFlag": "SAFE",
         "history": [
+          {
+            "date": "2026-07-09",
+            "eColi": 14
+          },
           {
             "date": "2026-07-08",
             "eColi": 21
@@ -368,10 +388,14 @@
     "wards-island": {
       "name": "Ward's Island Beach",
       "waterQuality": {
-        "eColi": 11,
-        "sampleDate": "2026-07-08",
+        "eColi": 10,
+        "sampleDate": "2026-07-09",
         "statusFlag": "SAFE",
         "history": [
+          {
+            "date": "2026-07-09",
+            "eColi": 10
+          },
           {
             "date": "2026-07-08",
             "eColi": 11
@@ -441,10 +465,14 @@
     "cherry": {
       "name": "Cherry Beach",
       "waterQuality": {
-        "eColi": 10,
-        "sampleDate": "2026-07-08",
+        "eColi": 11,
+        "sampleDate": "2026-07-09",
         "statusFlag": "SAFE",
         "history": [
+          {
+            "date": "2026-07-09",
+            "eColi": 11
+          },
           {
             "date": "2026-07-08",
             "eColi": 10
@@ -510,7 +538,7 @@
       },
       "buoy": {
         "waterTemp": 23.5,
-        "time": "2026-07-10T14:35:00.000Z",
+        "time": "2026-07-10T16:35:00.000Z",
         "site": "Cherry Beach"
       },
       "rain48hMm": 1.4
@@ -518,10 +546,14 @@
     "woodbine": {
       "name": "Woodbine Beaches",
       "waterQuality": {
-        "eColi": 38,
-        "sampleDate": "2026-07-08",
+        "eColi": 25,
+        "sampleDate": "2026-07-09",
         "statusFlag": "SAFE",
         "history": [
+          {
+            "date": "2026-07-09",
+            "eColi": 25
+          },
           {
             "date": "2026-07-08",
             "eColi": 38
@@ -591,10 +623,14 @@
     "kew-balmy": {
       "name": "Kew Balmy Beach",
       "waterQuality": {
-        "eColi": 46,
-        "sampleDate": "2026-07-08",
+        "eColi": 13,
+        "sampleDate": "2026-07-09",
         "statusFlag": "SAFE",
         "history": [
+          {
+            "date": "2026-07-09",
+            "eColi": 13
+          },
           {
             "date": "2026-07-08",
             "eColi": 46
@@ -659,8 +695,8 @@
         "waterClarity": "None"
       },
       "buoy": {
-        "waterTemp": 21.3,
-        "time": "2026-07-10T14:44:00.000Z",
+        "waterTemp": 22.2,
+        "time": "2026-07-10T16:44:00.000Z",
         "site": "Kew-Balmy Beach"
       },
       "rain48hMm": 1.1
@@ -668,10 +704,14 @@
     "bluffers": {
       "name": "Bluffer's Beach Park",
       "waterQuality": {
-        "eColi": 104,
-        "sampleDate": "2026-07-08",
-        "statusFlag": "UNSAFE",
+        "eColi": 35,
+        "sampleDate": "2026-07-09",
+        "statusFlag": "SAFE",
         "history": [
+          {
+            "date": "2026-07-09",
+            "eColi": 35
+          },
           {
             "date": "2026-07-08",
             "eColi": 104
