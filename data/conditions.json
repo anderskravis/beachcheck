@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-11T06:24:51.536Z",
+  "fetchedAt": "2026-07-11T08:58:15.282Z",
   "sources": {
     "liveResults": "https://secure.toronto.ca/opendata/adv/beach_results/v1",
     "waterQuality": "https://open.toronto.ca/dataset/toronto-beaches-water-quality/",
@@ -9,10 +9,10 @@
     "rain": "https://open-meteo.com/"
   },
   "lakeBuoy": {
-    "time": "2026-07-11T06:00:00.000Z",
-    "waveHeightM": 0,
-    "waterTempC": 21.4,
-    "windKn": 3.9,
+    "time": "2026-07-11T08:00:00.000Z",
+    "waveHeightM": 0.1,
+    "waterTempC": 21.3,
+    "windKn": 5.8,
     "station": "45159"
   },
   "beaches": {
@@ -514,7 +514,7 @@
       },
       "buoy": {
         "waterTemp": 22.5,
-        "time": "2026-07-11T05:36:00.000Z",
+        "time": "2026-07-11T08:37:00.000Z",
         "site": "Cherry Beach"
       },
       "rain48hMm": 1.4
@@ -663,8 +663,8 @@
         "waterClarity": "None"
       },
       "buoy": {
-        "waterTemp": 21.8,
-        "time": "2026-07-11T05:43:00.000Z",
+        "waterTemp": 21.4,
+        "time": "2026-07-11T08:43:00.000Z",
         "site": "Kew-Balmy Beach"
       },
       "rain48hMm": 1.1
