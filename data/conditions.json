@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-12T23:07:46.765Z",
+  "fetchedAt": "2026-07-13T00:10:36.319Z",
   "sources": {
     "liveResults": "https://secure.toronto.ca/opendata/adv/beach_results/v1",
     "waterQuality": "https://open.toronto.ca/dataset/toronto-beaches-water-quality/",
@@ -9,10 +9,10 @@
     "rain": "https://open-meteo.com/"
   },
   "lakeBuoy": {
-    "time": "2026-07-12T22:00:00.000Z",
+    "time": "2026-07-12T23:00:00.000Z",
     "waveHeightM": 0.2,
-    "waterTempC": 22.6,
-    "windKn": 7.8,
+    "waterTempC": 22.5,
+    "windKn": 3.9,
     "station": "45159"
   },
   "beaches": {
@@ -66,10 +66,6 @@
           {
             "date": "2026-06-29",
             "eColi": 73
-          },
-          {
-            "date": "2026-06-28",
-            "eColi": 120
           }
         ]
       },
@@ -143,10 +139,6 @@
           {
             "date": "2026-06-29",
             "eColi": 90
-          },
-          {
-            "date": "2026-06-28",
-            "eColi": 50
           }
         ]
       },
@@ -219,10 +211,6 @@
           },
           {
             "date": "2026-06-29",
-            "eColi": 10
-          },
-          {
-            "date": "2026-06-28",
             "eColi": 10
           }
         ]
@@ -297,10 +285,6 @@
           {
             "date": "2026-06-29",
             "eColi": 11
-          },
-          {
-            "date": "2026-06-28",
-            "eColi": 17
           }
         ]
       },
@@ -374,10 +358,6 @@
           {
             "date": "2026-06-29",
             "eColi": 39
-          },
-          {
-            "date": "2026-06-28",
-            "eColi": 56
           }
         ]
       },
@@ -451,10 +431,6 @@
           {
             "date": "2026-06-29",
             "eColi": 62
-          },
-          {
-            "date": "2026-06-28",
-            "eColi": 49
           }
         ]
       },
@@ -528,10 +504,6 @@
           {
             "date": "2026-06-29",
             "eColi": 26
-          },
-          {
-            "date": "2026-06-28",
-            "eColi": 37
           }
         ]
       },
@@ -545,8 +517,8 @@
         "waterClarity": "None"
       },
       "buoy": {
-        "waterTemp": 24.5,
-        "time": "2026-07-12T22:43:00.000Z",
+        "waterTemp": 25,
+        "time": "2026-07-12T23:43:00.000Z",
         "site": "Cherry Beach"
       },
       "rain48hMm": 0
@@ -609,10 +581,6 @@
           {
             "date": "2026-06-29",
             "eColi": 14
-          },
-          {
-            "date": "2026-06-28",
-            "eColi": 10
           }
         ]
       },
@@ -686,10 +654,6 @@
           {
             "date": "2026-06-29",
             "eColi": 11
-          },
-          {
-            "date": "2026-06-28",
-            "eColi": 10
           }
         ]
       },
@@ -703,8 +667,8 @@
         "waterClarity": "None"
       },
       "buoy": {
-        "waterTemp": 24.7,
-        "time": "2026-07-12T22:43:00.000Z",
+        "waterTemp": 24.2,
+        "time": "2026-07-12T23:23:00.000Z",
         "site": "Kew-Balmy Beach"
       },
       "rain48hMm": 0
@@ -766,10 +730,6 @@
           },
           {
             "date": "2026-06-29",
-            "eColi": 11
-          },
-          {
-            "date": "2026-06-28",
             "eColi": 11
           }
         ]
