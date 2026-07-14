@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-14T20:21:14.781Z",
+  "fetchedAt": "2026-07-14T22:10:53.256Z",
   "sources": {
     "liveResults": "https://secure.toronto.ca/opendata/adv/beach_results/v1",
     "waterQuality": "https://open.toronto.ca/dataset/toronto-beaches-water-quality/",
@@ -9,10 +9,10 @@
     "rain": "https://open-meteo.com/"
   },
   "lakeBuoy": {
-    "time": "2026-07-14T20:00:00.000Z",
-    "waveHeightM": 0.9,
-    "waterTempC": 19.6,
-    "windKn": 13.6,
+    "time": "2026-07-14T21:00:00.000Z",
+    "waveHeightM": 0.6,
+    "waterTempC": 18.9,
+    "windKn": 11.7,
     "station": "45159"
   },
   "beaches": {
@@ -74,13 +74,13 @@
         ]
       },
       "observations": {
-        "date": "2025-09-08",
-        "waterTemp": null,
-        "airTemp": null,
-        "windSpeed": null,
-        "windDirection": "None",
-        "waveAction": "None",
-        "waterClarity": "None"
+        "date": "2026-07-14",
+        "waterTemp": 21,
+        "airTemp": 23,
+        "windSpeed": 13,
+        "windDirection": "SW",
+        "waveAction": "MOD",
+        "waterClarity": "Murky"
       },
       "buoy": null,
       "rain48hMm": 0
@@ -151,15 +151,19 @@
         ]
       },
       "observations": {
-        "date": "2025-09-08",
-        "waterTemp": null,
-        "airTemp": null,
-        "windSpeed": null,
-        "windDirection": "None",
-        "waveAction": "None",
-        "waterClarity": "None"
+        "date": "2026-07-14",
+        "waterTemp": 21,
+        "airTemp": 23,
+        "windSpeed": 13,
+        "windDirection": "SW",
+        "waveAction": "NONE",
+        "waterClarity": "Murky"
       },
-      "buoy": null,
+      "buoy": {
+        "waterTemp": 21,
+        "time": "2026-07-14T16:00:00.000Z",
+        "site": "Sunnyside Beach"
+      },
       "rain48hMm": 0
     },
     "hanlans-point": {
@@ -228,15 +232,19 @@
         ]
       },
       "observations": {
-        "date": "2025-09-08",
-        "waterTemp": null,
-        "airTemp": null,
-        "windSpeed": null,
-        "windDirection": "None",
-        "waveAction": "None",
-        "waterClarity": "None"
+        "date": "2026-07-14",
+        "waterTemp": 18,
+        "airTemp": 23,
+        "windSpeed": 13,
+        "windDirection": "SW",
+        "waveAction": "HIGH",
+        "waterClarity": "Clear"
       },
-      "buoy": null,
+      "buoy": {
+        "waterTemp": 18,
+        "time": "2026-07-14T16:00:00.000Z",
+        "site": "Hanlan's Point Beach"
+      },
       "rain48hMm": 0
     },
     "gibraltar-point": {
@@ -305,15 +313,19 @@
         ]
       },
       "observations": {
-        "date": "2025-09-08",
-        "waterTemp": null,
-        "airTemp": null,
-        "windSpeed": null,
-        "windDirection": "None",
-        "waveAction": "None",
-        "waterClarity": "None"
+        "date": "2026-07-14",
+        "waterTemp": 18,
+        "airTemp": 23,
+        "windSpeed": 13,
+        "windDirection": "SW",
+        "waveAction": "HIGH",
+        "waterClarity": "Clear"
       },
-      "buoy": null,
+      "buoy": {
+        "waterTemp": 18,
+        "time": "2026-07-14T16:00:00.000Z",
+        "site": "Gibraltar Beach"
+      },
       "rain48hMm": 0
     },
     "centre-island": {
@@ -382,13 +394,13 @@
         ]
       },
       "observations": {
-        "date": "2025-09-08",
-        "waterTemp": null,
-        "airTemp": null,
-        "windSpeed": null,
-        "windDirection": "None",
-        "waveAction": "None",
-        "waterClarity": "None"
+        "date": "2026-07-14",
+        "waterTemp": 18,
+        "airTemp": 23,
+        "windSpeed": 13,
+        "windDirection": "SW",
+        "waveAction": "HIGH",
+        "waterClarity": "Clear"
       },
       "buoy": null,
       "rain48hMm": 0
@@ -459,13 +471,13 @@
         ]
       },
       "observations": {
-        "date": "2025-09-08",
-        "waterTemp": null,
-        "airTemp": null,
-        "windSpeed": null,
-        "windDirection": "None",
-        "waveAction": "None",
-        "waterClarity": "None"
+        "date": "2026-07-14",
+        "waterTemp": 18,
+        "airTemp": 23,
+        "windSpeed": 13,
+        "windDirection": "SW",
+        "waveAction": "HIGH",
+        "waterClarity": "Clear"
       },
       "buoy": null,
       "rain48hMm": 0
@@ -536,17 +548,17 @@
         ]
       },
       "observations": {
-        "date": "2025-09-08",
-        "waterTemp": null,
-        "airTemp": null,
-        "windSpeed": null,
-        "windDirection": "None",
-        "waveAction": "None",
-        "waterClarity": "None"
+        "date": "2026-07-14",
+        "waterTemp": 18,
+        "airTemp": 23,
+        "windSpeed": 13,
+        "windDirection": "SW",
+        "waveAction": "HIGH",
+        "waterClarity": "Clear"
       },
       "buoy": {
-        "waterTemp": 24,
-        "time": "2026-07-14T19:48:00.000Z",
+        "waterTemp": 24.5,
+        "time": "2026-07-14T21:47:00.000Z",
         "site": "Cherry Beach"
       },
       "rain48hMm": 0
@@ -617,15 +629,19 @@
         ]
       },
       "observations": {
-        "date": "2025-09-08",
-        "waterTemp": null,
-        "airTemp": null,
-        "windSpeed": null,
-        "windDirection": "None",
-        "waveAction": "None",
-        "waterClarity": "None"
+        "date": "2026-07-14",
+        "waterTemp": 18,
+        "airTemp": 23,
+        "windSpeed": 13,
+        "windDirection": "SW",
+        "waveAction": "LOW",
+        "waterClarity": "Cloudy"
       },
-      "buoy": null,
+      "buoy": {
+        "waterTemp": 18,
+        "time": "2026-07-14T16:00:00.000Z",
+        "site": "Woodbine Beach"
+      },
       "rain48hMm": 0
     },
     "kew-balmy": {
@@ -694,17 +710,17 @@
         ]
       },
       "observations": {
-        "date": "2025-09-08",
-        "waterTemp": null,
-        "airTemp": null,
-        "windSpeed": null,
-        "windDirection": "None",
-        "waveAction": "None",
-        "waterClarity": "None"
+        "date": "2026-07-14",
+        "waterTemp": 19,
+        "airTemp": 23,
+        "windSpeed": 13,
+        "windDirection": "SW",
+        "waveAction": "LOW",
+        "waterClarity": "Cloudy"
       },
       "buoy": {
-        "waterTemp": 19.6,
-        "time": "2026-07-14T20:03:00.000Z",
+        "waterTemp": 18,
+        "time": "2026-07-14T21:43:00.000Z",
         "site": "Kew-Balmy Beach"
       },
       "rain48hMm": 0
@@ -775,15 +791,19 @@
         ]
       },
       "observations": {
-        "date": "2025-09-08",
-        "waterTemp": null,
-        "airTemp": null,
-        "windSpeed": null,
-        "windDirection": "None",
-        "waveAction": "None",
-        "waterClarity": "None"
+        "date": "2026-07-14",
+        "waterTemp": 18,
+        "airTemp": 23,
+        "windSpeed": 13,
+        "windDirection": "SW",
+        "waveAction": "LOW",
+        "waterClarity": "Clear"
       },
-      "buoy": null,
+      "buoy": {
+        "waterTemp": 18,
+        "time": "2026-07-14T16:00:00.000Z",
+        "site": "Bluffer's Park Beach"
+      },
       "rain48hMm": 0
     },
     "rouge": {
