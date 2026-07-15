@@ -546,12 +546,13 @@ const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 const waveStateFromHeight = (m) => bandLabel(WAVE_HEIGHT_BANDS, m);
 const waveState = (windKn) => bandLabel(WAVE_BANDS, windKn);
 
-// US EPA AQI breakpoints (what Open-Meteo's us_aqi field is already scaled
-// to). Each band also carries a tier — good/caution/bad — so the air
-// quality card can reuse the exact same three-color status language as the
-// water quality card above it, rather than inventing a second color system;
-// the precise EPA label ("unhealthy for sensitive groups" vs "hazardous")
-// still carries the finer distinction in text.
+// US EPA AQI breakpoints (what WAQI's aqi field is already scaled to — it's
+// computed the same way, worst sub-index across pollutants). Each band also
+// carries a tier — good/caution/bad — so the air quality readout can reuse
+// the exact same three-color status language as the water quality card
+// above it, rather than inventing a second color system; the precise EPA
+// label ("unhealthy for sensitive groups" vs "hazardous") still carries the
+// finer distinction in text.
 const AQI_BANDS = [
   { max: 51, label: "good", tier: "good" },
   { max: 101, label: "moderate", tier: "caution" },
@@ -644,6 +645,11 @@ async function render() {
 
   const safeToSwim = renderStatus(data?.waterQuality ?? null, data?.rain48hMm ?? null);
   renderHistoryChart(data?.waterQuality ?? null);
+  // Unlike wind/temperature below, this comes from the same hourly-refreshed
+  // conditions.json as water quality — real station AQI (WAQI) needs an API
+  // token, which can't be fetched client-side without shipping it publicly,
+  // so it's fetched server-side in CI instead. See fetch-conditions.mjs.
+  const aqi = renderAirQuality(data?.aqi?.value ?? null);
 
   const obsFresh = obs && daysAgo(obs.date) <= STALE_DAYS;
   const buoy = data?.buoy;
@@ -686,15 +692,9 @@ async function render() {
     ? `City data fetched ${fetched.toLocaleString("en-CA", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZone: "America/Toronto" })} · wind is live`
     : "City data unavailable · wind is live";
 
-  // Live weather (and air quality, same live-fetch treatment) fills in
-  // after the city data paints — fired together since neither depends on
-  // the other, rather than serializing two independent round-trips.
-  const [weather, airQualityReading] = await Promise.all([
-    fetchWeather(beach).catch(() => null),
-    fetchAirQuality(beach).catch(() => null),
-  ]);
+  // Live weather fills in after the city data paints.
+  const weather = await fetchWeather(beach).catch(() => null);
   if (beach.slug !== currentBeach().slug) return; // user switched beaches mid-fetch
-  const aqi = renderAirQuality(airQualityReading?.us_aqi ?? null);
 
   let windKn = null;
   if (weather) {
@@ -764,17 +764,6 @@ async function fetchWeather(beach) {
     `&wind_speed_unit=kn&timezone=America%2FToronto`;
   const r = await fetch(url);
   if (!r.ok) throw new Error(`open-meteo ${r.status}`);
-  return (await r.json()).current;
-}
-
-// Open-Meteo's separate air-quality host (same "no key, no backend" deal as
-// the weather fetch above) — us_aqi is already scaled to the US EPA index
-// AQI_BANDS expects, so no unit conversion is needed on this end.
-async function fetchAirQuality(beach) {
-  const url = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${beach.lat}&longitude=${beach.lon}` +
-    `&current=us_aqi,pm2_5&timezone=America%2FToronto`;
-  const r = await fetch(url);
-  if (!r.ok) throw new Error(`open-meteo air quality ${r.status}`);
   return (await r.json()).current;
 }
 

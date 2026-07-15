@@ -231,6 +231,52 @@ async function fetchRain48h() {
   return out;
 }
 
+// Real monitoring-station AQI (aqicn.org/WAQI), not a forecast model — the
+// one data source that needs a real credential, which is exactly why this
+// runs here in CI (reading the token from an env var backed by a GitHub
+// Actions secret) instead of as a client-side fetch like wind/rain above:
+// a token embedded in the shipped JS would be public the moment the page
+// loads, and WAQI's isn't meant to be. No bulk/multi-coordinate endpoint
+// like Open-Meteo's, so this is one request per beach — fine at an hourly
+// cadence, well under the free tier's rate limit.
+const WAQI_TOKEN = process.env.WAQI_TOKEN;
+
+async function fetchAqi() {
+  if (USE_FIXTURES) {
+    return Object.fromEntries(
+      BEACHES.map((b) => [
+        b.slug,
+        b.slug === "bluffers"
+          ? { value: 162, dominantPollutant: "pm25", station: "Toronto (fixture)" }
+          : { value: 42, dominantPollutant: "pm25", station: "Toronto (fixture)" },
+      ])
+    );
+  }
+  if (!WAQI_TOKEN) {
+    console.error("WAQI_TOKEN not set — skipping air quality (site will show no reading)");
+    return {};
+  }
+  const out = {};
+  await Promise.all(
+    BEACHES.map(async (b) => {
+      try {
+        const url = `https://api.waqi.info/feed/geo:${b.lat};${b.lon}/?token=${WAQI_TOKEN}`;
+        const res = await getJson(url);
+        if (res.status !== "ok" || typeof res.data?.aqi !== "number") return;
+        out[b.slug] = {
+          value: res.data.aqi,
+          dominantPollutant: res.data.dominentpol ?? null,
+          station: res.data.city?.name ?? null,
+          time: res.data.time?.iso ?? null,
+        };
+      } catch (e) {
+        console.error(`WAQI fetch failed for ${b.slug}:`, e.message);
+      }
+    })
+  );
+  return out;
+}
+
 // City datasets have varied casing over the years; find fields case-insensitively.
 function fieldFinder(record) {
   const keys = Object.keys(record);
@@ -336,6 +382,10 @@ const rain48h = await fetchRain48h().catch((e) => {
   console.error("Open-Meteo rain history failed:", e.message);
   return {};
 });
+const aqi = await fetchAqi().catch((e) => {
+  console.error("WAQI air quality fetch failed:", e.message);
+  return {};
+});
 
 // Live feed wins per beach; the CKAN dataset (a season behind) is the fallback.
 const waterQuality = { ...ckanWaterQuality, ...liveResults };
@@ -349,6 +399,7 @@ const conditions = {
     buoys: OWD,
     lakeBuoy: "https://www.ndbc.noaa.gov/station_page.php?station=45159",
     rain: "https://open-meteo.com/",
+    airQuality: "https://waqi.info/",
   },
   lakeBuoy,
   beaches: Object.fromEntries(
@@ -360,6 +411,7 @@ const conditions = {
         observations: observations[b.slug] ?? null,
         buoy: buoys[b.slug] ?? null,
         rain48hMm: rain48h[b.slug] ?? null,
+        aqi: aqi[b.slug] ?? null,
       },
     ])
   ),

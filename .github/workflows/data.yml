@@ -30,6 +30,8 @@ jobs:
         with:
           node-version: 22
       - run: node scripts/fetch-conditions.mjs
+        env:
+          WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}
       - name: Commit if changed
         id: commit
         run: |

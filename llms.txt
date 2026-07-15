@@ -11,7 +11,8 @@ A beach reads "swim" when its latest E. coli sample is comfortably under the Cit
 - Water quality & posted swim status: City of Toronto open data (https://open.toronto.ca/dataset/toronto-beaches-water-quality/)
 - Water temperature: Open Water Data buoys (https://www.openwaterdata.com/)
 - Wave height: NOAA/ECCC buoy 45159, Lake Ontario (https://www.ndbc.noaa.gov/station_page.php?station=45159)
-- Wind, air temperature & air quality (US AQI): Open-Meteo (https://open-meteo.com/)
+- Wind & air temperature: Open-Meteo (https://open-meteo.com/)
+- Air quality (US AQI): WAQI real monitoring stations (https://waqi.info/)
 
 ## Links
 
