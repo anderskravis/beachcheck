@@ -91,7 +91,42 @@ conditionsPromise.then((conditions) => {
     else dot.style.removeProperty("--dot-status");
   }
   setBeachStatuses(statuses);
+  renderStatusSummary(statuses);
 }).catch(() => { /* dots just keep their neutral color if this fails */ });
+
+// Tiny header bar summarizing every beach at once — same three colors as
+// the dots, just proportional segment widths instead of 11 separate points.
+const STATUS_SUMMARY_ORDER = ["safe", "caution", "unsafe"];
+const STATUS_SUMMARY_LABEL = { safe: "swim", caution: "caution", unsafe: "no swim" };
+function renderStatusSummary(statuses) {
+  const wrap = $("status-summary");
+  const bar = $("status-summary-bar");
+  const counts = { safe: 0, caution: 0, unsafe: 0 };
+  for (const status of Object.values(statuses)) {
+    if (status in counts) counts[status]++;
+  }
+  const total = counts.safe + counts.caution + counts.unsafe;
+  if (total === 0) {
+    wrap.hidden = true; // nothing currently classified (e.g. off-season) — nothing to summarize
+    return;
+  }
+  bar.textContent = "";
+  const parts = [];
+  for (const tier of STATUS_SUMMARY_ORDER) {
+    const count = counts[tier];
+    if (!count) continue;
+    const seg = document.createElement("span");
+    seg.className = "status-summary-seg";
+    seg.style.flexGrow = count;
+    seg.style.background = DOT_STATUS_COLORS[tier];
+    bar.appendChild(seg);
+    parts.push(`${count} ${STATUS_SUMMARY_LABEL[tier]}`);
+  }
+  const label = `${total} beaches — ${parts.join(", ")}`;
+  wrap.setAttribute("aria-label", label);
+  wrap.title = label;
+  wrap.hidden = false;
+}
 
 const compass = (deg) =>
   ["N", "NE", "E", "SE", "S", "SW", "W", "NW"][Math.round(deg / 45) % 8];

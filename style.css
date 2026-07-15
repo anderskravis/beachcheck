@@ -196,6 +196,35 @@ body {
   }
 }
 
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  min-width: 0; /* lets the wordmark ellipsis/wrap instead of forcing the row wide */
+}
+
+/* The tiniest possible "how's the whole city doing" readout — every beach
+   dot on the map already carries this same color, but this is the same
+   read without having to scan 11 separate points. Segment widths are
+   proportional to how many beaches fall in each tier; beaches with no
+   current reading (off-season, stale) aren't counted, so a segment only
+   ever represents a real classification. Native title/aria-label carry the
+   exact breakdown — kept to that rather than a full custom tooltip, since
+   this is a glance-only echo of information the map dots and each beach's
+   own card already give in full. */
+.status-summary-bar {
+  display: flex;
+  gap: 1.5px;
+  width: 3.4rem;
+  height: 4px;
+}
+
+.status-summary-seg {
+  display: block;
+  height: 100%;
+  border-radius: 2px;
+}
+
 .wordmark {
   display: flex;
   align-items: center;
