@@ -233,7 +233,15 @@ setTimeout(() => $("map-band").classList.add("show-fallback"), 2500);
     const guess = vh - 34 * 16;
     return Math.min(Math.max(guess, vh * 0.10), vh * 0.46);
   };
-  const expandedTopPx = () => Math.max(window.innerHeight * 0.18, 7 * 16);
+  // A guaranteed shrink relative to the resting top, rather than an
+  // independent floor — the old `max(vh * 0.18, 7rem)` converged with
+  // collapsedTopPx() on shorter viewports (browser chrome eating into vh,
+  // smaller phones), making the "grows taller" effect nearly invisible
+  // (as little as 3px on a 667px-tall viewport). This keeps the growth
+  // substantial everywhere while still leaving room under the header.
+  const EXPAND_DELTA_PX = 200;
+  const MIN_EXPANDED_TOP_PX = 5 * 16;
+  const expandedTopPx = () => Math.max(MIN_EXPANDED_TOP_PX, collapsedTopPx() - EXPAND_DELTA_PX);
 
   let ticking = false;
   function updateParallax() {
