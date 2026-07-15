@@ -1,12 +1,13 @@
 {
-  "fetchedAt": "2026-07-15T17:36:29.988Z",
+  "fetchedAt": "2026-07-15T17:56:44.640Z",
   "sources": {
     "liveResults": "https://secure.toronto.ca/opendata/adv/beach_results/v1",
     "waterQuality": "https://open.toronto.ca/dataset/toronto-beaches-water-quality/",
     "observations": "https://open.toronto.ca/dataset/toronto-beaches-observations/",
     "buoys": "https://www.openwaterdata.com",
     "lakeBuoy": "https://www.ndbc.noaa.gov/station_page.php?station=45159",
-    "rain": "https://open-meteo.com/"
+    "rain": "https://open-meteo.com/",
+    "airQuality": "https://waqi.info/"
   },
   "lakeBuoy": {
     "time": "2026-07-15T17:00:00.000Z",
@@ -83,7 +84,8 @@
         "waterClarity": "Murky"
       },
       "buoy": null,
-      "rain48hMm": 0
+      "rain48hMm": 0,
+      "aqi": null
     },
     "sunnyside": {
       "name": "Sunnyside Beach",
@@ -164,7 +166,8 @@
         "time": "2026-07-14T16:00:00.000Z",
         "site": "Sunnyside Beach"
       },
-      "rain48hMm": 0
+      "rain48hMm": 0,
+      "aqi": null
     },
     "hanlans-point": {
       "name": "Hanlan's Point Beach",
@@ -245,7 +248,8 @@
         "time": "2026-07-14T16:00:00.000Z",
         "site": "Hanlan's Point Beach"
       },
-      "rain48hMm": 0
+      "rain48hMm": 0,
+      "aqi": null
     },
     "gibraltar-point": {
       "name": "Gibraltar Point Beach",
@@ -326,7 +330,8 @@
         "time": "2026-07-14T16:00:00.000Z",
         "site": "Gibraltar Beach"
       },
-      "rain48hMm": 0
+      "rain48hMm": 0,
+      "aqi": null
     },
     "centre-island": {
       "name": "Centre Island Beach",
@@ -403,7 +408,8 @@
         "waterClarity": "Clear"
       },
       "buoy": null,
-      "rain48hMm": 0
+      "rain48hMm": 0,
+      "aqi": null
     },
     "wards-island": {
       "name": "Ward's Island Beach",
@@ -480,7 +486,8 @@
         "waterClarity": "Clear"
       },
       "buoy": null,
-      "rain48hMm": 0
+      "rain48hMm": 0,
+      "aqi": null
     },
     "cherry": {
       "name": "Cherry Beach",
@@ -561,7 +568,8 @@
         "time": "2026-07-15T17:18:00.000Z",
         "site": "Cherry Beach"
       },
-      "rain48hMm": 0
+      "rain48hMm": 0,
+      "aqi": null
     },
     "woodbine": {
       "name": "Woodbine Beaches",
@@ -642,7 +650,8 @@
         "time": "2026-07-14T16:00:00.000Z",
         "site": "Woodbine Beach"
       },
-      "rain48hMm": 0
+      "rain48hMm": 0,
+      "aqi": null
     },
     "kew-balmy": {
       "name": "Kew Balmy Beach",
@@ -719,11 +728,12 @@
         "waterClarity": "Cloudy"
       },
       "buoy": {
-        "waterTemp": 14.4,
-        "time": "2026-07-15T17:23:00.000Z",
+        "waterTemp": 14.5,
+        "time": "2026-07-15T17:43:00.000Z",
         "site": "Kew-Balmy Beach"
       },
-      "rain48hMm": 0
+      "rain48hMm": 0,
+      "aqi": null
     },
     "bluffers": {
       "name": "Bluffer's Beach Park",
@@ -804,14 +814,16 @@
         "time": "2026-07-14T16:00:00.000Z",
         "site": "Bluffer's Park Beach"
       },
-      "rain48hMm": 0
+      "rain48hMm": 0,
+      "aqi": null
     },
     "rouge": {
       "name": "Rouge Beach",
       "waterQuality": null,
       "observations": null,
       "buoy": null,
-      "rain48hMm": 0
+      "rain48hMm": 0,
+      "aqi": null
     }
   }
 }
