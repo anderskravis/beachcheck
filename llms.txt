@@ -1,6 +1,6 @@
 # BeachCheck
 
-> Free, independent tool showing real-time water quality, water temperature, waves and wind for Toronto's supervised swimming beaches — built for swimmers, paddlers and SUP riders who want one glance instead of five tabs.
+> Free, independent tool showing real-time water quality, water temperature, waves, wind and air quality for Toronto's supervised swimming beaches — built for swimmers, paddlers and SUP riders who want one glance instead of five tabs.
 
 BeachCheck covers all of Toronto's supervised beaches: Marie Curtis Park East, Sunnyside, Hanlan's Point, Gibraltar Point, Centre Island, Ward's Island, Cherry, Woodbine, Kew-Balmy, Bluffer's Park and Rouge.
 
@@ -11,7 +11,7 @@ A beach reads "swim" when its latest E. coli sample is comfortably under the Cit
 - Water quality & posted swim status: City of Toronto open data (https://open.toronto.ca/dataset/toronto-beaches-water-quality/)
 - Water temperature: Open Water Data buoys (https://www.openwaterdata.com/)
 - Wave height: NOAA/ECCC buoy 45159, Lake Ontario (https://www.ndbc.noaa.gov/station_page.php?station=45159)
-- Wind & air temperature: Open-Meteo (https://open-meteo.com/)
+- Wind, air temperature & air quality (US AQI): Open-Meteo (https://open-meteo.com/)
 
 ## Links
 

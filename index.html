@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="light dark">
   <title>BeachCheck · Toronto beach conditions</title>
-  <meta name="description" content="Live water quality, water temperature, waves and wind for Toronto's supervised beaches — one glance for swimmers, paddlers and SUP riders.">
+  <meta name="description" content="Live water quality, water temperature, waves, wind and air quality for Toronto's supervised beaches — one glance for swimmers, paddlers and SUP riders.">
   <link rel="canonical" href="https://beachcheck.ca/">
   <meta name="robots" content="index, follow">
   <link rel="stylesheet" href="style.css">
@@ -13,7 +13,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="BeachCheck">
   <meta property="og:title" content="BeachCheck · Toronto beach conditions">
-  <meta property="og:description" content="Live water quality, water temperature, waves and wind for Toronto's supervised beaches — one glance for swimmers, paddlers and SUP riders.">
+  <meta property="og:description" content="Live water quality, water temperature, waves, wind and air quality for Toronto's supervised beaches — one glance for swimmers, paddlers and SUP riders.">
   <meta property="og:url" content="https://beachcheck.ca/">
   <meta property="og:image" content="https://beachcheck.ca/og-image.png">
   <meta property="og:image:width" content="1200">
@@ -63,7 +63,7 @@
         "name": "Where does BeachCheck get its data?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Water quality and posted swim status come from the City of Toronto's open data; water temperature from Open Water Data buoys; wave height from NOAA/ECCC buoy 45159 on Lake Ontario; and wind and air temperature from Open-Meteo."
+          "text": "Water quality and posted swim status come from the City of Toronto's open data; water temperature from Open Water Data buoys; wave height from NOAA/ECCC buoy 45159 on Lake Ontario; and wind, air temperature and air quality from Open-Meteo."
         }
       },
       {
@@ -158,6 +158,13 @@
             <dt>air</dt>
             <dd><span id="air-temp"></span></dd>
           </div>
+          <div class="stat status-card" id="stat-air-quality">
+            <dt>air quality</dt>
+            <dd>
+              <span id="air-quality-word"></span>
+              <small id="air-quality-detail"></small>
+            </dd>
+          </div>
         </dl>
 
         <p id="paddle-note" class="paddle-note"></p>
@@ -190,7 +197,7 @@
         <p>
           Water data: <a href="https://open.toronto.ca/dataset/toronto-beaches-water-quality/">City of Toronto</a> ·
           water temp: <a href="https://www.openwaterdata.com/">Open Water Data</a> buoys ·
-          wind: <a href="https://open-meteo.com/">Open-Meteo</a> ·
+          wind &amp; air quality: <a href="https://open-meteo.com/">Open-Meteo</a> ·
           not official safety advice
         </p>
         <button id="share-btn" class="text-btn" type="button">Share these conditions</button>
@@ -218,7 +225,7 @@
       <li><a href="https://open.toronto.ca/dataset/toronto-beaches-water-quality/" target="_blank" rel="noopener">City of Toronto</a> — daily E. coli sampling &amp; posted swim status</li>
       <li><a href="https://www.openwaterdata.com/" target="_blank" rel="noopener">Open Water Data</a> — real-time buoy water temperature</li>
       <li><a href="https://www.ndbc.noaa.gov/station_page.php?station=45159" target="_blank" rel="noopener">NOAA / ECCC buoy 45159</a> — Lake Ontario wave height</li>
-      <li><a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> — live wind, air temperature &amp; rainfall</li>
+      <li><a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> — live wind, air temperature, rainfall &amp; air quality</li>
     </ul>
 
     <h3>How the water quality call works</h3>

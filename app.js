@@ -344,6 +344,27 @@ function renderStatus(wq, rain48hMm) {
   return status;
 }
 
+// Same card treatment as renderStatus() — full-width, three-color status
+// language — for a live US AQI reading. Returns the matched band (with its
+// tier) so conditionsNote() can fold a heads-up into the paddle note the
+// same way it already does for rain and the E. coli trend.
+function renderAirQuality(aqi) {
+  const card = $("stat-air-quality");
+  const word = $("air-quality-word");
+  const detail = $("air-quality-detail");
+  const band = aqiBand(aqi);
+  if (!band) {
+    card.className = "stat status-card";
+    word.textContent = "—";
+    detail.textContent = "no live reading right now";
+    return null;
+  }
+  card.className = `stat status-card ${band.tier === "bad" ? "bad" : band.tier === "caution" ? "caution" : "good"}`;
+  word.textContent = capitalize(band.label);
+  detail.textContent = `AQI ${Math.round(aqi)} (US)`;
+  return { value: Math.round(aqi), ...band };
+}
+
 // Same three-way call as beachStatus(), but per single reading — a day in
 // history has no city statusFlag and no rain figure attached to it, so this
 // only ever looks at that day's E. coli against the two thresholds. Kept
@@ -522,6 +543,22 @@ const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 const waveStateFromHeight = (m) => bandLabel(WAVE_HEIGHT_BANDS, m);
 const waveState = (windKn) => bandLabel(WAVE_BANDS, windKn);
 
+// US EPA AQI breakpoints (what Open-Meteo's us_aqi field is already scaled
+// to). Each band also carries a tier — good/caution/bad — so the air
+// quality card can reuse the exact same three-color status language as the
+// water quality card above it, rather than inventing a second color system;
+// the precise EPA label ("unhealthy for sensitive groups" vs "hazardous")
+// still carries the finer distinction in text.
+const AQI_BANDS = [
+  { max: 51, label: "good", tier: "good" },
+  { max: 101, label: "moderate", tier: "caution" },
+  { max: 151, label: "unhealthy for sensitive groups", tier: "caution" },
+  { max: 201, label: "unhealthy", tier: "bad" },
+  { max: 301, label: "very unhealthy", tier: "bad" },
+  { max: Infinity, label: "hazardous", tier: "bad" },
+];
+const aqiBand = (value) => (value == null ? null : AQI_BANDS.find((b) => value < b.max));
+
 // A small, factual aside folded into the end of the note for specific
 // beaches — worth knowing, understated rather than a standalone callout.
 // Keyed by slug so more can be added later without touching the function
@@ -537,8 +574,11 @@ const BEACH_ASIDES = {
 // — a "no swim" day should never be topped off with an upbeat paddling
 // verdict, and a "caution" day gets a heads-up that says WHY (borderline
 // reading, heavy recent rain, or both — wq/rain48hMm carry the evidence).
+// aqi is renderAirQuality()'s return value ({ value, label, tier }) — folded
+// in regardless of water status, since smoke is unrelated to E. coli and a
+// "no swim" day shouldn't hide that the air is also bad.
 // Returns HTML (a beach aside may include a link), not plain text.
-function conditionsNote(waveWord, waterTempC, windKn, status, slug, wq, rain48hMm) {
+function conditionsNote(waveWord, waterTempC, windKn, status, slug, wq, rain48hMm, aqi) {
   let note;
   if (status === "unsafe") {
     note = waveWord
@@ -570,6 +610,12 @@ function conditionsNote(waveWord, waterTempC, windKn, status, slug, wq, rain48hM
       }
       note = note ? `${note} ${headsUp}` : headsUp;
     }
+  }
+  if (aqi && aqi.tier !== "good") {
+    const aqNote = aqi.tier === "bad"
+      ? `Air quality is ${aqi.label} today (AQI ${aqi.value}) — consider limiting time outdoors.`
+      : `Air quality is ${aqi.label} today (AQI ${aqi.value}) — sensitive groups should take it easy.`;
+    note = note ? `${note} ${aqNote}` : aqNote;
   }
   const aside = BEACH_ASIDES[slug];
   if (aside) note = note ? `${note} ${aside}` : aside;
@@ -637,9 +683,15 @@ async function render() {
     ? `City data fetched ${fetched.toLocaleString("en-CA", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZone: "America/Toronto" })} · wind is live`
     : "City data unavailable · wind is live";
 
-  // Live weather fills in after the city data paints.
-  const weather = await fetchWeather(beach).catch(() => null);
+  // Live weather (and air quality, same live-fetch treatment) fills in
+  // after the city data paints — fired together since neither depends on
+  // the other, rather than serializing two independent round-trips.
+  const [weather, airQualityReading] = await Promise.all([
+    fetchWeather(beach).catch(() => null),
+    fetchAirQuality(beach).catch(() => null),
+  ]);
   if (beach.slug !== currentBeach().slug) return; // user switched beaches mid-fetch
+  const aqi = renderAirQuality(airQualityReading?.us_aqi ?? null);
 
   let windKn = null;
   if (weather) {
@@ -670,7 +722,7 @@ async function render() {
   }
   $("paddle-note").innerHTML = conditionsNote(
     waveWord, waterTempC, windKn, safeToSwim, beach.slug,
-    data?.waterQuality ?? null, data?.rain48hMm ?? null
+    data?.waterQuality ?? null, data?.rain48hMm ?? null, aqi
   );
 }
 
@@ -709,6 +761,17 @@ async function fetchWeather(beach) {
     `&wind_speed_unit=kn&timezone=America%2FToronto`;
   const r = await fetch(url);
   if (!r.ok) throw new Error(`open-meteo ${r.status}`);
+  return (await r.json()).current;
+}
+
+// Open-Meteo's separate air-quality host (same "no key, no backend" deal as
+// the weather fetch above) — us_aqi is already scaled to the US EPA index
+// AQI_BANDS expects, so no unit conversion is needed on this end.
+async function fetchAirQuality(beach) {
+  const url = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${beach.lat}&longitude=${beach.lon}` +
+    `&current=us_aqi,pm2_5&timezone=America%2FToronto`;
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`open-meteo air quality ${r.status}`);
   return (await r.json()).current;
 }
 
