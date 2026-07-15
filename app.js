@@ -92,7 +92,6 @@ conditionsPromise.then((conditions) => {
   }
   setBeachStatuses(statuses);
   renderStatusSummary(statuses);
-  updateSelectDots(statuses);
 }).catch(() => { /* dots just keep their neutral color if this fails */ });
 
 // Tiny header bar summarizing every beach at once — same three colors as
@@ -127,22 +126,6 @@ function renderStatusSummary(statuses) {
   wrap.setAttribute("aria-label", label);
   wrap.title = label;
   wrap.hidden = false;
-}
-
-// A native <select>'s <option> elements barely take CSS styling — iOS's
-// own picker UI in particular ignores almost anything custom on them — so
-// a colored dot can't be drawn with markup/CSS the way the map dots and
-// status bar are. A colored-circle emoji sidesteps that entirely: it's
-// plain text, so it renders wherever the picker itself renders, no styling
-// support needed. No dot at all for a beach with no current reading,
-// matching how the map dots also just stay neutral in that case.
-const STATUS_DOT = { safe: "🔵", caution: "🟠", unsafe: "🔴" };
-function updateSelectDots(statuses) {
-  for (const opt of select.options) {
-    const beach = beachForSlug(opt.value);
-    const dot = STATUS_DOT[statuses[opt.value]];
-    opt.textContent = dot ? `${dot} ${beach.short}` : beach.short;
-  }
 }
 
 const compass = (deg) =>
