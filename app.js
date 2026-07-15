@@ -352,31 +352,24 @@ function renderStatus(wq, rain48hMm) {
   return status;
 }
 
-// A compact readout tucked into the existing Air tile rather than a card of
-// its own: a thin filled track (0–300 AQI, the range that covers everything
-// short of a genuinely hazardous day) colored by the same three-tier
-// good/caution/bad language as the water quality card, plus the number and
-// EPA label as text. Returns the matched band so conditionsNote() can fold
-// a heads-up into the paddle note the same way it already does for rain and
-// the E. coli trend.
-const AQI_GAUGE_MAX = 300;
-function renderAirQuality(aqi) {
-  const mini = $("aqi-mini");
-  const fill = $("aqi-mini-fill");
-  const text = $("aqi-mini-text");
+// Pure lookup, no DOM writes — the Air tile's own rendering (further down
+// in render()) needs this before the weather condition text is known (AQI
+// arrives with the city data; weather is a separate, slower client fetch),
+// so it's computed once up front and consumed in two places: the tile's
+// background color (set immediately) and its subtext line (set once the
+// weather text is in, alongside it).
+function airQualityReading(aqi) {
   const band = aqiBand(aqi);
-  if (!band) {
-    mini.hidden = true;
-    return null;
-  }
-  // Quiet on a good-air day — same plain two-line shape as Wind/Waves —
-  // and only earns its line back when it's actually worth a look, which is
-  // also exactly when a reader wants to see it.
-  mini.hidden = band.tier === "good";
-  fill.className = `aqi-mini-fill ${band.tier}`;
-  fill.style.width = `${Math.min(100, (aqi / AQI_GAUGE_MAX) * 100)}%`;
-  text.textContent = `AQI ${Math.round(aqi)} · ${band.label}`;
-  return { value: Math.round(aqi), ...band };
+  return band ? { value: Math.round(aqi), ...band } : null;
+}
+
+// The Air tile recolors like the water quality card — same good/caution/bad
+// language — but only away from its plain default on a caution/bad reading;
+// a good reading isn't exciting enough to earn a blue tile the way a "swim"
+// verdict does for water quality, so it just stays quiet.
+function renderAirTileColor(aqi) {
+  const card = $("stat-air");
+  card.className = `stat${aqi && aqi.tier !== "good" ? ` ${aqi.tier}` : ""}`;
 }
 
 // Same three-way call as beachStatus(), but per single reading — a day in
@@ -589,7 +582,7 @@ const BEACH_ASIDES = {
 // — a "no swim" day should never be topped off with an upbeat paddling
 // verdict, and a "caution" day gets a heads-up that says WHY (borderline
 // reading, heavy recent rain, or both — wq/rain48hMm carry the evidence).
-// aqi is renderAirQuality()'s return value ({ value, label, tier }) — folded
+// aqi is airQualityReading()'s return value ({ value, label, tier }) — folded
 // in regardless of water status, since smoke is unrelated to E. coli and a
 // "no swim" day shouldn't hide that the air is also bad.
 // Returns HTML (a beach aside may include a link), not plain text.
@@ -660,7 +653,8 @@ async function render() {
   // conditions.json as water quality — real station AQI (WAQI) needs an API
   // token, which can't be fetched client-side without shipping it publicly,
   // so it's fetched server-side in CI instead. See fetch-conditions.mjs.
-  const aqi = renderAirQuality(data?.aqi?.value ?? null);
+  const aqi = airQualityReading(data?.aqi?.value ?? null);
+  renderAirTileColor(aqi);
 
   const obsFresh = obs && daysAgo(obs.date) <= STALE_DAYS;
   const buoy = data?.buoy;
@@ -716,16 +710,26 @@ async function render() {
     $("wind").innerHTML =
       `${Math.round(weather.wind_speed_10m)} kn ${compass(weather.wind_direction_10m)} ${arrow} ` +
       `<small>gusts ${Math.round(weather.wind_gusts_10m)}</small>`;
-    const condition = liveConditionLabel(weather);
-    $("air-temp").innerHTML = condition
-      ? `${Math.round(weather.temperature_2m)}° <small>${condition}</small>`
+    let condition = liveConditionLabel(weather);
+    // A small "is it actually raining right now" touch, independent of the
+    // condition word (which, per the comment above liveConditionLabel, can
+    // still lag) — precipitation is the one figure that can't.
+    if (condition && weather.precipitation >= 0.1) condition = `🌧️ ${condition}`;
+    const aqiText = aqi ? `AQI ${aqi.value}` : null;
+    const subtext = [condition, aqiText].filter(Boolean).join(" · ");
+    $("air-temp").innerHTML = subtext
+      ? `${Math.round(weather.temperature_2m)}° <small>${subtext}</small>`
       : `${Math.round(weather.temperature_2m)}°`;
   } else {
     if (obsFresh && obs.windSpeed != null) windKn = obs.windSpeed * 0.539957; // km/h -> kn
     $("wind").textContent = obsFresh && obs.windSpeed != null
       ? `${obs.windSpeed} km/h ${obs.windDirection ?? ""}`
       : "—";
-    $("air-temp").textContent = obsFresh && obs.airTemp != null ? `${obs.airTemp}°` : "—";
+    // Air quality comes from a source independent of the live weather fetch
+    // above, so it's still worth showing here even when that fetch failed.
+    const aqiText = aqi ? `AQI ${aqi.value}` : null;
+    const airValue = obsFresh && obs.airTemp != null ? `${obs.airTemp}°` : "—";
+    $("air-temp").innerHTML = aqiText ? `${airValue} <small>${aqiText}</small>` : airValue;
   }
 
   // Only the wind-derived estimate genuinely needs to wait this long —

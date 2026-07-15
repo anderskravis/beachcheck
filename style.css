@@ -433,6 +433,7 @@ h1 {
   background: var(--card);
   border-radius: 1.15rem;
   padding: .85rem 1rem .95rem;
+  transition: background-color .4s, color .4s;
   /* Reserves room for a full value line + subtext line from the start, so
      cards don't visibly collapse/resize as data streams in at different
      times (water quality + water temp arrive first, wind/air/waves after
@@ -482,47 +483,28 @@ h1 {
   color: var(--muted);
 }
 
-/* A thin filled gauge tucked under the Air tile's temperature, rather than
-   a full status card of its own — same three-tier color language as the
-   water quality card (via .good/.caution/.bad below), just far quieter. */
-.aqi-mini {
-  display: flex;
-  align-items: center;
-  gap: .45rem;
-  margin-top: .45rem;
+/* The Air tile recolors on a caution/bad AQI reading — same colors as the
+   water quality card, but scoped to plain .stat (not .status-card, which
+   also sets grid-column: 1/-1 — this tile stays put in the 2x2 grid). A
+   good reading is intentionally not colored; see renderAirTileColor(). */
+.stat.caution {
+  background: #ff9500;
+  color: #201a02;
 }
 
-/* Author styles beat the UA [hidden]{display:none} rule regardless of
-   specificity, so the flex display above would otherwise win and the
-   good-air day would never actually go quiet. */
-.aqi-mini[hidden] {
-  display: none;
+.stat.bad {
+  background: #eb4034;
+  color: #fff;
 }
 
-.aqi-mini-track {
-  flex: 1;
-  height: 4px;
-  border-radius: 99px;
-  background: color-mix(in srgb, var(--muted) 25%, transparent);
-  overflow: hidden;
+.stat.caution dt,
+.stat.caution dd small {
+  color: rgba(32, 26, 2, .72);
 }
 
-.aqi-mini-fill {
-  display: block;
-  height: 100%;
-  border-radius: 99px;
-  transition: width .4s ease;
-}
-
-.aqi-mini-fill.good { background: #0a7aff; }
-.aqi-mini-fill.caution { background: #ff9500; }
-.aqi-mini-fill.bad { background: #eb4034; }
-
-#aqi-mini-text {
-  flex: none;
-  font-size: .72rem;
-  color: var(--muted);
-  white-space: nowrap;
+.stat.bad dt,
+.stat.bad dd small {
+  color: rgba(255, 255, 255, .82);
 }
 
 .paddle-note {
