@@ -664,12 +664,14 @@ async function render() {
   let waterTempC = null;
   if (buoy?.waterTemp != null) {
     waterTempC = buoy.waterTemp;
+    const band = bandLabel(TEMP_BANDS, waterTempC);
     const hoursAgo = Math.round((Date.now() - new Date(buoy.time)) / 3600000);
     const when = hoursAgo < 1 ? "now" : `${hoursAgo}h ago`;
-    $("water-temp").innerHTML = `${formatWaterTemp(buoy.waterTemp)} <small>buoy · ${when}</small>`;
+    $("water-temp").innerHTML = `${formatWaterTemp(buoy.waterTemp)} ${band} <small>buoy · ${when}</small>`;
   } else if (obsFresh && obs.waterTemp != null) {
     waterTempC = obs.waterTemp;
-    $("water-temp").innerHTML = `${formatWaterTemp(obs.waterTemp)} <small>${shortDate(obs.date)}</small>`;
+    const band = bandLabel(TEMP_BANDS, waterTempC);
+    $("water-temp").innerHTML = `${formatWaterTemp(obs.waterTemp)} ${band} <small>${shortDate(obs.date)}</small>`;
   } else {
     $("water-temp").innerHTML = `— <small>no reading for this beach</small>`;
   }
