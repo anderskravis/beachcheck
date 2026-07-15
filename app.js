@@ -344,24 +344,27 @@ function renderStatus(wq, rain48hMm) {
   return status;
 }
 
-// Same card treatment as renderStatus() — full-width, three-color status
-// language — for a live US AQI reading. Returns the matched band (with its
-// tier) so conditionsNote() can fold a heads-up into the paddle note the
-// same way it already does for rain and the E. coli trend.
+// A compact readout tucked into the existing Air tile rather than a card of
+// its own: a thin filled track (0–300 AQI, the range that covers everything
+// short of a genuinely hazardous day) colored by the same three-tier
+// good/caution/bad language as the water quality card, plus the number and
+// EPA label as text. Returns the matched band so conditionsNote() can fold
+// a heads-up into the paddle note the same way it already does for rain and
+// the E. coli trend.
+const AQI_GAUGE_MAX = 300;
 function renderAirQuality(aqi) {
-  const card = $("stat-air-quality");
-  const word = $("air-quality-word");
-  const detail = $("air-quality-detail");
+  const mini = $("aqi-mini");
+  const fill = $("aqi-mini-fill");
+  const text = $("aqi-mini-text");
   const band = aqiBand(aqi);
   if (!band) {
-    card.className = "stat status-card";
-    word.textContent = "—";
-    detail.textContent = "no live reading right now";
+    mini.hidden = true;
     return null;
   }
-  card.className = `stat status-card ${band.tier === "bad" ? "bad" : band.tier === "caution" ? "caution" : "good"}`;
-  word.textContent = capitalize(band.label);
-  detail.textContent = `AQI ${Math.round(aqi)} (US)`;
+  mini.hidden = false;
+  fill.className = `aqi-mini-fill ${band.tier}`;
+  fill.style.width = `${Math.min(100, (aqi / AQI_GAUGE_MAX) * 100)}%`;
+  text.textContent = `AQI ${Math.round(aqi)} · ${band.label}`;
   return { value: Math.round(aqi), ...band };
 }
 

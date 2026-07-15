@@ -482,6 +482,42 @@ h1 {
   color: var(--muted);
 }
 
+/* A thin filled gauge tucked under the Air tile's temperature, rather than
+   a full status card of its own — same three-tier color language as the
+   water quality card (via .good/.caution/.bad below), just far quieter. */
+.aqi-mini {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  margin-top: .45rem;
+}
+
+.aqi-mini-track {
+  flex: 1;
+  height: 4px;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--muted) 25%, transparent);
+  overflow: hidden;
+}
+
+.aqi-mini-fill {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  transition: width .4s ease;
+}
+
+.aqi-mini-fill.good { background: #0a7aff; }
+.aqi-mini-fill.caution { background: #ff9500; }
+.aqi-mini-fill.bad { background: #eb4034; }
+
+#aqi-mini-text {
+  flex: none;
+  font-size: .72rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
 .paddle-note {
   margin: 1.2rem 0 0;
   font-size: .9rem;
