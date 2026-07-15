@@ -196,35 +196,6 @@ body {
   }
 }
 
-.brand {
-  display: flex;
-  flex-direction: column;
-  gap: .35rem;
-  min-width: 0; /* lets the wordmark ellipsis/wrap instead of forcing the row wide */
-}
-
-/* The tiniest possible "how's the whole city doing" readout — every beach
-   dot on the map already carries this same color, but this is the same
-   read without having to scan 11 separate points. Segment widths are
-   proportional to how many beaches fall in each tier; beaches with no
-   current reading (off-season, stale) aren't counted, so a segment only
-   ever represents a real classification. Native title/aria-label carry the
-   exact breakdown — kept to that rather than a full custom tooltip, since
-   this is a glance-only echo of information the map dots and each beach's
-   own card already give in full. */
-.status-summary-bar {
-  display: flex;
-  gap: 1.5px;
-  width: 3.4rem;
-  height: 4px;
-}
-
-.status-summary-seg {
-  display: block;
-  height: 100%;
-  border-radius: 2px;
-}
-
 .wordmark {
   display: flex;
   align-items: center;
@@ -302,6 +273,16 @@ body {
   cursor: pointer;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  /* Pre-existing gap: a native <select> has no intrinsic shrink limit of
+     its own, so the longest beach name ("Gibraltar Point") pushed the
+     whole header past a 375px-wide screen's actual edge — not something
+     that ever showed up with the default beach selected, but real for
+     anyone who picked one of the longer names on a narrow phone. */
+  min-width: 0;
+  max-width: 7.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 #beach-select option { color: #1c1c1a; background: #fff; }
@@ -792,6 +773,37 @@ dialog#about-dialog p {
   margin: .55rem 0;
   font-size: .92rem;
   line-height: 1.55;
+}
+
+/* "How's the whole city doing" — every beach dot on the map (and now the
+   picker) already carries this same color, but this is the same read
+   without scanning 11 separate points. Segment lengths are proportional
+   to how many beaches fall in each tier; beaches with no current reading
+   (off-season, stale) aren't counted, so a segment only ever represents a
+   real classification. Lives here rather than the header since the header
+   has no room to also carry a legible text label, and this is a supporting
+   detail, not something that needs to be visible at a glance on every load. */
+.status-summary {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin: .7rem 0;
+  font-size: .85rem;
+  color: var(--muted);
+}
+
+.status-summary-bar {
+  display: flex;
+  flex: none;
+  gap: 2px;
+  width: 4.5rem;
+  height: 6px;
+}
+
+.status-summary-seg {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
 }
 
 dialog#about-dialog ul {

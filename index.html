@@ -113,12 +113,7 @@
       </g>
     </svg>
     <header>
-      <div class="brand">
-        <span class="wordmark"><span class="wave" aria-hidden="true">🌊</span>BeachCheck<span class="locale-tag">TO</span></span>
-        <div class="status-summary" id="status-summary" role="img" hidden>
-          <span class="status-summary-bar" id="status-summary-bar"></span>
-        </div>
-      </div>
+      <span class="wordmark"><span class="wave" aria-hidden="true">🌊</span>BeachCheck<span class="locale-tag">TO</span></span>
       <div class="header-actions">
         <button id="about-btn" class="icon-btn" type="button" aria-label="About BeachCheck" title="About">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -219,6 +214,12 @@
       good they are. The hope is that knowing conditions at a glance makes it
       a little easier to actually get out and enjoy — and look after — them.
     </p>
+
+    <div class="status-summary" id="status-summary" hidden>
+      <span class="status-summary-bar" id="status-summary-bar"></span>
+      <span id="status-summary-text"></span>
+    </div>
+
     <h3>Data sources</h3>
     <ul>
       <li><a href="https://open.toronto.ca/dataset/toronto-beaches-water-quality/" target="_blank" rel="noopener">City of Toronto</a> — daily E. coli sampling &amp; posted swim status</li>

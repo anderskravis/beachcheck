@@ -92,15 +92,19 @@ conditionsPromise.then((conditions) => {
   }
   setBeachStatuses(statuses);
   renderStatusSummary(statuses);
+  updateSelectDots(statuses);
 }).catch(() => { /* dots just keep their neutral color if this fails */ });
 
-// Tiny header bar summarizing every beach at once — same three colors as
-// the dots, just proportional segment widths instead of 11 separate points.
+// Citywide summary bar shown in the About panel — same three colors as the
+// map dots and picker, just proportional segment widths instead of 11
+// separate points, plus a real text readout (there's room for one here,
+// unlike the header).
 const STATUS_SUMMARY_ORDER = ["safe", "caution", "unsafe"];
 const STATUS_SUMMARY_LABEL = { safe: "swim", caution: "caution", unsafe: "no swim" };
 function renderStatusSummary(statuses) {
   const wrap = $("status-summary");
   const bar = $("status-summary-bar");
+  const text = $("status-summary-text");
   const counts = { safe: 0, caution: 0, unsafe: 0 };
   for (const status of Object.values(statuses)) {
     if (status in counts) counts[status]++;
@@ -122,10 +126,22 @@ function renderStatusSummary(statuses) {
     bar.appendChild(seg);
     parts.push(`${count} ${STATUS_SUMMARY_LABEL[tier]}`);
   }
-  const label = `${total} beaches — ${parts.join(", ")}`;
-  wrap.setAttribute("aria-label", label);
-  wrap.title = label;
+  text.textContent = `${total} beaches right now — ${parts.join(", ")}`;
   wrap.hidden = false;
+}
+
+// Same colors as the map dots, but a beach with no current reading (like
+// Rouge outside the sampling season) gets an explicit neutral gray dot
+// instead of no dot at all — a hollow circle reads as "no reading," not
+// "forgot to color this one."
+const STATUS_DOT = { safe: "🔵", caution: "🟠", unsafe: "🔴" };
+const NO_DATA_DOT = "⚪";
+function updateSelectDots(statuses) {
+  for (const opt of select.options) {
+    const beach = beachForSlug(opt.value);
+    const dot = STATUS_DOT[statuses[opt.value]] ?? NO_DATA_DOT;
+    opt.textContent = `${dot} ${beach.short}`;
+  }
 }
 
 const compass = (deg) =>
