@@ -492,6 +492,13 @@ h1 {
   margin-top: .45rem;
 }
 
+/* Author styles beat the UA [hidden]{display:none} rule regardless of
+   specificity, so the flex display above would otherwise win and the
+   good-air day would never actually go quiet. */
+.aqi-mini[hidden] {
+  display: none;
+}
+
 .aqi-mini-track {
   flex: 1;
   height: 4px;

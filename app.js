@@ -369,7 +369,10 @@ function renderAirQuality(aqi) {
     mini.hidden = true;
     return null;
   }
-  mini.hidden = false;
+  // Quiet on a good-air day — same plain two-line shape as Wind/Waves —
+  // and only earns its line back when it's actually worth a look, which is
+  // also exactly when a reader wants to see it.
+  mini.hidden = band.tier === "good";
   fill.className = `aqi-mini-fill ${band.tier}`;
   fill.style.width = `${Math.min(100, (aqi / AQI_GAUGE_MAX) * 100)}%`;
   text.textContent = `AQI ${Math.round(aqi)} · ${band.label}`;
@@ -667,11 +670,11 @@ async function render() {
     const band = bandLabel(TEMP_BANDS, waterTempC);
     const hoursAgo = Math.round((Date.now() - new Date(buoy.time)) / 3600000);
     const when = hoursAgo < 1 ? "now" : `${hoursAgo}h ago`;
-    $("water-temp").innerHTML = `${formatWaterTemp(buoy.waterTemp)} ${band} <small>buoy · ${when}</small>`;
+    $("water-temp").innerHTML = `${formatWaterTemp(buoy.waterTemp)} <small>${band} · buoy ${when}</small>`;
   } else if (obsFresh && obs.waterTemp != null) {
     waterTempC = obs.waterTemp;
     const band = bandLabel(TEMP_BANDS, waterTempC);
-    $("water-temp").innerHTML = `${formatWaterTemp(obs.waterTemp)} ${band} <small>${shortDate(obs.date)}</small>`;
+    $("water-temp").innerHTML = `${formatWaterTemp(obs.waterTemp)} <small>${band} · ${shortDate(obs.date)}</small>`;
   } else {
     $("water-temp").innerHTML = `— <small>no reading for this beach</small>`;
   }
