@@ -224,6 +224,11 @@ body {
   display: flex;
   align-items: center;
   gap: .5rem;
+  /* The classic nested-flexbox trap: this is itself a flex item of
+     header, so its own default min-width:auto would refuse to shrink
+     below its children's natural combined width regardless of the
+     min-width: 0 set on #beach-select inside it. */
+  min-width: 0;
 }
 
 .icon-btn {
@@ -273,13 +278,17 @@ body {
   cursor: pointer;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  /* Pre-existing gap: a native <select> has no intrinsic shrink limit of
-     its own, so the longest beach name ("Gibraltar Point") pushed the
-     whole header past a 375px-wide screen's actual edge — not something
-     that ever showed up with the default beach selected, but real for
-     anyone who picked one of the longer names on a narrow phone. */
+  /* Pre-existing gap: a native <select> resists shrinking below its own
+     content width by default (min-width:auto), so the longest beach name
+     ("Gibraltar Point") pushed the whole header past a 375px-wide screen's
+     actual edge — not something that ever showed up with the default
+     beach selected, but real for anyone who picked one of the longer
+     names on a narrow phone. min-width: 0 lets it actually shrink to
+     whatever room .icon-btn's fixed size leaves it (no magic max-width
+     needed — a flat cap either truncates names that would've fit fine on
+     a wider screen, or isn't small enough on a narrower one); ellipsis
+     handles whatever doesn't fit. */
   min-width: 0;
-  max-width: 7.5rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

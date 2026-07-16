@@ -376,10 +376,20 @@ function eColiTrend(wq) {
   return null;
 }
 
+// A handful of "supervised" beaches have no water quality reading for a
+// real, structural reason — not staleness, not being out of season — so
+// the generic "not currently monitored" line would actively mislead (it
+// reads as a seasonal gap). Rouge is sampled by Parks Canada rather than
+// Toronto Public Health, so it just isn't part of the city's own feed
+// this reads from.
+const NO_DATA_REASON = {
+  rouge: "water quality here is monitored by Parks Canada, not part of this feed",
+};
+
 // Renders the status card for the current beach — callers use the return
 // value to keep the paddle note from contradicting a "no swim" call (and
 // to soften it, rather than contradict it, on a "caution" day).
-function renderStatus(wq, rain48hMm) {
+function renderStatus(wq, rain48hMm, slug) {
   const card = $("status");
   const word = $("status-word");
   const detail = $("status-detail");
@@ -387,9 +397,11 @@ function renderStatus(wq, rain48hMm) {
   if (status === null) {
     card.className = "stat status-card";
     word.textContent = "no data";
-    detail.textContent = wq
-      ? `last sample ${shortDate(wq.sampleDate)} — beach not currently monitored`
-      : "beach not currently monitored (sampling runs June–September)";
+    const reason = NO_DATA_REASON[slug];
+    detail.textContent = reason
+      ?? (wq
+        ? `last sample ${shortDate(wq.sampleDate)} — beach not currently monitored`
+        : "beach not currently monitored (sampling runs June–September)");
     return null;
   }
   card.className = `stat status-card ${status === "unsafe" ? "bad" : status === "caution" ? "caution" : "good"}`;
@@ -588,18 +600,38 @@ const TEMP_BANDS = [
   { max: 26, label: "pleasant" },
   { max: Infinity, label: "bathwater warm" },
 ];
+// The wind-only verdict, plus a cold-water-aware alternative for each band
+// — wind decides whether conditions are physically steady enough to be out
+// there at all, but a flatly upbeat "ideal for a long paddle" over frigid
+// water ignores the one thing that actually matters if you go in. Calm
+// wind and frigid water aren't a contradiction (that's a genuinely common
+// early-season Toronto day), so the fix isn't to argue with the wind
+// verdict, it's to fold the water risk into the same sentence rather than
+// stating both and leaving the reader to notice they clash.
 const VERDICT_BANDS = [
-  { max: 8, label: "ideal for a long paddle" },
-  { max: 14, label: "easy paddling" },
-  { max: 20, label: "fine if you're steady on the board" },
-  { max: 28, label: "short outings only" },
-  { max: Infinity, label: "not a paddle day" },
+  { max: 8, label: "ideal for a long paddle", coldLabel: "calm enough for a long paddle, just dress for the cold water" },
+  { max: 14, label: "easy paddling", coldLabel: "easy paddling, but dress for the cold water in case you go in" },
+  { max: 20, label: "fine if you're steady on the board", coldLabel: "fine if you're steady on the board — the water's cold if you're not" },
+  { max: 28, label: "short outings only", coldLabel: "short outings only, and the cold water raises the stakes if you fall in" },
+  // Wind already rules paddling out here, so restating that the water's
+  // also cold doesn't add anything — "not a paddle day" already covers it.
+  { max: Infinity, label: "not a paddle day", coldLabel: "not a paddle day" },
 ];
 const bandLabel = (bands, value) => (value == null ? null : bands.find((b) => value < b.max).label);
 const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
 const waveStateFromHeight = (m) => bandLabel(WAVE_HEIGHT_BANDS, m);
 const waveState = (windKn) => bandLabel(WAVE_BANDS, windKn);
+
+// "Frigid" specifically (not "brisk") is the cutoff for calling out cold
+// water in the paddle verdict — brisk is still a perfectly normal
+// swimmable temperature that doesn't need a special warning attached.
+function paddleVerdict(windKn, waterTempC) {
+  if (windKn == null) return null;
+  const band = VERDICT_BANDS.find((b) => windKn < b.max);
+  const cold = bandLabel(TEMP_BANDS, waterTempC) === "frigid";
+  return cold ? band.coldLabel : band.label;
+}
 
 // US EPA AQI breakpoints (what WAQI's aqi field is already scaled to — it's
 // computed the same way, worst sub-index across pollutants). Each band also
@@ -650,7 +682,7 @@ function conditionsNote(waveWord, waterTempC, windKn, status, slug, wq, rain48hM
     if (temp) clauses.push(`water's ${temp}`);
     note = "";
     if (clauses.length) {
-      const verdict = bandLabel(VERDICT_BANDS, windKn);
+      const verdict = paddleVerdict(windKn, waterTempC);
       note = verdict ? `${clauses.join(", ")} — ${verdict}.` : `${clauses.join(", ")}.`;
     }
     if (status === "caution") {
@@ -698,7 +730,7 @@ async function render() {
   const data = conditions?.beaches?.[beach.slug];
   const obs = data?.observations;
 
-  const safeToSwim = renderStatus(data?.waterQuality ?? null, data?.rain48hMm ?? null);
+  const safeToSwim = renderStatus(data?.waterQuality ?? null, data?.rain48hMm ?? null, beach.slug);
   renderHistoryChart(data?.waterQuality ?? null);
   // Unlike wind/temperature below, this comes from the same hourly-refreshed
   // conditions.json as water quality — real station AQI (WAQI) needs an API
