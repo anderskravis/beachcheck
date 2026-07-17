@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-17T17:22:21.804Z",
+  "fetchedAt": "2026-07-17T19:30:49.377Z",
   "sources": {
     "liveResults": "https://secure.toronto.ca/opendata/adv/beach_results/v1",
     "waterQuality": "https://open.toronto.ca/dataset/toronto-beaches-water-quality/",
@@ -10,9 +10,9 @@
     "airQuality": "https://waqi.info/"
   },
   "lakeBuoy": {
-    "time": "2026-07-17T17:00:00.000Z",
+    "time": "2026-07-17T19:00:00.000Z",
     "waveHeightM": 0.2,
-    "waterTempC": 18.1,
+    "waterTempC": 18.4,
     "windKn": 5.8,
     "station": "45159"
   },
@@ -86,10 +86,10 @@
       "buoy": null,
       "rain48hMm": 0,
       "aqi": {
-        "value": 25,
+        "value": 26,
         "dominantPollutant": "o3",
         "station": "Mississauga, Ontario, Canada",
-        "time": "2026-07-17T12:00:00-05:00"
+        "time": "2026-07-17T14:00:00-05:00"
       }
     },
     "sunnyside": {
@@ -176,7 +176,7 @@
         "value": 30,
         "dominantPollutant": "pm25",
         "station": "Toronto Downtown, Ontario, Canada",
-        "time": "2026-07-17T12:00:00-05:00"
+        "time": "2026-07-17T14:00:00-05:00"
       }
     },
     "hanlans-point": {
@@ -263,7 +263,7 @@
         "value": 30,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-07-17T12:00:00-05:00"
+        "time": "2026-07-17T14:00:00-05:00"
       }
     },
     "gibraltar-point": {
@@ -350,7 +350,7 @@
         "value": 30,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-07-17T12:00:00-05:00"
+        "time": "2026-07-17T14:00:00-05:00"
       }
     },
     "centre-island": {
@@ -433,7 +433,7 @@
         "value": 30,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-07-17T12:00:00-05:00"
+        "time": "2026-07-17T14:00:00-05:00"
       }
     },
     "wards-island": {
@@ -516,7 +516,7 @@
         "value": 30,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-07-17T12:00:00-05:00"
+        "time": "2026-07-17T14:00:00-05:00"
       }
     },
     "cherry": {
@@ -594,8 +594,8 @@
         "waterClarity": "Clear"
       },
       "buoy": {
-        "waterTemp": 20.5,
-        "time": "2026-07-17T16:54:00.000Z",
+        "waterTemp": 21.5,
+        "time": "2026-07-17T18:55:00.000Z",
         "site": "Cherry Beach"
       },
       "rain48hMm": 0,
@@ -603,7 +603,7 @@
         "value": 30,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-07-17T12:00:00-05:00"
+        "time": "2026-07-17T14:00:00-05:00"
       }
     },
     "woodbine": {
@@ -690,7 +690,7 @@
         "value": 30,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-07-17T12:00:00-05:00"
+        "time": "2026-07-17T14:00:00-05:00"
       }
     },
     "kew-balmy": {
@@ -768,16 +768,16 @@
         "waterClarity": "Clear"
       },
       "buoy": {
-        "waterTemp": 15.5,
-        "time": "2026-07-17T17:03:00.000Z",
+        "waterTemp": 16.4,
+        "time": "2026-07-17T19:03:00.000Z",
         "site": "Kew-Balmy Beach"
       },
       "rain48hMm": 0,
       "aqi": {
-        "value": 22,
+        "value": 23,
         "dominantPollutant": "o3",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-07-17T12:00:00-05:00"
+        "time": "2026-07-17T14:00:00-05:00"
       }
     },
     "bluffers": {
@@ -861,10 +861,10 @@
       },
       "rain48hMm": 0,
       "aqi": {
-        "value": 22,
+        "value": 23,
         "dominantPollutant": "o3",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-07-17T12:00:00-05:00"
+        "time": "2026-07-17T14:00:00-05:00"
       }
     },
     "rouge": {
@@ -874,10 +874,10 @@
       "buoy": null,
       "rain48hMm": 0,
       "aqi": {
-        "value": 22,
+        "value": 23,
         "dominantPollutant": "o3",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-07-17T12:00:00-05:00"
+        "time": "2026-07-17T14:00:00-05:00"
       }
     }
   }
