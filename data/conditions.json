@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-21T16:40:23.800Z",
+  "fetchedAt": "2026-07-21T18:39:10.660Z",
   "sources": {
     "liveResults": "https://secure.toronto.ca/opendata/adv/beach_results/v1",
     "waterQuality": "https://open.toronto.ca/dataset/toronto-beaches-water-quality/",
@@ -10,10 +10,10 @@
     "airQuality": "https://waqi.info/"
   },
   "lakeBuoy": {
-    "time": "2026-07-21T16:00:00.000Z",
-    "waveHeightM": 0.9,
-    "waterTempC": 16,
-    "windKn": 15.6,
+    "time": "2026-07-21T18:00:00.000Z",
+    "waveHeightM": 1.5,
+    "waterTempC": 15.6,
+    "windKn": 19.4,
     "station": "45159"
   },
   "beaches": {
@@ -80,7 +80,7 @@
         "waterClarity": "Clear"
       },
       "buoy": null,
-      "rain48hMm": 3.2,
+      "rain48hMm": 25.2,
       "aqi": {
         "value": 80,
         "dominantPollutant": "pm25",
@@ -155,7 +155,7 @@
         "time": "2026-07-20T16:00:00.000Z",
         "site": "Sunnyside Beach"
       },
-      "rain48hMm": 2.5,
+      "rain48hMm": 20.9,
       "aqi": {
         "value": 85,
         "dominantPollutant": "pm25",
@@ -230,7 +230,7 @@
         "time": "2026-07-20T16:00:00.000Z",
         "site": "Hanlan's Point Beach"
       },
-      "rain48hMm": 4.4,
+      "rain48hMm": 56.6,
       "aqi": {
         "value": 85,
         "dominantPollutant": "pm25",
@@ -305,7 +305,7 @@
         "time": "2026-07-20T16:00:00.000Z",
         "site": "Gibraltar Beach"
       },
-      "rain48hMm": 4.4,
+      "rain48hMm": 56.6,
       "aqi": {
         "value": 85,
         "dominantPollutant": "pm25",
@@ -376,7 +376,7 @@
         "waterClarity": "Cloudy"
       },
       "buoy": null,
-      "rain48hMm": 4.4,
+      "rain48hMm": 56.6,
       "aqi": {
         "value": 85,
         "dominantPollutant": "pm25",
@@ -447,7 +447,7 @@
         "waterClarity": "Clear"
       },
       "buoy": null,
-      "rain48hMm": 3.7,
+      "rain48hMm": 60.2,
       "aqi": {
         "value": 85,
         "dominantPollutant": "pm25",
@@ -518,11 +518,11 @@
         "waterClarity": "Clear"
       },
       "buoy": {
-        "waterTemp": 17.5,
-        "time": "2026-07-21T16:19:00.000Z",
+        "waterTemp": 15,
+        "time": "2026-07-21T18:19:00.000Z",
         "site": "Cherry Beach"
       },
-      "rain48hMm": 3.7,
+      "rain48hMm": 60.2,
       "aqi": {
         "value": 85,
         "dominantPollutant": "pm25",
@@ -597,7 +597,7 @@
         "time": "2026-07-20T16:00:00.000Z",
         "site": "Woodbine Beach"
       },
-      "rain48hMm": 4.4,
+      "rain48hMm": 25.6,
       "aqi": {
         "value": 85,
         "dominantPollutant": "pm25",
@@ -668,11 +668,11 @@
         "waterClarity": "Clear"
       },
       "buoy": {
-        "waterTemp": 13.2,
-        "time": "2026-07-21T16:22:00.000Z",
+        "waterTemp": 13.5,
+        "time": "2026-07-21T18:22:00.000Z",
         "site": "Kew-Balmy Beach"
       },
-      "rain48hMm": 13.4,
+      "rain48hMm": 25.3,
       "aqi": {
         "value": 82,
         "dominantPollutant": "pm25",
@@ -747,7 +747,7 @@
         "time": "2026-07-20T16:00:00.000Z",
         "site": "Bluffer's Park Beach"
       },
-      "rain48hMm": 11.2,
+      "rain48hMm": 29.9,
       "aqi": {
         "value": 82,
         "dominantPollutant": "pm25",
@@ -760,7 +760,7 @@
       "waterQuality": null,
       "observations": null,
       "buoy": null,
-      "rain48hMm": 46.4,
+      "rain48hMm": 49.7,
       "aqi": {
         "value": 82,
         "dominantPollutant": "pm25",
