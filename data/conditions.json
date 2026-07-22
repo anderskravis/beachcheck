@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-22T09:37:14.139Z",
+  "fetchedAt": "2026-07-22T12:01:41.644Z",
   "sources": {
     "liveResults": "https://secure.toronto.ca/opendata/adv/beach_results/v1",
     "waterQuality": "https://open.toronto.ca/dataset/toronto-beaches-water-quality/",
@@ -10,10 +10,10 @@
     "airQuality": "https://waqi.info/"
   },
   "lakeBuoy": {
-    "time": "2026-07-22T09:00:00.000Z",
-    "waveHeightM": 0.5,
-    "waterTempC": 13.8,
-    "windKn": 11.7,
+    "time": "2026-07-22T11:00:00.000Z",
+    "waveHeightM": 0.4,
+    "waterTempC": 13.7,
+    "windKn": 9.7,
     "station": "45159"
   },
   "beaches": {
@@ -81,7 +81,7 @@
         "value": 17,
         "dominantPollutant": "o3",
         "station": "Mississauga, Ontario, Canada",
-        "time": "2026-07-22T05:00:00-05:00"
+        "time": "2026-07-22T07:00:00-05:00"
       }
     },
     "sunnyside": {
@@ -152,7 +152,7 @@
         "value": 15,
         "dominantPollutant": "o3",
         "station": "Toronto Downtown, Ontario, Canada",
-        "time": "2026-07-22T05:00:00-05:00"
+        "time": "2026-07-22T07:00:00-05:00"
       }
     },
     "hanlans-point": {
@@ -223,7 +223,7 @@
         "value": 15,
         "dominantPollutant": "o3",
         "station": "Toronto",
-        "time": "2026-07-22T05:00:00-05:00"
+        "time": "2026-07-22T07:00:00-05:00"
       }
     },
     "gibraltar-point": {
@@ -294,7 +294,7 @@
         "value": 15,
         "dominantPollutant": "o3",
         "station": "Toronto",
-        "time": "2026-07-22T05:00:00-05:00"
+        "time": "2026-07-22T07:00:00-05:00"
       }
     },
     "centre-island": {
@@ -361,7 +361,7 @@
         "value": 15,
         "dominantPollutant": "o3",
         "station": "Toronto",
-        "time": "2026-07-22T05:00:00-05:00"
+        "time": "2026-07-22T07:00:00-05:00"
       }
     },
     "wards-island": {
@@ -428,7 +428,7 @@
         "value": 15,
         "dominantPollutant": "o3",
         "station": "Toronto",
-        "time": "2026-07-22T05:00:00-05:00"
+        "time": "2026-07-22T07:00:00-05:00"
       }
     },
     "cherry": {
@@ -490,8 +490,8 @@
         "waterClarity": "Murky, Algae"
       },
       "buoy": {
-        "waterTemp": 14,
-        "time": "2026-07-22T08:55:00.000Z",
+        "waterTemp": 14.5,
+        "time": "2026-07-22T11:56:00.000Z",
         "site": "Cherry Beach"
       },
       "rain48hMm": 65.3,
@@ -499,7 +499,7 @@
         "value": 15,
         "dominantPollutant": "o3",
         "station": "Toronto",
-        "time": "2026-07-22T05:00:00-05:00"
+        "time": "2026-07-22T07:00:00-05:00"
       }
     },
     "woodbine": {
@@ -570,7 +570,7 @@
         "value": 15,
         "dominantPollutant": "o3",
         "station": "Toronto",
-        "time": "2026-07-22T05:00:00-05:00"
+        "time": "2026-07-22T07:00:00-05:00"
       }
     },
     "kew-balmy": {
@@ -632,16 +632,16 @@
         "waterClarity": "Murky"
       },
       "buoy": {
-        "waterTemp": 8.1,
-        "time": "2026-07-22T09:02:00.000Z",
+        "waterTemp": 8.3,
+        "time": "2026-07-22T11:42:00.000Z",
         "site": "Kew-Balmy Beach"
       },
       "rain48hMm": 26.7,
       "aqi": {
-        "value": 14,
+        "value": 15,
         "dominantPollutant": "o3",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-07-22T05:00:00-05:00"
+        "time": "2026-07-22T07:00:00-05:00"
       }
     },
     "bluffers": {
@@ -709,10 +709,10 @@
       },
       "rain48hMm": 34.2,
       "aqi": {
-        "value": 14,
+        "value": 15,
         "dominantPollutant": "o3",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-07-22T05:00:00-05:00"
+        "time": "2026-07-22T07:00:00-05:00"
       }
     },
     "rouge": {
@@ -722,10 +722,10 @@
       "buoy": null,
       "rain48hMm": 49.7,
       "aqi": {
-        "value": 14,
+        "value": 15,
         "dominantPollutant": "o3",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-07-22T05:00:00-05:00"
+        "time": "2026-07-22T07:00:00-05:00"
       }
     }
   }
