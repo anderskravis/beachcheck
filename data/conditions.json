@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-25T17:12:55.167Z",
+  "fetchedAt": "2026-07-25T19:32:19.837Z",
   "sources": {
     "liveResults": "https://secure.toronto.ca/opendata/adv/beach_results/v1",
     "waterQuality": "https://open.toronto.ca/dataset/toronto-beaches-water-quality/",
@@ -10,9 +10,9 @@
     "airQuality": "https://waqi.info/"
   },
   "lakeBuoy": {
-    "time": "2026-07-25T16:00:00.000Z",
-    "waveHeightM": 0.2,
-    "waterTempC": 15,
+    "time": "2026-07-25T19:00:00.000Z",
+    "waveHeightM": 0.1,
+    "waterTempC": 15.5,
     "windKn": 5.8,
     "station": "45159"
   },
@@ -74,10 +74,10 @@
       "buoy": null,
       "rain48hMm": 0,
       "aqi": {
-        "value": 31,
+        "value": 36,
         "dominantPollutant": "o3",
         "station": "Mississauga, Ontario, Canada",
-        "time": "2026-07-25T12:00:00-05:00"
+        "time": "2026-07-25T14:00:00-05:00"
       }
     },
     "sunnyside": {
@@ -152,7 +152,7 @@
         "value": 38,
         "dominantPollutant": "pm25",
         "station": "Toronto Downtown, Ontario, Canada",
-        "time": "2026-07-25T12:00:00-05:00"
+        "time": "2026-07-25T14:00:00-05:00"
       }
     },
     "hanlans-point": {
@@ -227,7 +227,7 @@
         "value": 38,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-07-25T12:00:00-05:00"
+        "time": "2026-07-25T14:00:00-05:00"
       }
     },
     "gibraltar-point": {
@@ -302,7 +302,7 @@
         "value": 38,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-07-25T12:00:00-05:00"
+        "time": "2026-07-25T14:00:00-05:00"
       }
     },
     "centre-island": {
@@ -373,7 +373,7 @@
         "value": 38,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-07-25T12:00:00-05:00"
+        "time": "2026-07-25T14:00:00-05:00"
       }
     },
     "wards-island": {
@@ -444,7 +444,7 @@
         "value": 38,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-07-25T12:00:00-05:00"
+        "time": "2026-07-25T14:00:00-05:00"
       }
     },
     "cherry": {
@@ -510,8 +510,8 @@
         "waterClarity": "Clear"
       },
       "buoy": {
-        "waterTemp": 15,
-        "time": "2026-07-25T16:55:00.000Z",
+        "waterTemp": 16,
+        "time": "2026-07-25T18:55:00.000Z",
         "site": "Cherry Beach"
       },
       "rain48hMm": 0,
@@ -519,7 +519,7 @@
         "value": 38,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-07-25T12:00:00-05:00"
+        "time": "2026-07-25T14:00:00-05:00"
       }
     },
     "woodbine": {
@@ -594,7 +594,7 @@
         "value": 38,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-07-25T12:00:00-05:00"
+        "time": "2026-07-25T14:00:00-05:00"
       }
     },
     "kew-balmy": {
@@ -660,16 +660,16 @@
         "waterClarity": "Clear"
       },
       "buoy": {
-        "waterTemp": 17.1,
-        "time": "2026-07-25T16:42:00.000Z",
+        "waterTemp": 16.1,
+        "time": "2026-07-25T19:22:00.000Z",
         "site": "Kew-Balmy Beach"
       },
       "rain48hMm": 0,
       "aqi": {
-        "value": 34,
+        "value": 40,
         "dominantPollutant": "o3",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-07-25T12:00:00-05:00"
+        "time": "2026-07-25T14:00:00-05:00"
       }
     },
     "bluffers": {
@@ -741,10 +741,10 @@
       },
       "rain48hMm": 0,
       "aqi": {
-        "value": 34,
+        "value": 40,
         "dominantPollutant": "o3",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-07-25T12:00:00-05:00"
+        "time": "2026-07-25T14:00:00-05:00"
       }
     },
     "rouge": {
@@ -754,10 +754,10 @@
       "buoy": null,
       "rain48hMm": 0,
       "aqi": {
-        "value": 34,
+        "value": 40,
         "dominantPollutant": "o3",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-07-25T12:00:00-05:00"
+        "time": "2026-07-25T14:00:00-05:00"
       }
     }
   }
