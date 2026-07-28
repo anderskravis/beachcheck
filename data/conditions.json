@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-28T21:20:56.509Z",
+  "fetchedAt": "2026-07-28T23:13:53.957Z",
   "sources": {
     "liveResults": "https://secure.toronto.ca/opendata/adv/beach_results/v1",
     "waterQuality": "https://open.toronto.ca/dataset/toronto-beaches-water-quality/",
@@ -10,10 +10,10 @@
     "airQuality": "https://waqi.info/"
   },
   "lakeBuoy": {
-    "time": "2026-07-28T21:00:00.000Z",
+    "time": "2026-07-28T22:00:00.000Z",
     "waveHeightM": 0.2,
-    "waterTempC": 17.4,
-    "windKn": 7.8,
+    "waterTempC": 17.5,
+    "windKn": 9.7,
     "station": "45159"
   },
   "beaches": {
@@ -75,9 +75,9 @@
       "rain48hMm": 4.3,
       "aqi": {
         "value": 34,
-        "dominantPollutant": "o3",
+        "dominantPollutant": "pm25",
         "station": "Mississauga, Ontario, Canada",
-        "time": "2026-07-28T16:00:00-05:00"
+        "time": "2026-07-28T18:00:00-05:00"
       }
     },
     "sunnyside": {
@@ -149,10 +149,10 @@
       },
       "rain48hMm": 4.7,
       "aqi": {
-        "value": 38,
+        "value": 50,
         "dominantPollutant": "pm25",
         "station": "Toronto Downtown, Ontario, Canada",
-        "time": "2026-07-28T16:00:00-05:00"
+        "time": "2026-07-28T18:00:00-05:00"
       }
     },
     "hanlans-point": {
@@ -224,10 +224,10 @@
       },
       "rain48hMm": 0.4,
       "aqi": {
-        "value": 38,
+        "value": 50,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-07-28T16:00:00-05:00"
+        "time": "2026-07-28T18:00:00-05:00"
       }
     },
     "gibraltar-point": {
@@ -299,10 +299,10 @@
       },
       "rain48hMm": 0.4,
       "aqi": {
-        "value": 38,
+        "value": 50,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-07-28T16:00:00-05:00"
+        "time": "2026-07-28T18:00:00-05:00"
       }
     },
     "centre-island": {
@@ -370,10 +370,10 @@
       "buoy": null,
       "rain48hMm": 0.4,
       "aqi": {
-        "value": 38,
+        "value": 50,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-07-28T16:00:00-05:00"
+        "time": "2026-07-28T18:00:00-05:00"
       }
     },
     "wards-island": {
@@ -441,10 +441,10 @@
       "buoy": null,
       "rain48hMm": 1.4,
       "aqi": {
-        "value": 38,
+        "value": 50,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-07-28T16:00:00-05:00"
+        "time": "2026-07-28T18:00:00-05:00"
       }
     },
     "cherry": {
@@ -510,16 +510,16 @@
         "waterClarity": "Clear"
       },
       "buoy": {
-        "waterTemp": 17,
-        "time": "2026-07-28T20:19:00.000Z",
+        "waterTemp": 16,
+        "time": "2026-07-28T22:49:00.000Z",
         "site": "Cherry Beach"
       },
       "rain48hMm": 1.4,
       "aqi": {
-        "value": 38,
+        "value": 50,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-07-28T16:00:00-05:00"
+        "time": "2026-07-28T18:00:00-05:00"
       }
     },
     "woodbine": {
@@ -591,10 +591,10 @@
       },
       "rain48hMm": 1.1,
       "aqi": {
-        "value": 38,
+        "value": 50,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-07-28T16:00:00-05:00"
+        "time": "2026-07-28T18:00:00-05:00"
       }
     },
     "kew-balmy": {
@@ -660,16 +660,16 @@
         "waterClarity": "Cloudy"
       },
       "buoy": {
-        "waterTemp": 20.7,
-        "time": "2026-07-28T21:02:00.000Z",
+        "waterTemp": 19.9,
+        "time": "2026-07-28T22:42:00.000Z",
         "site": "Kew-Balmy Beach"
       },
       "rain48hMm": 6.5,
       "aqi": {
-        "value": 34,
+        "value": 42,
         "dominantPollutant": "pm25",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-07-28T16:00:00-05:00"
+        "time": "2026-07-28T18:00:00-05:00"
       }
     },
     "bluffers": {
@@ -741,10 +741,10 @@
       },
       "rain48hMm": 29.9,
       "aqi": {
-        "value": 34,
+        "value": 42,
         "dominantPollutant": "pm25",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-07-28T16:00:00-05:00"
+        "time": "2026-07-28T18:00:00-05:00"
       }
     },
     "rouge": {
@@ -754,10 +754,10 @@
       "buoy": null,
       "rain48hMm": 0.4,
       "aqi": {
-        "value": 34,
+        "value": 42,
         "dominantPollutant": "pm25",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-07-28T16:00:00-05:00"
+        "time": "2026-07-28T18:00:00-05:00"
       }
     }
   }
