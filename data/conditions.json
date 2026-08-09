@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-09T08:59:56.830Z",
+  "fetchedAt": "2026-08-09T09:53:24.476Z",
   "sources": {
     "liveResults": "https://secure.toronto.ca/opendata/adv/beach_results/v1",
     "waterQuality": "https://open.toronto.ca/dataset/toronto-beaches-water-quality/",
@@ -76,10 +76,10 @@
       "buoy": null,
       "rain48hMm": 13.3,
       "aqi": {
-        "value": 25,
+        "value": 21,
         "dominantPollutant": "pm25",
         "station": "Mississauga, Ontario, Canada",
-        "time": "2026-08-09T04:00:00-05:00"
+        "time": "2026-08-09T05:00:00-05:00"
       }
     },
     "sunnyside": {
@@ -561,7 +561,7 @@
       },
       "buoy": {
         "waterTemp": 23,
-        "time": "2026-08-09T08:20:00.000Z",
+        "time": "2026-08-09T08:50:00.000Z",
         "site": "Cherry Beach"
       },
       "rain48hMm": 3.9,
@@ -727,15 +727,15 @@
       },
       "buoy": {
         "waterTemp": 20.3,
-        "time": "2026-08-09T08:41:00.000Z",
+        "time": "2026-08-09T09:01:00.000Z",
         "site": "Kew-Balmy Beach"
       },
       "rain48hMm": 75.2,
       "aqi": {
-        "value": 21,
+        "value": 25,
         "dominantPollutant": "pm25",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-08-09T04:00:00-05:00"
+        "time": "2026-08-09T05:00:00-05:00"
       }
     },
     "bluffers": {
@@ -815,10 +815,10 @@
       },
       "rain48hMm": 53.6,
       "aqi": {
-        "value": 21,
+        "value": 25,
         "dominantPollutant": "pm25",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-08-09T04:00:00-05:00"
+        "time": "2026-08-09T05:00:00-05:00"
       }
     },
     "rouge": {
@@ -828,10 +828,10 @@
       "buoy": null,
       "rain48hMm": 0,
       "aqi": {
-        "value": 21,
+        "value": 25,
         "dominantPollutant": "pm25",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-08-09T04:00:00-05:00"
+        "time": "2026-08-09T05:00:00-05:00"
       }
     }
   }
