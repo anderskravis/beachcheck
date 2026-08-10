@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-09T23:44:35.514Z",
+  "fetchedAt": "2026-08-10T02:31:07.120Z",
   "sources": {
     "liveResults": "https://secure.toronto.ca/opendata/adv/beach_results/v1",
     "waterQuality": "https://open.toronto.ca/dataset/toronto-beaches-water-quality/",
@@ -10,10 +10,10 @@
     "airQuality": "https://waqi.info/"
   },
   "lakeBuoy": {
-    "time": "2026-08-09T22:00:00.000Z",
-    "waveHeightM": 0.2,
-    "waterTempC": 22.6,
-    "windKn": 7.8,
+    "time": "2026-08-10T02:00:00.000Z",
+    "waveHeightM": 0.3,
+    "waterTempC": 22.5,
+    "windKn": 5.8,
     "station": "45159"
   },
   "beaches": {
@@ -67,10 +67,6 @@
           {
             "date": "2026-07-27",
             "eColi": 40
-          },
-          {
-            "date": "2026-07-26",
-            "eColi": 62
           }
         ]
       },
@@ -150,10 +146,6 @@
           {
             "date": "2026-07-27",
             "eColi": 19
-          },
-          {
-            "date": "2026-07-26",
-            "eColi": 17
           }
         ]
       },
@@ -237,10 +229,6 @@
           {
             "date": "2026-07-27",
             "eColi": 13
-          },
-          {
-            "date": "2026-07-26",
-            "eColi": 13
           }
         ]
       },
@@ -263,7 +251,7 @@
         "value": 25,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-09T18:00:00-05:00"
+        "time": "2026-08-09T19:00:00-05:00"
       }
     },
     "gibraltar-point": {
@@ -324,10 +312,6 @@
           {
             "date": "2026-07-27",
             "eColi": 11
-          },
-          {
-            "date": "2026-07-26",
-            "eColi": 12
           }
         ]
       },
@@ -350,7 +334,7 @@
         "value": 25,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-09T18:00:00-05:00"
+        "time": "2026-08-09T19:00:00-05:00"
       }
     },
     "centre-island": {
@@ -411,10 +395,6 @@
           {
             "date": "2026-07-27",
             "eColi": 49
-          },
-          {
-            "date": "2026-07-26",
-            "eColi": 26
           }
         ]
       },
@@ -433,7 +413,7 @@
         "value": 25,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-09T18:00:00-05:00"
+        "time": "2026-08-09T19:00:00-05:00"
       }
     },
     "wards-island": {
@@ -494,10 +474,6 @@
           {
             "date": "2026-07-27",
             "eColi": 11
-          },
-          {
-            "date": "2026-07-26",
-            "eColi": 11
           }
         ]
       },
@@ -516,7 +492,7 @@
         "value": 25,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-09T18:00:00-05:00"
+        "time": "2026-08-09T19:00:00-05:00"
       }
     },
     "cherry": {
@@ -577,10 +553,6 @@
           {
             "date": "2026-07-27",
             "eColi": 11
-          },
-          {
-            "date": "2026-07-26",
-            "eColi": 10
           }
         ]
       },
@@ -594,8 +566,8 @@
         "waterClarity": "Cloudy"
       },
       "buoy": {
-        "waterTemp": 24.5,
-        "time": "2026-08-09T23:23:00.000Z",
+        "waterTemp": 23.5,
+        "time": "2026-08-10T02:24:00.000Z",
         "site": "Cherry Beach"
       },
       "rain48hMm": 3.9,
@@ -603,7 +575,7 @@
         "value": 25,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-09T18:00:00-05:00"
+        "time": "2026-08-09T19:00:00-05:00"
       }
     },
     "woodbine": {
@@ -664,10 +636,6 @@
           {
             "date": "2026-07-27",
             "eColi": 12
-          },
-          {
-            "date": "2026-07-26",
-            "eColi": 17
           }
         ]
       },
@@ -690,7 +658,7 @@
         "value": 25,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-09T18:00:00-05:00"
+        "time": "2026-08-09T19:00:00-05:00"
       }
     },
     "kew-balmy": {
@@ -751,10 +719,6 @@
           {
             "date": "2026-07-27",
             "eColi": 15
-          },
-          {
-            "date": "2026-07-26",
-            "eColi": 10
           }
         ]
       },
@@ -768,8 +732,8 @@
         "waterClarity": "Clear"
       },
       "buoy": {
-        "waterTemp": 21.8,
-        "time": "2026-08-09T23:21:00.000Z",
+        "waterTemp": 21,
+        "time": "2026-08-10T02:21:00.000Z",
         "site": "Kew-Balmy Beach"
       },
       "rain48hMm": 75.2,
@@ -838,10 +802,6 @@
           {
             "date": "2026-07-27",
             "eColi": 10
-          },
-          {
-            "date": "2026-07-26",
-            "eColi": 20
           }
         ]
       },
