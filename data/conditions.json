@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-11T02:25:01.461Z",
+  "fetchedAt": "2026-08-11T04:37:16.088Z",
   "sources": {
     "liveResults": "https://secure.toronto.ca/opendata/adv/beach_results/v1",
     "waterQuality": "https://open.toronto.ca/dataset/toronto-beaches-water-quality/",
@@ -10,10 +10,10 @@
     "airQuality": "https://waqi.info/"
   },
   "lakeBuoy": {
-    "time": "2026-08-11T02:00:00.000Z",
-    "waveHeightM": 0.4,
-    "waterTempC": 21.9,
-    "windKn": 5.8,
+    "time": "2026-08-11T04:00:00.000Z",
+    "waveHeightM": 0.3,
+    "waterTempC": 21.6,
+    "windKn": 7.8,
     "station": "45159"
   },
   "beaches": {
@@ -82,10 +82,10 @@
       "buoy": null,
       "rain48hMm": 0,
       "aqi": {
-        "value": 38,
+        "value": 42,
         "dominantPollutant": "pm25",
         "station": "Mississauga, Ontario, Canada",
-        "time": "2026-08-10T22:00:00-05:00"
+        "time": "2026-08-11T00:00:00-05:00"
       }
     },
     "sunnyside": {
@@ -158,13 +158,17 @@
         "waveAction": "NONE",
         "waterClarity": "Murky"
       },
-      "buoy": null,
+      "buoy": {
+        "waterTemp": 23,
+        "time": "2026-08-10T16:00:00.000Z",
+        "site": "Sunnyside Beach"
+      },
       "rain48hMm": 0,
       "aqi": {
-        "value": 57,
+        "value": 55,
         "dominantPollutant": "pm25",
         "station": "Toronto Downtown, Ontario, Canada",
-        "time": "2026-08-10T22:00:00-05:00"
+        "time": "2026-08-11T00:00:00-05:00"
       }
     },
     "hanlans-point": {
@@ -237,13 +241,17 @@
         "waveAction": "NONE",
         "waterClarity": "Clear"
       },
-      "buoy": null,
+      "buoy": {
+        "waterTemp": 26,
+        "time": "2026-08-10T16:00:00.000Z",
+        "site": "Hanlan's Point Beach"
+      },
       "rain48hMm": 0,
       "aqi": {
         "value": 55,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-10T21:00:00-05:00"
+        "time": "2026-08-11T00:00:00-05:00"
       }
     },
     "gibraltar-point": {
@@ -316,13 +324,17 @@
         "waveAction": "NONE",
         "waterClarity": "Cloudy"
       },
-      "buoy": null,
+      "buoy": {
+        "waterTemp": 26,
+        "time": "2026-08-10T16:00:00.000Z",
+        "site": "Gibraltar Beach"
+      },
       "rain48hMm": 0,
       "aqi": {
         "value": 55,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-10T21:00:00-05:00"
+        "time": "2026-08-11T00:00:00-05:00"
       }
     },
     "centre-island": {
@@ -401,7 +413,7 @@
         "value": 55,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-10T21:00:00-05:00"
+        "time": "2026-08-11T00:00:00-05:00"
       }
     },
     "wards-island": {
@@ -480,7 +492,7 @@
         "value": 55,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-10T21:00:00-05:00"
+        "time": "2026-08-11T00:00:00-05:00"
       }
     },
     "cherry": {
@@ -554,8 +566,8 @@
         "waterClarity": "Clear"
       },
       "buoy": {
-        "waterTemp": 23.5,
-        "time": "2026-08-11T00:57:00.000Z",
+        "waterTemp": 25,
+        "time": "2026-08-11T04:28:00.000Z",
         "site": "Cherry Beach"
       },
       "rain48hMm": 0,
@@ -563,7 +575,7 @@
         "value": 55,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-10T21:00:00-05:00"
+        "time": "2026-08-11T00:00:00-05:00"
       }
     },
     "woodbine": {
@@ -636,13 +648,17 @@
         "waveAction": "NONE",
         "waterClarity": "Clear"
       },
-      "buoy": null,
+      "buoy": {
+        "waterTemp": 20,
+        "time": "2026-08-10T16:00:00.000Z",
+        "site": "Woodbine Beach"
+      },
       "rain48hMm": 0,
       "aqi": {
         "value": 55,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-10T21:00:00-05:00"
+        "time": "2026-08-11T00:00:00-05:00"
       }
     },
     "kew-balmy": {
@@ -716,8 +732,8 @@
         "waterClarity": "Clear"
       },
       "buoy": {
-        "waterTemp": 20.9,
-        "time": "2026-08-11T01:01:00.000Z",
+        "waterTemp": 20.2,
+        "time": "2026-08-11T04:21:00.000Z",
         "site": "Kew-Balmy Beach"
       },
       "rain48hMm": 0,
@@ -725,7 +741,7 @@
         "value": 50,
         "dominantPollutant": "pm25",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-08-10T22:00:00-05:00"
+        "time": "2026-08-11T00:00:00-05:00"
       }
     },
     "bluffers": {
@@ -798,13 +814,17 @@
         "waveAction": "NONE",
         "waterClarity": "Murky"
       },
-      "buoy": null,
+      "buoy": {
+        "waterTemp": 18,
+        "time": "2026-08-10T16:00:00.000Z",
+        "site": "Bluffer's Park Beach"
+      },
       "rain48hMm": 0,
       "aqi": {
         "value": 50,
         "dominantPollutant": "pm25",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-08-10T22:00:00-05:00"
+        "time": "2026-08-11T00:00:00-05:00"
       }
     },
     "rouge": {
@@ -817,7 +837,7 @@
         "value": 50,
         "dominantPollutant": "pm25",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-08-10T22:00:00-05:00"
+        "time": "2026-08-11T00:00:00-05:00"
       }
     }
   }
