@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-15T10:36:22.303Z",
+  "fetchedAt": "2026-08-15T11:32:01.733Z",
   "sources": {
     "liveResults": "https://secure.toronto.ca/opendata/adv/beach_results/v1",
     "waterQuality": "https://open.toronto.ca/dataset/toronto-beaches-water-quality/",
@@ -10,9 +10,9 @@
     "airQuality": "https://waqi.info/"
   },
   "lakeBuoy": {
-    "time": "2026-08-15T10:00:00.000Z",
+    "time": "2026-08-15T11:00:00.000Z",
     "waveHeightM": 0.3,
-    "waterTempC": 21.1,
+    "waterTempC": 21.3,
     "windKn": 9.7,
     "station": "45159"
   },
@@ -86,10 +86,10 @@
       "buoy": null,
       "rain48hMm": 0,
       "aqi": {
-        "value": 13,
+        "value": 11,
         "dominantPollutant": "o3",
         "station": "Mississauga, Ontario, Canada",
-        "time": "2026-08-15T06:00:00-05:00"
+        "time": "2026-08-15T07:00:00-05:00"
       }
     },
     "sunnyside": {
@@ -172,7 +172,7 @@
         "value": 30,
         "dominantPollutant": "pm25",
         "station": "Toronto Downtown, Ontario, Canada",
-        "time": "2026-08-15T06:00:00-05:00"
+        "time": "2026-08-15T07:00:00-05:00"
       }
     },
     "hanlans-point": {
@@ -571,7 +571,7 @@
       },
       "buoy": {
         "waterTemp": 23.5,
-        "time": "2026-08-15T09:19:00.000Z",
+        "time": "2026-08-15T11:20:00.000Z",
         "site": "Cherry Beach"
       },
       "rain48hMm": 0,
@@ -737,7 +737,7 @@
       },
       "buoy": {
         "waterTemp": 22.1,
-        "time": "2026-08-15T10:00:00.000Z",
+        "time": "2026-08-15T11:20:00.000Z",
         "site": "Kew-Balmy Beach"
       },
       "rain48hMm": 0,
