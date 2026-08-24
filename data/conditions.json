@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-24T03:14:18.255Z",
+  "fetchedAt": "2026-08-24T04:58:54.273Z",
   "sources": {
     "liveResults": "https://secure.toronto.ca/opendata/adv/beach_results/v1",
     "waterQuality": "https://open.toronto.ca/dataset/toronto-beaches-water-quality/",
@@ -10,10 +10,10 @@
     "airQuality": "https://waqi.info/"
   },
   "lakeBuoy": {
-    "time": "2026-08-24T03:00:00.000Z",
+    "time": "2026-08-24T04:00:00.000Z",
     "waveHeightM": 0.7,
-    "waterTempC": 21.1,
-    "windKn": 15.6,
+    "waterTempC": 21,
+    "windKn": 17.5,
     "station": "45159"
   },
   "beaches": {
@@ -90,10 +90,10 @@
       "buoy": null,
       "rain48hMm": 4.7,
       "aqi": {
-        "value": 21,
+        "value": 17,
         "dominantPollutant": "pm25",
         "station": "Mississauga, Ontario, Canada",
-        "time": "2026-08-23T22:00:00-05:00"
+        "time": "2026-08-24T00:00:00-05:00"
       }
     },
     "sunnyside": {
@@ -176,7 +176,7 @@
         "value": 25,
         "dominantPollutant": "pm25",
         "station": "Toronto Downtown, Ontario, Canada",
-        "time": "2026-08-23T22:00:00-05:00"
+        "time": "2026-08-24T00:00:00-05:00"
       }
     },
     "hanlans-point": {
@@ -259,7 +259,7 @@
         "value": 25,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-23T22:00:00-05:00"
+        "time": "2026-08-24T00:00:00-05:00"
       }
     },
     "gibraltar-point": {
@@ -342,7 +342,7 @@
         "value": 25,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-23T22:00:00-05:00"
+        "time": "2026-08-24T00:00:00-05:00"
       }
     },
     "centre-island": {
@@ -421,7 +421,7 @@
         "value": 25,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-23T22:00:00-05:00"
+        "time": "2026-08-24T00:00:00-05:00"
       }
     },
     "wards-island": {
@@ -500,7 +500,7 @@
         "value": 25,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-23T22:00:00-05:00"
+        "time": "2026-08-24T00:00:00-05:00"
       }
     },
     "cherry": {
@@ -574,8 +574,8 @@
         "waterClarity": "Cloudy"
       },
       "buoy": {
-        "waterTemp": 20.5,
-        "time": "2026-08-24T02:48:00.000Z",
+        "waterTemp": 20,
+        "time": "2026-08-24T04:18:00.000Z",
         "site": "Cherry Beach"
       },
       "rain48hMm": 25.6,
@@ -583,7 +583,7 @@
         "value": 25,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-23T22:00:00-05:00"
+        "time": "2026-08-24T00:00:00-05:00"
       }
     },
     "woodbine": {
@@ -666,7 +666,7 @@
         "value": 25,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-23T22:00:00-05:00"
+        "time": "2026-08-24T00:00:00-05:00"
       }
     },
     "kew-balmy": {
@@ -740,16 +740,16 @@
         "waterClarity": "Cloudy"
       },
       "buoy": {
-        "waterTemp": 19.3,
-        "time": "2026-08-24T02:59:00.000Z",
+        "waterTemp": 18.6,
+        "time": "2026-08-24T04:39:00.000Z",
         "site": "Kew-Balmy Beach"
       },
       "rain48hMm": 39.7,
       "aqi": {
-        "value": 30,
+        "value": 21,
         "dominantPollutant": "pm25",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-08-23T22:00:00-05:00"
+        "time": "2026-08-24T00:00:00-05:00"
       }
     },
     "bluffers": {
@@ -829,10 +829,10 @@
       },
       "rain48hMm": 22.8,
       "aqi": {
-        "value": 30,
+        "value": 21,
         "dominantPollutant": "pm25",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-08-23T22:00:00-05:00"
+        "time": "2026-08-24T00:00:00-05:00"
       }
     },
     "rouge": {
@@ -842,10 +842,10 @@
       "buoy": null,
       "rain48hMm": 4.8,
       "aqi": {
-        "value": 30,
+        "value": 21,
         "dominantPollutant": "pm25",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-08-23T22:00:00-05:00"
+        "time": "2026-08-24T00:00:00-05:00"
       }
     }
   }
