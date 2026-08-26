@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-25T23:35:23.036Z",
+  "fetchedAt": "2026-08-26T01:56:27.262Z",
   "sources": {
     "liveResults": "https://secure.toronto.ca/opendata/adv/beach_results/v1",
     "waterQuality": "https://open.toronto.ca/dataset/toronto-beaches-water-quality/",
@@ -10,10 +10,10 @@
     "airQuality": "https://waqi.info/"
   },
   "lakeBuoy": {
-    "time": "2026-08-25T23:00:00.000Z",
+    "time": "2026-08-26T01:00:00.000Z",
     "waveHeightM": 0.1,
-    "waterTempC": 16.4,
-    "windKn": 3.9,
+    "waterTempC": 18.1,
+    "windKn": 0,
     "station": "45159"
   },
   "beaches": {
@@ -71,10 +71,6 @@
           {
             "date": "2026-08-12",
             "eColi": 26
-          },
-          {
-            "date": "2026-08-11",
-            "eColi": 20
           }
         ]
       },
@@ -93,7 +89,7 @@
         "value": 46,
         "dominantPollutant": "pm25",
         "station": "Mississauga, Ontario, Canada",
-        "time": "2026-08-25T19:00:00-05:00"
+        "time": "2026-08-25T21:00:00-05:00"
       }
     },
     "sunnyside": {
@@ -154,10 +150,6 @@
           {
             "date": "2026-08-12",
             "eColi": 112
-          },
-          {
-            "date": "2026-08-11",
-            "eColi": 65
           }
         ]
       },
@@ -180,7 +172,7 @@
         "value": 46,
         "dominantPollutant": "pm25",
         "station": "Toronto Downtown, Ontario, Canada",
-        "time": "2026-08-25T19:00:00-05:00"
+        "time": "2026-08-25T21:00:00-05:00"
       }
     },
     "hanlans-point": {
@@ -233,10 +225,6 @@
           {
             "date": "2026-08-12",
             "eColi": 12
-          },
-          {
-            "date": "2026-08-11",
-            "eColi": 12
           }
         ]
       },
@@ -259,7 +247,7 @@
         "value": 46,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-25T19:00:00-05:00"
+        "time": "2026-08-25T21:00:00-05:00"
       }
     },
     "gibraltar-point": {
@@ -320,10 +308,6 @@
           {
             "date": "2026-08-12",
             "eColi": 10
-          },
-          {
-            "date": "2026-08-11",
-            "eColi": 14
           }
         ]
       },
@@ -346,7 +330,7 @@
         "value": 46,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-25T19:00:00-05:00"
+        "time": "2026-08-25T21:00:00-05:00"
       }
     },
     "centre-island": {
@@ -407,10 +391,6 @@
           {
             "date": "2026-08-12",
             "eColi": 23
-          },
-          {
-            "date": "2026-08-11",
-            "eColi": 29
           }
         ]
       },
@@ -429,7 +409,7 @@
         "value": 46,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-25T19:00:00-05:00"
+        "time": "2026-08-25T21:00:00-05:00"
       }
     },
     "wards-island": {
@@ -490,10 +470,6 @@
           {
             "date": "2026-08-12",
             "eColi": 73
-          },
-          {
-            "date": "2026-08-11",
-            "eColi": 31
           }
         ]
       },
@@ -512,7 +488,7 @@
         "value": 46,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-25T19:00:00-05:00"
+        "time": "2026-08-25T21:00:00-05:00"
       }
     },
     "cherry": {
@@ -573,10 +549,6 @@
           {
             "date": "2026-08-12",
             "eColi": 90
-          },
-          {
-            "date": "2026-08-11",
-            "eColi": 30
           }
         ]
       },
@@ -590,8 +562,8 @@
         "waterClarity": "Clear"
       },
       "buoy": {
-        "waterTemp": 22.5,
-        "time": "2026-08-25T23:05:00.000Z",
+        "waterTemp": 23,
+        "time": "2026-08-26T01:36:00.000Z",
         "site": "Cherry Beach"
       },
       "rain48hMm": 0,
@@ -599,7 +571,7 @@
         "value": 46,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-25T19:00:00-05:00"
+        "time": "2026-08-25T21:00:00-05:00"
       }
     },
     "woodbine": {
@@ -660,10 +632,6 @@
           {
             "date": "2026-08-12",
             "eColi": 85
-          },
-          {
-            "date": "2026-08-11",
-            "eColi": 38
           }
         ]
       },
@@ -686,7 +654,7 @@
         "value": 46,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-08-25T19:00:00-05:00"
+        "time": "2026-08-25T21:00:00-05:00"
       }
     },
     "kew-balmy": {
@@ -747,10 +715,6 @@
           {
             "date": "2026-08-12",
             "eColi": 51
-          },
-          {
-            "date": "2026-08-11",
-            "eColi": 29
           }
         ]
       },
@@ -765,15 +729,15 @@
       },
       "buoy": {
         "waterTemp": 12.6,
-        "time": "2026-08-25T23:19:00.000Z",
+        "time": "2026-08-26T01:39:00.000Z",
         "site": "Kew-Balmy Beach"
       },
       "rain48hMm": 0,
       "aqi": {
-        "value": 38,
+        "value": 42,
         "dominantPollutant": "pm25",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-08-25T18:00:00-05:00"
+        "time": "2026-08-25T21:00:00-05:00"
       }
     },
     "bluffers": {
@@ -834,10 +798,6 @@
           {
             "date": "2026-08-12",
             "eColi": 42
-          },
-          {
-            "date": "2026-08-11",
-            "eColi": 46
           }
         ]
       },
@@ -857,10 +817,10 @@
       },
       "rain48hMm": 0,
       "aqi": {
-        "value": 38,
+        "value": 42,
         "dominantPollutant": "pm25",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-08-25T18:00:00-05:00"
+        "time": "2026-08-25T21:00:00-05:00"
       }
     },
     "rouge": {
@@ -870,10 +830,10 @@
       "buoy": null,
       "rain48hMm": 0,
       "aqi": {
-        "value": 38,
+        "value": 42,
         "dominantPollutant": "pm25",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-08-25T18:00:00-05:00"
+        "time": "2026-08-25T21:00:00-05:00"
       }
     }
   }
