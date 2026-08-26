@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-26T07:57:29.453Z",
+  "fetchedAt": "2026-08-26T08:59:52.778Z",
   "sources": {
     "liveResults": "https://secure.toronto.ca/opendata/adv/beach_results/v1",
     "waterQuality": "https://open.toronto.ca/dataset/toronto-beaches-water-quality/",
@@ -10,9 +10,9 @@
     "airQuality": "https://waqi.info/"
   },
   "lakeBuoy": {
-    "time": "2026-08-26T07:00:00.000Z",
+    "time": "2026-08-26T08:00:00.000Z",
     "waveHeightM": 0,
-    "waterTempC": 15.7,
+    "waterTempC": 15.2,
     "windKn": 3.9,
     "station": "45159"
   },
@@ -86,10 +86,10 @@
       "buoy": null,
       "rain48hMm": 0,
       "aqi": {
-        "value": 38,
+        "value": 34,
         "dominantPollutant": "pm25",
         "station": "Mississauga, Ontario, Canada",
-        "time": "2026-08-26T03:00:00-05:00"
+        "time": "2026-08-26T04:00:00-05:00"
       }
     },
     "sunnyside": {
@@ -562,8 +562,8 @@
         "waterClarity": "Clear"
       },
       "buoy": {
-        "waterTemp": 22.5,
-        "time": "2026-08-26T05:37:00.000Z",
+        "waterTemp": 22,
+        "time": "2026-08-26T08:08:00.000Z",
         "site": "Cherry Beach"
       },
       "rain48hMm": 0,
@@ -728,8 +728,8 @@
         "waterClarity": "Clear"
       },
       "buoy": {
-        "waterTemp": 12,
-        "time": "2026-08-26T05:39:00.000Z",
+        "waterTemp": 11.9,
+        "time": "2026-08-26T08:19:00.000Z",
         "site": "Kew-Balmy Beach"
       },
       "rain48hMm": 0,
@@ -737,7 +737,7 @@
         "value": 46,
         "dominantPollutant": "pm25",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-08-26T03:00:00-05:00"
+        "time": "2026-08-26T04:00:00-05:00"
       }
     },
     "bluffers": {
@@ -820,7 +820,7 @@
         "value": 46,
         "dominantPollutant": "pm25",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-08-26T03:00:00-05:00"
+        "time": "2026-08-26T04:00:00-05:00"
       }
     },
     "rouge": {
@@ -833,7 +833,7 @@
         "value": 46,
         "dominantPollutant": "pm25",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-08-26T03:00:00-05:00"
+        "time": "2026-08-26T04:00:00-05:00"
       }
     }
   }
