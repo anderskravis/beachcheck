@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-05T18:14:46.990Z",
+  "fetchedAt": "2026-09-05T21:11:51.373Z",
   "sources": {
     "liveResults": "https://secure.toronto.ca/opendata/adv/beach_results/v1",
     "waterQuality": "https://open.toronto.ca/dataset/toronto-beaches-water-quality/",
@@ -10,10 +10,10 @@
     "airQuality": "https://waqi.info/"
   },
   "lakeBuoy": {
-    "time": "2026-09-05T17:00:00.000Z",
-    "waveHeightM": 0.1,
+    "time": "2026-09-05T20:00:00.000Z",
+    "waveHeightM": 0.2,
     "waterTempC": 21.5,
-    "windKn": 3.9,
+    "windKn": 9.7,
     "station": "45159"
   },
   "beaches": {
@@ -67,21 +67,21 @@
         ]
       },
       "observations": {
-        "date": "2026-09-04",
-        "waterTemp": 15,
-        "airTemp": 19,
-        "windSpeed": 11,
-        "windDirection": "NW",
+        "date": "2026-09-05",
+        "waterTemp": 16,
+        "airTemp": 17,
+        "windSpeed": null,
+        "windDirection": "None",
         "waveAction": "LOW",
-        "waterClarity": "Debris"
+        "waterClarity": "Cloudy"
       },
       "buoy": null,
       "rain48hMm": 0,
       "aqi": {
-        "value": 24,
+        "value": 31,
         "dominantPollutant": "o3",
         "station": "Mississauga, Ontario, Canada",
-        "time": "2026-09-05T13:00:00-05:00"
+        "time": "2026-09-05T16:00:00-05:00"
       }
     },
     "sunnyside": {
@@ -150,13 +150,13 @@
         ]
       },
       "observations": {
-        "date": "2026-09-04",
-        "waterTemp": 14,
-        "airTemp": 19,
-        "windSpeed": 11,
-        "windDirection": "NW",
+        "date": "2026-09-05",
+        "waterTemp": 15,
+        "airTemp": 17,
+        "windSpeed": null,
+        "windDirection": "None",
         "waveAction": "LOW",
-        "waterClarity": "Algae"
+        "waterClarity": "Cloudy"
       },
       "buoy": {
         "waterTemp": 14,
@@ -165,10 +165,10 @@
       },
       "rain48hMm": 0,
       "aqi": {
-        "value": 22,
+        "value": 27,
         "dominantPollutant": "o3",
         "station": "Toronto Downtown, Ontario, Canada",
-        "time": "2026-09-05T13:00:00-05:00"
+        "time": "2026-09-05T16:00:00-05:00"
       }
     },
     "hanlans-point": {
@@ -229,13 +229,13 @@
         ]
       },
       "observations": {
-        "date": "2026-09-04",
+        "date": "2026-09-05",
         "waterTemp": 16,
-        "airTemp": 19,
-        "windSpeed": 11,
-        "windDirection": "NW",
+        "airTemp": 17,
+        "windSpeed": null,
+        "windDirection": "None",
         "waveAction": "NONE",
-        "waterClarity": "Clear"
+        "waterClarity": "Cloudy"
       },
       "buoy": {
         "waterTemp": 16,
@@ -244,10 +244,10 @@
       },
       "rain48hMm": 0,
       "aqi": {
-        "value": 22,
+        "value": 27,
         "dominantPollutant": "o3",
         "station": "Toronto",
-        "time": "2026-09-05T13:00:00-05:00"
+        "time": "2026-09-05T16:00:00-05:00"
       }
     },
     "gibraltar-point": {
@@ -316,13 +316,13 @@
         ]
       },
       "observations": {
-        "date": "2026-09-04",
+        "date": "2026-09-05",
         "waterTemp": 16,
-        "airTemp": 19,
-        "windSpeed": 11,
-        "windDirection": "NW",
+        "airTemp": 17,
+        "windSpeed": null,
+        "windDirection": "None",
         "waveAction": "NONE",
-        "waterClarity": "Clear"
+        "waterClarity": "Cloudy"
       },
       "buoy": {
         "waterTemp": 16,
@@ -331,10 +331,10 @@
       },
       "rain48hMm": 0,
       "aqi": {
-        "value": 22,
+        "value": 27,
         "dominantPollutant": "o3",
         "station": "Toronto",
-        "time": "2026-09-05T13:00:00-05:00"
+        "time": "2026-09-05T16:00:00-05:00"
       }
     },
     "centre-island": {
@@ -403,21 +403,21 @@
         ]
       },
       "observations": {
-        "date": "2026-09-04",
-        "waterTemp": 16,
-        "airTemp": 19,
-        "windSpeed": 11,
-        "windDirection": "NW",
+        "date": "2026-09-05",
+        "waterTemp": 15,
+        "airTemp": 17,
+        "windSpeed": null,
+        "windDirection": "None",
         "waveAction": "NONE",
-        "waterClarity": "Clear"
+        "waterClarity": "Debris, murky"
       },
       "buoy": null,
       "rain48hMm": 0,
       "aqi": {
-        "value": 22,
+        "value": 27,
         "dominantPollutant": "o3",
         "station": "Toronto",
-        "time": "2026-09-05T13:00:00-05:00"
+        "time": "2026-09-05T16:00:00-05:00"
       }
     },
     "wards-island": {
@@ -478,21 +478,21 @@
         ]
       },
       "observations": {
-        "date": "2026-09-04",
-        "waterTemp": 16,
-        "airTemp": 19,
-        "windSpeed": 11,
-        "windDirection": "NW",
+        "date": "2026-09-05",
+        "waterTemp": 15,
+        "airTemp": 17,
+        "windSpeed": null,
+        "windDirection": "None",
         "waveAction": "NONE",
-        "waterClarity": "Clear"
+        "waterClarity": "Cloudy"
       },
       "buoy": null,
       "rain48hMm": 0,
       "aqi": {
-        "value": 22,
+        "value": 27,
         "dominantPollutant": "o3",
         "station": "Toronto",
-        "time": "2026-09-05T13:00:00-05:00"
+        "time": "2026-09-05T16:00:00-05:00"
       }
     },
     "cherry": {
@@ -561,25 +561,25 @@
         ]
       },
       "observations": {
-        "date": "2026-09-04",
+        "date": "2026-09-05",
         "waterTemp": 15,
-        "airTemp": 19,
-        "windSpeed": 11,
-        "windDirection": "NW",
+        "airTemp": 17,
+        "windSpeed": null,
+        "windDirection": "None",
         "waveAction": "NONE",
-        "waterClarity": "Clear"
+        "waterClarity": "Cloudy"
       },
       "buoy": {
         "waterTemp": 22,
-        "time": "2026-09-05T17:53:00.000Z",
+        "time": "2026-09-05T20:53:00.000Z",
         "site": "Cherry Beach"
       },
       "rain48hMm": 0,
       "aqi": {
-        "value": 22,
+        "value": 27,
         "dominantPollutant": "o3",
         "station": "Toronto",
-        "time": "2026-09-05T13:00:00-05:00"
+        "time": "2026-09-05T16:00:00-05:00"
       }
     },
     "woodbine": {
@@ -648,11 +648,11 @@
         ]
       },
       "observations": {
-        "date": "2026-09-04",
-        "waterTemp": 14,
-        "airTemp": 19,
-        "windSpeed": 11,
-        "windDirection": "NW",
+        "date": "2026-09-05",
+        "waterTemp": 16,
+        "airTemp": 17,
+        "windSpeed": null,
+        "windDirection": "None",
         "waveAction": "NONE",
         "waterClarity": "Clear"
       },
@@ -663,10 +663,10 @@
       },
       "rain48hMm": 0,
       "aqi": {
-        "value": 22,
+        "value": 27,
         "dominantPollutant": "o3",
         "station": "Toronto",
-        "time": "2026-09-05T13:00:00-05:00"
+        "time": "2026-09-05T16:00:00-05:00"
       }
     },
     "kew-balmy": {
@@ -735,25 +735,25 @@
         ]
       },
       "observations": {
-        "date": "2026-09-04",
-        "waterTemp": 15,
-        "airTemp": 19,
-        "windSpeed": 11,
-        "windDirection": "NW",
+        "date": "2026-09-05",
+        "waterTemp": 16,
+        "airTemp": 17,
+        "windSpeed": null,
+        "windDirection": "None",
         "waveAction": "NONE",
         "waterClarity": "Clear"
       },
       "buoy": {
-        "waterTemp": 20.7,
-        "time": "2026-09-05T17:58:00.000Z",
+        "waterTemp": 20.8,
+        "time": "2026-09-05T20:58:00.000Z",
         "site": "Kew-Balmy Beach"
       },
       "rain48hMm": 0,
       "aqi": {
-        "value": 17,
-        "dominantPollutant": "pm25",
+        "value": 21,
+        "dominantPollutant": "o3",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-09-05T13:00:00-05:00"
+        "time": "2026-09-05T16:00:00-05:00"
       }
     },
     "bluffers": {
@@ -822,13 +822,13 @@
         ]
       },
       "observations": {
-        "date": "2026-09-04",
-        "waterTemp": 15,
-        "airTemp": 19,
-        "windSpeed": 11,
-        "windDirection": "NW",
+        "date": "2026-09-05",
+        "waterTemp": 18,
+        "airTemp": 17,
+        "windSpeed": null,
+        "windDirection": "None",
         "waveAction": "NONE",
-        "waterClarity": "Murky"
+        "waterClarity": "Clear"
       },
       "buoy": {
         "waterTemp": 15,
@@ -837,10 +837,10 @@
       },
       "rain48hMm": 0,
       "aqi": {
-        "value": 17,
-        "dominantPollutant": "pm25",
+        "value": 21,
+        "dominantPollutant": "o3",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-09-05T13:00:00-05:00"
+        "time": "2026-09-05T16:00:00-05:00"
       }
     },
     "rouge": {
@@ -850,10 +850,10 @@
       "buoy": null,
       "rain48hMm": 0,
       "aqi": {
-        "value": 17,
-        "dominantPollutant": "pm25",
+        "value": 21,
+        "dominantPollutant": "o3",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-09-05T13:00:00-05:00"
+        "time": "2026-09-05T16:00:00-05:00"
       }
     }
   }
