@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-19T20:35:31.497Z",
+  "fetchedAt": "2026-09-19T22:59:00.174Z",
   "sources": {
     "liveResults": "https://secure.toronto.ca/opendata/adv/beach_results/v1",
     "waterQuality": "https://open.toronto.ca/dataset/toronto-beaches-water-quality/",
@@ -10,10 +10,10 @@
     "airQuality": "https://waqi.info/"
   },
   "lakeBuoy": {
-    "time": "2026-09-19T20:00:00.000Z",
-    "waveHeightM": 0.8,
-    "waterTempC": 18.6,
-    "windKn": 15.6,
+    "time": "2026-09-19T22:00:00.000Z",
+    "waveHeightM": 0.7,
+    "waterTempC": 18.5,
+    "windKn": 13.6,
     "station": "45159"
   },
   "beaches": {
@@ -53,7 +53,7 @@
         "value": 18,
         "dominantPollutant": "o3",
         "station": "Mississauga, Ontario, Canada",
-        "time": "2026-09-19T16:00:00-05:00"
+        "time": "2026-09-19T18:00:00-05:00"
       }
     },
     "sunnyside": {
@@ -89,10 +89,10 @@
       "buoy": null,
       "rain48hMm": 0,
       "aqi": {
-        "value": 15,
-        "dominantPollutant": "o3",
+        "value": 17,
+        "dominantPollutant": "pm25",
         "station": "Toronto Downtown, Ontario, Canada",
-        "time": "2026-09-19T16:00:00-05:00"
+        "time": "2026-09-19T18:00:00-05:00"
       }
     },
     "hanlans-point": {
@@ -131,7 +131,7 @@
         "value": 17,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-09-19T15:00:00-05:00"
+        "time": "2026-09-19T18:00:00-05:00"
       }
     },
     "gibraltar-point": {
@@ -170,7 +170,7 @@
         "value": 17,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-09-19T15:00:00-05:00"
+        "time": "2026-09-19T18:00:00-05:00"
       }
     },
     "centre-island": {
@@ -209,7 +209,7 @@
         "value": 17,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-09-19T15:00:00-05:00"
+        "time": "2026-09-19T18:00:00-05:00"
       }
     },
     "wards-island": {
@@ -248,7 +248,7 @@
         "value": 17,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-09-19T15:00:00-05:00"
+        "time": "2026-09-19T18:00:00-05:00"
       }
     },
     "cherry": {
@@ -282,8 +282,8 @@
         "waterClarity": "Murky"
       },
       "buoy": {
-        "waterTemp": 18.5,
-        "time": "2026-09-19T20:25:00.000Z",
+        "waterTemp": 18,
+        "time": "2026-09-19T22:26:00.000Z",
         "site": "Cherry Beach"
       },
       "rain48hMm": 0,
@@ -291,7 +291,7 @@
         "value": 17,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-09-19T15:00:00-05:00"
+        "time": "2026-09-19T18:00:00-05:00"
       }
     },
     "woodbine": {
@@ -330,7 +330,7 @@
         "value": 17,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-09-19T15:00:00-05:00"
+        "time": "2026-09-19T18:00:00-05:00"
       }
     },
     "kew-balmy": {
@@ -364,16 +364,16 @@
         "waterClarity": "Clear"
       },
       "buoy": {
-        "waterTemp": 19.5,
-        "time": "2026-09-19T20:17:00.000Z",
+        "waterTemp": 19.1,
+        "time": "2026-09-19T22:37:00.000Z",
         "site": "Kew-Balmy Beach"
       },
       "rain48hMm": 0,
       "aqi": {
-        "value": 17,
+        "value": 18,
         "dominantPollutant": "o3",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-09-19T16:00:00-05:00"
+        "time": "2026-09-19T18:00:00-05:00"
       }
     },
     "bluffers": {
@@ -409,10 +409,10 @@
       "buoy": null,
       "rain48hMm": 0,
       "aqi": {
-        "value": 17,
+        "value": 18,
         "dominantPollutant": "o3",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-09-19T16:00:00-05:00"
+        "time": "2026-09-19T18:00:00-05:00"
       }
     },
     "rouge": {
@@ -422,10 +422,10 @@
       "buoy": null,
       "rain48hMm": 0,
       "aqi": {
-        "value": 17,
+        "value": 18,
         "dominantPollutant": "o3",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-09-19T16:00:00-05:00"
+        "time": "2026-09-19T18:00:00-05:00"
       }
     }
   }
