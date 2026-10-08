@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-08T08:53:49.300Z",
+  "fetchedAt": "2026-10-08T16:26:44.173Z",
   "sources": {
     "liveResults": "https://secure.toronto.ca/opendata/adv/beach_results/v1",
     "waterQuality": "https://open.toronto.ca/dataset/toronto-beaches-water-quality/",
@@ -10,10 +10,10 @@
     "airQuality": "https://waqi.info/"
   },
   "lakeBuoy": {
-    "time": "2026-10-08T08:00:00.000Z",
-    "waveHeightM": 0.1,
-    "waterTempC": 15.1,
-    "windKn": 9.7,
+    "time": "2026-10-08T16:00:00.000Z",
+    "waveHeightM": 0.4,
+    "waterTempC": 13.5,
+    "windKn": 13.6,
     "station": "45159"
   },
   "beaches": {
@@ -93,10 +93,10 @@
       "buoy": null,
       "rain48hMm": 0.4,
       "aqi": {
-        "value": 22,
+        "value": 26,
         "dominantPollutant": "o3",
         "station": "Mississauga, Ontario, Canada",
-        "time": "2026-10-08T04:00:00-05:00"
+        "time": "2026-10-08T12:00:00-05:00"
       }
     },
     "sunnyside": {
@@ -178,7 +178,7 @@
         "value": 22,
         "dominantPollutant": "o3",
         "station": "Toronto Downtown, Ontario, Canada",
-        "time": "2026-10-08T04:00:00-05:00"
+        "time": "2026-10-08T12:00:00-05:00"
       }
     },
     "hanlans-point": {
@@ -260,7 +260,7 @@
         "value": 22,
         "dominantPollutant": "o3",
         "station": "Toronto",
-        "time": "2026-10-08T04:00:00-05:00"
+        "time": "2026-10-08T12:00:00-05:00"
       }
     },
     "gibraltar-point": {
@@ -342,7 +342,7 @@
         "value": 22,
         "dominantPollutant": "o3",
         "station": "Toronto",
-        "time": "2026-10-08T04:00:00-05:00"
+        "time": "2026-10-08T12:00:00-05:00"
       }
     },
     "centre-island": {
@@ -424,7 +424,7 @@
         "value": 22,
         "dominantPollutant": "o3",
         "station": "Toronto",
-        "time": "2026-10-08T04:00:00-05:00"
+        "time": "2026-10-08T12:00:00-05:00"
       }
     },
     "wards-island": {
@@ -506,7 +506,7 @@
         "value": 22,
         "dominantPollutant": "o3",
         "station": "Toronto",
-        "time": "2026-10-08T04:00:00-05:00"
+        "time": "2026-10-08T12:00:00-05:00"
       }
     },
     "cherry": {
@@ -584,7 +584,7 @@
       },
       "buoy": {
         "waterTemp": 16,
-        "time": "2026-10-08T08:37:00.000Z",
+        "time": "2026-10-08T16:11:00.000Z",
         "site": "Cherry Beach"
       },
       "rain48hMm": 0,
@@ -592,7 +592,7 @@
         "value": 22,
         "dominantPollutant": "o3",
         "station": "Toronto",
-        "time": "2026-10-08T04:00:00-05:00"
+        "time": "2026-10-08T12:00:00-05:00"
       }
     },
     "woodbine": {
@@ -674,7 +674,7 @@
         "value": 22,
         "dominantPollutant": "o3",
         "station": "Toronto",
-        "time": "2026-10-08T04:00:00-05:00"
+        "time": "2026-10-08T12:00:00-05:00"
       }
     },
     "kew-balmy": {
@@ -751,16 +751,16 @@
         "waterClarity": "Clear"
       },
       "buoy": {
-        "waterTemp": 7.3,
-        "time": "2026-10-08T08:35:00.000Z",
+        "waterTemp": 7.8,
+        "time": "2026-10-08T15:55:00.000Z",
         "site": "Kew-Balmy Beach"
       },
       "rain48hMm": 0.7,
       "aqi": {
-        "value": 23,
+        "value": 21,
         "dominantPollutant": "o3",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-10-08T04:00:00-05:00"
+        "time": "2026-10-08T12:00:00-05:00"
       }
     },
     "bluffers": {
@@ -839,10 +839,10 @@
       "buoy": null,
       "rain48hMm": 0.4,
       "aqi": {
-        "value": 23,
+        "value": 21,
         "dominantPollutant": "o3",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-10-08T04:00:00-05:00"
+        "time": "2026-10-08T12:00:00-05:00"
       }
     },
     "rouge": {
@@ -852,10 +852,10 @@
       "buoy": null,
       "rain48hMm": 0.8,
       "aqi": {
-        "value": 23,
+        "value": 21,
         "dominantPollutant": "o3",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-10-08T04:00:00-05:00"
+        "time": "2026-10-08T12:00:00-05:00"
       }
     }
   }
