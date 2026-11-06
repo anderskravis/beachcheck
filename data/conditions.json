@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-06T17:55:49.071Z",
+  "fetchedAt": "2026-11-06T23:04:06.859Z",
   "sources": {
     "liveResults": "https://secure.toronto.ca/opendata/adv/beach_results/v1",
     "waterQuality": "https://open.toronto.ca/dataset/toronto-beaches-water-quality/",
@@ -10,10 +10,10 @@
     "airQuality": "https://waqi.info/"
   },
   "lakeBuoy": {
-    "time": "2026-11-06T17:00:00.000Z",
-    "waveHeightM": 0.2,
-    "waterTempC": 13.1,
-    "windKn": 5.8,
+    "time": "2026-11-06T22:00:00.000Z",
+    "waveHeightM": 0.6,
+    "waterTempC": 13,
+    "windKn": 13.6,
     "station": "45159"
   },
   "beaches": {
@@ -93,10 +93,10 @@
       "buoy": null,
       "rain48hMm": 7.3,
       "aqi": {
-        "value": 10,
+        "value": 12,
         "dominantPollutant": "o3",
         "station": "Mississauga, Ontario, Canada",
-        "time": "2026-11-06T12:00:00-05:00"
+        "time": "2026-11-06T17:00:00-05:00"
       }
     },
     "sunnyside": {
@@ -178,7 +178,7 @@
         "value": 21,
         "dominantPollutant": "pm25",
         "station": "Toronto Downtown, Ontario, Canada",
-        "time": "2026-11-06T12:00:00-05:00"
+        "time": "2026-11-06T17:00:00-05:00"
       }
     },
     "hanlans-point": {
@@ -260,7 +260,7 @@
         "value": 21,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-11-06T12:00:00-05:00"
+        "time": "2026-11-06T17:00:00-05:00"
       }
     },
     "gibraltar-point": {
@@ -342,7 +342,7 @@
         "value": 21,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-11-06T12:00:00-05:00"
+        "time": "2026-11-06T17:00:00-05:00"
       }
     },
     "centre-island": {
@@ -424,7 +424,7 @@
         "value": 21,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-11-06T12:00:00-05:00"
+        "time": "2026-11-06T17:00:00-05:00"
       }
     },
     "wards-island": {
@@ -506,7 +506,7 @@
         "value": 21,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-11-06T12:00:00-05:00"
+        "time": "2026-11-06T17:00:00-05:00"
       }
     },
     "cherry": {
@@ -583,8 +583,8 @@
         "waterClarity": "Murky"
       },
       "buoy": {
-        "waterTemp": 12.5,
-        "time": "2026-11-06T16:25:00.000Z",
+        "waterTemp": 12,
+        "time": "2026-11-06T20:57:00.000Z",
         "site": "Cherry Beach"
       },
       "rain48hMm": 2.9,
@@ -592,7 +592,7 @@
         "value": 21,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-11-06T12:00:00-05:00"
+        "time": "2026-11-06T17:00:00-05:00"
       }
     },
     "woodbine": {
@@ -674,7 +674,7 @@
         "value": 21,
         "dominantPollutant": "pm25",
         "station": "Toronto",
-        "time": "2026-11-06T12:00:00-05:00"
+        "time": "2026-11-06T17:00:00-05:00"
       }
     },
     "kew-balmy": {
@@ -751,16 +751,16 @@
         "waterClarity": "Clear"
       },
       "buoy": {
-        "waterTemp": 12.8,
-        "time": "2026-11-06T16:32:00.000Z",
+        "waterTemp": 12.5,
+        "time": "2026-11-06T20:52:00.000Z",
         "site": "Kew-Balmy Beach"
       },
       "rain48hMm": 2.6,
       "aqi": {
-        "value": 9,
+        "value": 13,
         "dominantPollutant": "pm25",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-11-06T12:00:00-05:00"
+        "time": "2026-11-06T17:00:00-05:00"
       }
     },
     "bluffers": {
@@ -839,10 +839,10 @@
       "buoy": null,
       "rain48hMm": 1.5,
       "aqi": {
-        "value": 9,
+        "value": 13,
         "dominantPollutant": "pm25",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-11-06T12:00:00-05:00"
+        "time": "2026-11-06T17:00:00-05:00"
       }
     },
     "rouge": {
@@ -852,10 +852,10 @@
       "buoy": null,
       "rain48hMm": 1.1,
       "aqi": {
-        "value": 9,
+        "value": 13,
         "dominantPollutant": "pm25",
         "station": "Toronto East, Ontario, Canada",
-        "time": "2026-11-06T12:00:00-05:00"
+        "time": "2026-11-06T17:00:00-05:00"
       }
     }
   }
